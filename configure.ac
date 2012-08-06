@@ -2,7 +2,7 @@ AC_INIT([compilador],[0.1],[rubin.diego@gmail.com])
 
 AM_INIT_AUTOMAKE(compilador,0.1)
 
-AC_PROG_CC
+AC_PROG_CC(cc)
 
 #PKG_CHECK_MODULES([COMPILADOR],[])
 
