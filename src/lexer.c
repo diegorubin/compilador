@@ -84,10 +84,16 @@ token_t gettoken(FILE *buffer)
   return getc(buffer);
 }
 
-int match(token_t expected)
+void match(int expected)
 {
-  return 0;
+  if (lookahead == expected) {
+      lookahead = gettoken(sourcecode);
+  } else {
+    fprintf(stderr,
+            "token mismatch: found %d but %d expected\n",
+            lookahead, expected);
+    exit(-1);
+  }
 }
-
 
 

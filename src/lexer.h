@@ -3,9 +3,12 @@
 
 #include "tokens.h"
 
+int lookahead;
+
+extern FILE *sourcecode;
 
 token_t get_token(FILE *buffer);
-int match(token_t expected);
+void match(int expected);
 
 #endif /*__LEXER_H__*/
 
