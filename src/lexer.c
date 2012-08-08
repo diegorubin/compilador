@@ -6,7 +6,7 @@
 #define isoctal(x) ( '0' <= (x) && (x) < '8' )
 #define ishexa(x)  ( isdigit(x) || 'a' <= tolower(x) && tolower(x) <= 'f')
 
-isOPLUS(FILE *buffer)
+int isOPLUS(FILE *buffer)
 {
     int             head = getc(buffer);
     switch (head) {
@@ -18,7 +18,7 @@ isOPLUS(FILE *buffer)
     return 0;
 }
 
-isOTIMES(FILE *buffer)
+int isOTIMES(FILE *buffer)
 {
     int             head = getc(buffer);
     switch (head) {
@@ -42,7 +42,7 @@ int isID(FILE *buffer)
   return 0;
 }
 
-isNUM(FILE *buffer)
+int isNUM(FILE *buffer)
 {
   char head = getc(buffer);
   if (isdigit(head)) {
