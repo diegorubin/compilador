@@ -6,6 +6,30 @@
 #define isoctal(x) ( '0' <= (x) && (x) < '8' )
 #define ishexa(x)  ( isdigit(x) || 'a' <= tolower(x) && tolower(x) <= 'f')
 
+isOPLUS(FILE *buffer)
+{
+    int             head = getc(buffer);
+    switch (head) {
+    case '+':
+    case '-':
+        return OPLUS;
+    }
+    ungetc(head,buffer);
+    return 0;
+}
+
+isOTIMES(FILE *buffer)
+{
+    int             head = getc(buffer);
+    switch (head) {
+    case '*':
+    case '/':
+        return OTIMES;
+    }
+    ungetc(head,buffer);
+    return 0;
+}
+
 int isID(FILE *buffer)
 {
   char head = getc(buffer);
@@ -52,8 +76,10 @@ token_t gettoken(FILE *buffer)
   while(isspace(head = getc(buffer)));
   ungetc(head, buffer);
 
-  if(token = isID(buffer)) return token;
   if(token = isNUM(buffer)) return token;
+  if(token = isID(buffer)) return token;
+  if(token = isOPLUS(buffer)) return token;
+  if(token = isOTIMES(buffer)) return token;
 
   return getc(buffer);
 }

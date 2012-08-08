@@ -10,7 +10,7 @@
 
 int main(int argc, char **argv)
 {
-  plan_tests(5);
+  plan_tests(9);
 
   int token;
   FILE *buffer;
@@ -40,6 +40,26 @@ int main(int argc, char **argv)
   buffer = fmemopen (input, strlen(input), "r");
   token = gettoken(buffer);
   ok1(token == HEXA); 
+
+  input = "+";
+  buffer = fmemopen (input, strlen(input), "r");
+  token = gettoken(buffer);
+  ok1(token == OPLUS); 
+
+  input = "-";
+  buffer = fmemopen (input, strlen(input), "r");
+  token = gettoken(buffer);
+  ok1(token == OPLUS); 
+
+  input = "*";
+  buffer = fmemopen (input, strlen(input), "r");
+  token = gettoken(buffer);
+  ok1(token == OTIMES); 
+
+  input = "/";
+  buffer = fmemopen (input, strlen(input), "r");
+  token = gettoken(buffer);
+  ok1(token == OTIMES); 
 
   return exit_status();
 }
