@@ -3,12 +3,13 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
-bin_PROGRAMS = compilador_test 
+bin_PROGRAMS = lexer_test 
 
-compilador_test_SOURCES = main_test.c \
-										     tap.c
+lexer_test_SOURCES = lexer_test.c \
+										 tap.c
 
-TESTS=compilador_test
+TESTS=lexer_test
 
-compilador_test_LDADD = ${COMPILADOR_LIBS}
+lexer_test_LDADD = ${LEXER_LIBS} \
+                   $(top_srcdir)/src/lexer.o
 

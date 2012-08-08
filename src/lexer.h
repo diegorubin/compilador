@@ -3,7 +3,6 @@
 
 #include "tokens.h"
 
-token_t lookahead;
 
 token_t get_token(FILE *buffer);
 int match(token_t expected);

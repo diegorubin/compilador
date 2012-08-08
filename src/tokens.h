@@ -4,11 +4,13 @@
 typedef int token_t;
 
 enum {
-  T_SPACE = ' ',
-  T_EOL = '\n',
-
-  T_VAR = 1024,
-  T_CONS = 1025,
+  ID=1024,
+  ZERO,
+  NUM,
+  HEXA,
+  OCTA,
+  OPLUS,
+  OTIMES,
 };
 
 #endif /*__TOKENS_H__*/
