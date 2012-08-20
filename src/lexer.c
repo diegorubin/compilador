@@ -67,6 +67,26 @@ int isNUM(FILE *buffer)
   return 0;
 }
 
+int isFLOAT(FILE *buffer)
+{
+  char head = getc(buffer);
+  if(head == '.') {
+    if(isdigit(head = getc(buffer))) {
+      while(isdigit(head = getc(buffer)));
+
+      if(tolower(head) == 'e')
+        while(isdigit(head = getc(buffer)));
+      ungetc(head, buffer);
+      return FLOAT;
+    }
+    ungetc(head, buffer);
+    return 0;
+  }
+
+  ungetc('.', buffer);
+  return 0;
+}
+
 token_t gettoken(FILE *buffer)
 {
   char head;
@@ -80,6 +100,7 @@ token_t gettoken(FILE *buffer)
   if(token = isID(buffer)) return token;
   if(token = isOPLUS(buffer)) return token;
   if(token = isOTIMES(buffer)) return token;
+  if(token = isFLOAT(buffer)) return token;
 
   return getc(buffer);
 }
