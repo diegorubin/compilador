@@ -7,52 +7,34 @@
  */
 
 /*
- * Expr -> Term R 
+ * Expr -> Term {plus Term} 
  */
-void Expr()
+void Expr(void)
 {
   Term();
-  R();
-}
-
-/*
- * R -> OPLUS Term R | "" 
- */
-void R()
-{
-  if (lookahead == OPLUS) {
-    match(OPLUS);
-    Term();
-    R();
+  while(lookahead == OPLUS) {
+    match(OPLUS); Term();
   }
 }
 
 /*
- * Term -> Factor Q
+ * Term -> Factor {times Factor}
  */
-void Term()
+void Term(void)
 {
   Factor();
-  Q();
-}
-/*
- * Q -> OTIMES Factor Q | ""
- */
-void Q()
-{
-  if (lookahead == OTIMES) {
-    match(OTIMES);
-    Factor();
-    Q();
+  while(lookahead == OTIMES){
+    match(OTIMES); Factor();
   }
 }
 /*
- * F -> NUM | OCTA | HEXA | ID | (E)
+ * Factor -> NUM | OCTA | HEXA | ID | FLOAT | (E)
  */
 void Factor()
 {
   switch (lookahead) {
   case NUM:
+  case FLOAT:
   case OCTA:
   case HEXA:
   case ID:

@@ -4,11 +4,9 @@
 #include "lexer.h"
 #include "tokens.h"
 
-void Expr();
-void Term();
-void R();
-void Factor();
-void Q();
+void Expr(void);
+void Term(void);
+void Factor(void);
 
 #endif /* __PARSER_H__ */
 
