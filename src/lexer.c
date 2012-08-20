@@ -69,7 +69,36 @@ int isNUM(FILE *buffer)
 
 int isFLOAT(FILE *buffer)
 {
-  char head = getc(buffer);
+  char head;
+  int numtype;
+  if(numtype = isNUM(buffer)){
+
+    head = getc(buffer);
+
+    if(head == '.') {
+      if(isdigit(head = getc(buffer))) {
+        while(isdigit(head = getc(buffer)));
+
+        if(tolower(head) == 'e')
+          while(isdigit(head = getc(buffer)));
+        ungetc(head, buffer);
+        return FLOAT;
+      }
+      ungetc(head, buffer);
+      return 0;
+    }
+
+    if(tolower(head) == 'e') {
+      while(isdigit(head = getc(buffer)));
+      ungetc(head, buffer);
+      return FLOAT;
+    }
+
+    return numtype;
+
+  }
+
+  head = getc(buffer);
   if(head == '.') {
     if(isdigit(head = getc(buffer))) {
       while(isdigit(head = getc(buffer)));
@@ -96,7 +125,7 @@ token_t gettoken(FILE *buffer)
   while(isspace(head = getc(buffer)));
   ungetc(head, buffer);
 
-  if(token = isNUM(buffer)) return token;
+  //if(token = isNUM(buffer)) return token;
   if(token = isID(buffer)) return token;
   if(token = isOPLUS(buffer)) return token;
   if(token = isOTIMES(buffer)) return token;

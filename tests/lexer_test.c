@@ -12,7 +12,7 @@ FILE *sourcecode;
 
 int main(int argc, char **argv)
 {
-  plan_tests(13);
+  plan_tests(15);
 
   int token;
   char *input;
@@ -78,6 +78,14 @@ int main(int argc, char **argv)
   sourcecode = fmemopen (input, strlen(input), "r");
   token = gettoken(sourcecode);
   ok1(token == FLOAT);
+
+  input = "12.12e12 abacaxi";
+  sourcecode = fmemopen (input, strlen(input), "r");
+  token = gettoken(sourcecode);
+  ok1(token == FLOAT);
+  token = gettoken(sourcecode);
+  ok1(token == ID);
+
 
   return exit_status();
 }
