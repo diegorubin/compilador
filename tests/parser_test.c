@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
   ok1("Accepted Language");
 
-  input = "(a + a)";
+  input = "(a - a)";
   sourcecode = fmemopen (input, strlen(input), "r");
 
   lookahead = gettoken(sourcecode);
