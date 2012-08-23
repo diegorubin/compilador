@@ -35,6 +35,7 @@ void Factor()
   switch (lookahead) {
   case NUM:
   case FLOAT:
+  case ZERO:
   case OCTA:
   case HEXA:
   case ID:

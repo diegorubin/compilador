@@ -8,7 +8,7 @@
 
 int isOPLUS(FILE *buffer)
 {
-    int             head = getc(buffer);
+    int head = getc(buffer);
     switch (head) {
     case '+':
     case '-':
@@ -20,7 +20,7 @@ int isOPLUS(FILE *buffer)
 
 int isOTIMES(FILE *buffer)
 {
-    int             head = getc(buffer);
+    int head = getc(buffer);
     switch (head) {
     case '*':
     case '/':
@@ -67,30 +67,59 @@ int isNUM(FILE *buffer)
   return 0;
 }
 
+int isexp(FILE *buffer) 
+{
+  char head = getc(buffer);
+  if(tolower(head) == 'e') {
+    /* guardaremos o 'e' caso precise ser devolvido e não
+     * podemos afirmar se ele está em minusculo
+     */
+    char reale = head;
+    head = getc(buffer);
+
+    /* o sinal é opcional */
+    if(head != '+' && head != '-')
+      ungetc(head, buffer);
+
+    if(isdigit(head = getc(buffer))) {
+      while(isdigit(head = getc(buffer)));
+      ungetc(head, buffer);
+
+      return 1;
+    }
+
+    ungetc(head,buffer);
+    ungetc(reale,buffer);
+
+    return 0;
+  }
+
+  ungetc(head,buffer);
+  return 0;
+}
+
 int isFLOAT(FILE *buffer)
 {
   char head;
-  int numtype;
-  if(numtype = isNUM(buffer)){
+  int numtype = isNUM(buffer);
+  if(numtype){
 
-    head = getc(buffer);
+    if(numtype == OCTA || numtype == HEXA) return numtype;
 
-    if(head == '.') {
+    if((head = getc(buffer)) == '.') {
       if(isdigit(head = getc(buffer))) {
         while(isdigit(head = getc(buffer)));
-
-        if(tolower(head) == 'e')
-          while(isdigit(head = getc(buffer)));
         ungetc(head, buffer);
+
+        isexp(buffer);
+
         return FLOAT;
       }
       ungetc(head, buffer);
       return 0;
     }
 
-    if(tolower(head) == 'e') {
-      while(isdigit(head = getc(buffer)));
-      ungetc(head, buffer);
+    if(isexp(buffer)) {
       return FLOAT;
     }
 
@@ -98,21 +127,20 @@ int isFLOAT(FILE *buffer)
 
   }
 
-  head = getc(buffer);
-  if(head == '.') {
+  if((head = getc(buffer)) == '.') {
     if(isdigit(head = getc(buffer))) {
       while(isdigit(head = getc(buffer)));
-
-      if(tolower(head) == 'e')
-        while(isdigit(head = getc(buffer)));
       ungetc(head, buffer);
+
+      isexp(buffer);
+
       return FLOAT;
     }
-    ungetc(head, buffer);
+    ungetc('.', buffer);
     return 0;
   }
 
-  ungetc('.', buffer);
+  ungetc(head, buffer);
   return 0;
 }
 
@@ -145,5 +173,4 @@ void match(int expected)
     exit(-1);
   }
 }
-
 
