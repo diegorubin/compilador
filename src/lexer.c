@@ -57,6 +57,8 @@ int isNUM(FILE *buffer)
         ungetc(head, buffer);
         return OCTA;
       }
+
+      ungetc(head, buffer);
       return ZERO;
     }
     while (isdigit(head = getc(buffer)));
