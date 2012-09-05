@@ -25,15 +25,14 @@ void Expr(void)
 
   /** */if(negate = (lookahead == '-')) match('-');/** */
   Term();
-  while(lookahead == '+' || lookahead == '-') {
-    oplus = lookahead;
+  /** */{negate && printf(" %c ", '-');}/** */
 
-    match(lookahead);
+  while(lookahead == '+' || lookahead == '-') {
+    match(oplus = lookahead);
     Term();
 
     /** */{printf(" %c ", oplus);}/** */
   }
-  /** */{negate && printf(" %c ", '-');}/** */
 }
 
 /*
@@ -46,11 +45,8 @@ void Term(void)
   Factor();
   while(lookahead == OTIMES){
     otimes = lexeme[0];
-
     match(OTIMES); 
-    Factor();
-
-    /** */{printf(" %c ", otimes);}/** */
+    Factor();/** */{printf(" %c ", otimes);}/** */
   }
 }
 /*
@@ -63,9 +59,12 @@ void Factor()
   case FLOAT:
   case OCTA:
   case HEXA:
-  case ID:
-    match(lookahead);
     /** */{printf(" %s ", lexeme);}/** */
+    match(lookahead);
+    break;
+  case ID:
+    /** */{printf(" %s ", lexeme);}/** */
+    match(ID);
     break;
   default:
     match('(');
