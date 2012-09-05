@@ -5,7 +5,6 @@ typedef int token_t;
 
 enum {
   ID=1024,
-  ZERO,
   NUM,
   HEXA,
   OCTA,

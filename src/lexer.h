@@ -7,6 +7,8 @@ int lookahead;
 
 extern FILE *sourcecode;
 
+char lexeme[32];
+
 token_t get_token(FILE *buffer);
 void match(int expected);
 

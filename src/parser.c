@@ -21,10 +21,17 @@ void mybc(void)
 void Expr(void)
 {
   int negate = 0;
+  int oplus = 0;
+
   /** */if(negate = (lookahead == '-')) match('-');/** */
   Term();
   while(lookahead == '+' || lookahead == '-') {
-    match(lookahead); Term();
+    oplus = lookahead;
+
+    match(lookahead);
+    Term();
+
+    /** */{printf(" %c ", oplus);}/** */
   }
   /** */{negate && printf(" %c ", '-');}/** */
 }
@@ -34,9 +41,16 @@ void Expr(void)
  */
 void Term(void)
 {
+  int otimes = 0;
+
   Factor();
   while(lookahead == OTIMES){
-    match(OTIMES); Factor();
+    otimes = lexeme[0];
+
+    match(OTIMES); 
+    Factor();
+
+    /** */{printf(" %c ", otimes);}/** */
   }
 }
 /*
@@ -47,11 +61,11 @@ void Factor()
   switch (lookahead) {
   case NUM:
   case FLOAT:
-  case ZERO:
   case OCTA:
   case HEXA:
   case ID:
     match(lookahead);
+    /** */{printf(" %s ", lexeme);}/** */
     break;
   default:
     match('(');

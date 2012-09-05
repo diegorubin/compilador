@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
   ok1("Accepted Language");
 
-  input = "(a - a)\n";
+  input = "(3 - a)\n";
   sourcecode = fmemopen (input, strlen(input), "r");
 
   lookahead = gettoken(sourcecode);
@@ -33,15 +33,13 @@ int main(int argc, char **argv)
 
   ok1("Accepted Language");
 
-  input = "- (a - a)\n";
+  input = "- (a * a)\n";
   sourcecode = fmemopen (input, strlen(input), "r");
 
   lookahead = gettoken(sourcecode);
   mybc();
 
   ok1("Accepted Language");
-
-
 
   return exit_status();
 }

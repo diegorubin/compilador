@@ -10,10 +10,13 @@
 int isOTIMES(FILE *buffer)
 {
     int head = getc(buffer);
+
     switch (head) {
     case '*':
     case '/':
-        return OTIMES;
+      lexeme[0] = head;
+      lexeme[1] = 0;
+      return OTIMES;
     }
     ungetc(head,buffer);
     return 0;
@@ -21,10 +24,16 @@ int isOTIMES(FILE *buffer)
 
 int isID(FILE *buffer)
 {
+  int p = 0;
+
   char head = getc(buffer);
   if (isalpha(head)) {
-    while (isalnum(head = getc(buffer)));
+    lexeme[p++] = head;
+
+    while (isalnum(head = getc(buffer))) lexeme[p++] = head;
     ungetc(head, buffer);
+
+    lexeme[p] = 0;
     return ID;
   }
   ungetc(head, buffer);
@@ -33,22 +42,39 @@ int isID(FILE *buffer)
 
 int isNUM(FILE *buffer)
 {
+  int p = 0;
+
   char head = getc(buffer);
+
   if (isdigit(head)) {
+    lexeme[p++] = head;
+
     if (head == '0') {
       if (tolower(head = getc(buffer)) == 'x') {
-        while (isdigit(head = getc(buffer)) || ishexa(head));
+        lexeme[p++] = head;
+
+        while (isdigit(head = getc(buffer)) || ishexa(head)) lexeme[p++] = head;
+
+        lexeme[p] = 0;
         ungetc(head, buffer);
+
         return HEXA;
       }
       if (isoctal(head)) {
-        while (isoctal(head = getc(buffer)));
+        lexeme[p++] = head;
+
+        while (isoctal(head = getc(buffer))) lexeme[p++] = head;
+
+        lexeme[p] = 0;
         ungetc(head, buffer);
+
         return OCTA;
       }
 
+      lexeme[p] = 0;
       ungetc(head, buffer);
-      return ZERO;
+
+      return NUM;
     }
     while (isdigit(head = getc(buffer)));
     ungetc(head, buffer);

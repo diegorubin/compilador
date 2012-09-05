@@ -30,7 +30,7 @@ int main(int argc, char **argv)
   input = "0";
   sourcecode = fmemopen (input, strlen(input), "r");
   token = gettoken(sourcecode);
-  ok1(token == ZERO); 
+  ok1(token == NUM); 
 
   input = "0123";
   sourcecode = fmemopen (input, strlen(input), "r");
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
   token = gettoken(sourcecode);
   ok1(token == '+');
   token = gettoken(sourcecode);
-  ok1(token == ZERO);
+  ok1(token == NUM);
   token = gettoken(sourcecode);
   ok1(token == '+');
   token = gettoken(sourcecode);
