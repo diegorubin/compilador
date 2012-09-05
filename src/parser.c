@@ -7,14 +7,26 @@
  */
 
 /*
- * Expr -> Term {plus Term} 
+ * mybc -> Expr() <enter>
+ */
+void mybc(void)
+{
+  Expr();
+  match('\n');
+}
+
+/*
+ * Expr -> [-] Term {plus Term} 
  */
 void Expr(void)
 {
+  int negate = 0;
+  /** */if(negate = (lookahead == '-')) match('-');/** */
   Term();
-  while(lookahead == OPLUS) {
-    match(OPLUS); Term();
+  while(lookahead == '+' || lookahead == '-') {
+    match(lookahead); Term();
   }
+  /** */{negate && printf(" %c ", '-');}/** */
 }
 
 /*

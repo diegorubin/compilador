@@ -12,7 +12,7 @@ FILE *sourcecode;
 
 int main(int argc, char **argv)
 {
-  plan_tests(33);
+  plan_tests(35);
 
   int token;
   char *input;
@@ -45,12 +45,12 @@ int main(int argc, char **argv)
   input = "+";
   sourcecode = fmemopen (input, strlen(input), "r");
   token = gettoken(sourcecode);
-  ok1(token == OPLUS); 
+  ok1(token == '+'); 
 
   input = "-";
   sourcecode = fmemopen (input, strlen(input), "r");
   token = gettoken(sourcecode);
-  ok1(token == OPLUS); 
+  ok1(token == '-'); 
 
   input = "*";
   sourcecode = fmemopen (input, strlen(input), "r");
@@ -119,11 +119,11 @@ int main(int argc, char **argv)
   token = gettoken(sourcecode);
   ok1(token == ID);
   token = gettoken(sourcecode);
-  ok1(token == OPLUS);
+  ok1(token == '+');
   token = gettoken(sourcecode);
   ok1(token == ZERO);
   token = gettoken(sourcecode);
-  ok1(token == OPLUS);
+  ok1(token == '+');
   token = gettoken(sourcecode);
   ok1(token == ID);
   token = gettoken(sourcecode);
@@ -138,6 +138,13 @@ int main(int argc, char **argv)
   ok1(token == FLOAT);
   token = gettoken(sourcecode);
   ok1(token == ')');
+
+  input = "- x";
+  sourcecode = fmemopen (input, strlen(input), "r");
+  token = gettoken(sourcecode);
+  ok1(token == '-');
+  token = gettoken(sourcecode);
+  ok1(token == ID);
 
 
   return exit_status();

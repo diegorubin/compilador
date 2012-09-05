@@ -10,7 +10,6 @@ enum {
   HEXA,
   OCTA,
   FLOAT,
-  OPLUS,
   OTIMES,
 };
 

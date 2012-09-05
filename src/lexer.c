@@ -1,22 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "lexer.h"
 
 #define isoctal(x) ( '0' <= (x) && (x) < '8' )
 #define ishexa(x)  ( isdigit(x) || 'a' <= tolower(x) && tolower(x) <= 'f')
-
-int isOPLUS(FILE *buffer)
-{
-    int head = getc(buffer);
-    switch (head) {
-    case '+':
-    case '-':
-        return OPLUS;
-    }
-    ungetc(head,buffer);
-    return 0;
-}
 
 int isOTIMES(FILE *buffer)
 {
@@ -152,12 +141,11 @@ token_t gettoken(FILE *buffer)
   int token;
 
   /* skip spaces */
-  while(isspace(head = getc(buffer)));
+  while(isspace(head = getc(buffer))) if(head == '\n') return head;
   ungetc(head, buffer);
 
   //if(token = isNUM(buffer)) return token;
   if(token = isID(buffer)) return token;
-  if(token = isOPLUS(buffer)) return token;
   if(token = isOTIMES(buffer)) return token;
   if(token = isFLOAT(buffer)) return token;
 

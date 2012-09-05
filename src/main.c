@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     sourcecode = stdin;
 
   lookahead = gettoken(sourcecode);
-  Expr();
+  mybc();
 
   printf("\n");
 
