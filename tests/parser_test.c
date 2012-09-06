@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
   ok1("Accepted Language");
 
-  input = "(3 - a)\n";
+  input = "(3 - 5)\n";
   sourcecode = fmemopen (input, strlen(input), "r");
 
   lookahead = gettoken(sourcecode);
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 
   ok1("Accepted Language");
 
-  input = "- (a * a)\n";
+  input = "- (a + a) * 5\n";
   sourcecode = fmemopen (input, strlen(input), "r");
 
   lookahead = gettoken(sourcecode);

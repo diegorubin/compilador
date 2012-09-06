@@ -55,6 +55,7 @@ void push(double val)
 {
   stack[++sp] = val;
 }
+
 double pop(void)
 {
   return stack[sp--];
