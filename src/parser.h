@@ -4,6 +4,9 @@
 #include "lexer.h"
 #include "tokens.h"
 
+int lookup(char *key);
+double store(double val, char *key);
+
 void Expr(void);
 void Term(void);
 void Factor(void);

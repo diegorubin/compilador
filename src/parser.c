@@ -1,5 +1,37 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "parser.h"
+
+#define MEMSIZE 0x100000
+
+int nextentry = 0;
+char symbol[MEMSIZE][IDSIZE];
+double memory[MEMSIZE];
+
+lookup(char *key)
+{
+  int i;
+  for(i = 0; i < nextentry; i++){
+    if(strcmp(key, symbol[i]) == 0) return i;
+  }
+  return -1;
+}
+
+double store(double val, char *key)
+{
+  int address;
+  if((address = lookup(key)) == -1){
+    if(nextentry < MEMSIZE){
+      strcpy(symbol[address=nextentry++], key);
+    }else{
+      fprintf(stderr,"memory room space exceeded... exiting\n");
+      exit(-5);
+    }
+  }
+  return memory[address] = val;
+}
 
 /** Topdown recursive parser
  * 

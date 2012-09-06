@@ -3,11 +3,12 @@
 
 #include "tokens.h"
 
-int lookahead;
+#define IDSIZE 32
 
+int lookahead;
 extern FILE *sourcecode;
 
-char lexeme[32];
+char lexeme[IDSIZE];
 
 token_t get_token(FILE *buffer);
 void match(int expected);
