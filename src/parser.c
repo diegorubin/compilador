@@ -10,6 +10,9 @@ int nextentry = 0;
 char symbol[MEMSIZE][IDSIZE];
 double memory[MEMSIZE];
 
+double stack[MEMSIZE];
+int sp = -1;
+
 lookup(char *key)
 {
   int i;
@@ -31,6 +34,30 @@ double store(double val, char *key)
     }
   }
   return memory[address] = val;
+}
+
+double recall(char *key)
+{
+  int address;
+  if((address = lookup(key)) == -1){
+    if(nextentry < MEMSIZE){
+      memcpy(symbol[nextentry++],key,strlen(key)+1);
+      return 0;
+    }else{
+      fprintf(stderr,"memory room space exceeded... exiting\n");
+      exit(-5);
+    }
+  }
+  return memory[address];
+}
+
+void push(double val)
+{
+  stack[++sp] = val;
+}
+double pop(void)
+{
+  return stack[sp--];
 }
 
 /** Topdown recursive parser

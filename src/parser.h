@@ -6,6 +6,10 @@
 
 int lookup(char *key);
 double store(double val, char *key);
+double recall(char *key);
+
+void push(double val);
+double pop(void);
 
 void Expr(void);
 void Term(void);
