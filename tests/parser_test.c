@@ -9,7 +9,7 @@ FILE *sourcecode;
 
 int main(int argc, char **argv)
 {
-  plan_tests(7);
+  plan_tests(8);
 
   int token;
   char *input;
@@ -41,7 +41,15 @@ int main(int argc, char **argv)
 
   ok1("Accepted Language");
 
-  input = "- (a + a) * 5\n";
+  input = "- (2.4e-45 + abacaxi) * 52\n";
+  sourcecode = fmemopen (input, strlen(input), "r");
+
+  lookahead = gettoken(sourcecode);
+  mybc();
+
+  ok1("Accepted Language");
+
+  input = ".4e45\n";
   sourcecode = fmemopen (input, strlen(input), "r");
 
   lookahead = gettoken(sourcecode);
