@@ -73,10 +73,11 @@ int isNUM(FILE *buffer)
 
       lexeme[p] = 0;
       ungetc(head, buffer);
-
+      
       return NUM;
     }
-    while (isdigit(head = getc(buffer)));
+
+    while (isdigit(head = getc(buffer))) lexeme[p++] = head;
     ungetc(head, buffer);
     return NUM;
   }
@@ -133,13 +134,14 @@ int isFLOAT(FILE *buffer)
         return FLOAT;
       }
       ungetc(head, buffer);
-      return 0;
+      return FLOAT;
     }
 
     if(isexp(buffer)) {
       return FLOAT;
     }
 
+    ungetc(head, buffer);
     return numtype;
 
   }
@@ -170,7 +172,6 @@ token_t gettoken(FILE *buffer)
   while(isspace(head = getc(buffer))) if(head == '\n') return head;
   ungetc(head, buffer);
 
-  //if(token = isNUM(buffer)) return token;
   if(token = isID(buffer)) return token;
   if(token = isOTIMES(buffer)) return token;
   if(token = isFLOAT(buffer)) return token;
