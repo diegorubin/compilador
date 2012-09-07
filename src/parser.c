@@ -13,6 +13,37 @@ double memory[MEMSIZE];
 double stack[MEMSIZE];
 int sp = -1;
 
+void execute_single(char op, double value)
+{
+  double result = 0;
+  switch(op){
+    case '-':
+      result = - value;
+      break;
+  }
+  push(result);
+}
+
+void execute_double(char op, double val1, double val2)
+{
+  double result = 0;
+  switch(op){
+    case '+':
+      result = val1 + val2;
+      break;
+    case '-':
+      result = val1 - val2;
+      break;
+    case '*':
+      result = val1 * val2;
+      break;
+    case '/':
+      result = val1 / val2;
+      break;
+  }
+  push(result);
+}
+
 lookup(char *key)
 {
   int i;
@@ -72,7 +103,8 @@ double pop(void)
 void mybc(void)
 {
   Expr();
-  match('\n');
+  /*match('\n');*/
+  /** */{printf("%f\n", pop());}/** */;
 }
 
 /*
@@ -85,13 +117,13 @@ void Expr(void)
 
   /** */if(negate = (lookahead == '-')) match('-');/** */
   Term();
-  /** */{negate && printf(" %c ", '-');}/** */
+  /** */{if(negate) execute_single('-', pop());}/** */
 
   while(lookahead == '+' || lookahead == '-') {
     match(oplus = lookahead);
     Term();
 
-    /** */{printf(" %c ", oplus);}/** */
+    /** */{execute_double(oplus,pop(),pop());}/** */
   }
 }
 
@@ -106,7 +138,9 @@ void Term(void)
   while(lookahead == OTIMES){
     otimes = lexeme[0];
     match(OTIMES); 
-    Factor();/** */{printf(" %c ", otimes);}/** */
+    Factor();
+    
+    /** */{execute_double(otimes,pop(),pop());}/** */
   }
 }
 /*
@@ -119,11 +153,11 @@ void Factor()
   case FLOAT:
   case OCTA:
   case HEXA:
-    /** */{printf(" %s ", lexeme);}/** */
+    /** */{push(atof(lexeme));}/** */
     match(lookahead);
     break;
   case ID:
-    /** */{printf(" %s ", lexeme);}/** */
+    /** */{push(recall(lexeme));}/** */
     match(ID);
     break;
   default:
