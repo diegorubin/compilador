@@ -12,7 +12,7 @@ FILE *sourcecode;
 
 int main(int argc, char **argv)
 {
-  plan_tests(41);
+  plan_tests(43);
 
   int token;
   char *input;
@@ -164,6 +164,15 @@ int main(int argc, char **argv)
   token = gettoken(sourcecode);
   ok1(token == ')');
 
+  input = "/* apenas um comentario */";
+  sourcecode = fmemopen (input, strlen(input), "r");
+  token = gettoken(sourcecode);
+  ok1(token == COMMENT);
+
+  input = "/* apenas um * comentario */";
+  sourcecode = fmemopen (input, strlen(input), "r");
+  token = gettoken(sourcecode);
+  ok1(token == COMMENT);
 
   return exit_status();
 }

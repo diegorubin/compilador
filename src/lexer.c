@@ -182,6 +182,30 @@ int isFLOAT(FILE *buffer)
   return 0;
 }
 
+int isCOMMENT(FILE *buffer)
+{
+  char head;
+  head = getc(buffer);
+
+  if(head == '/') {
+    head = getc(buffer);
+
+    if(head == '*') {
+      do {
+        while((head = getc(buffer)) != '*');
+      } while((head = getc(buffer)) != '/');
+      return COMMENT;
+    }
+
+    ungetc(head, buffer);
+    ungetc('/', buffer);
+    return 0;
+  }
+
+  ungetc(head, buffer);
+  return 0;
+}
+
 token_t gettoken(FILE *buffer)
 {
   char head;
@@ -193,6 +217,7 @@ token_t gettoken(FILE *buffer)
   while(isspace(head = getc(buffer))) if(head == '\n') return head;
   ungetc(head, buffer);
 
+  if(token = isCOMMENT(buffer)) return token;
   if(token = isID(buffer)) return token;
   if(token = isOTIMES(buffer)) return token;
   if(token = isFLOAT(buffer)) return token;

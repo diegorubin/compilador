@@ -10,6 +10,7 @@ enum {
   OCTA,
   FLOAT,
   OTIMES,
+  COMMENT
 };
 
 #endif /*__TOKENS_H__*/
