@@ -19,8 +19,10 @@ void whileblock(void);
 void repblock(void);
 void idblock(void);
 
-void expr(void);
+void expressionlist(void);
 void expression(void);
+void expr(void);
+void term(void);
 
 int isrelationalop(token_t token);
 

@@ -22,6 +22,13 @@ enum {
   REPEAT,
   UNTIL,
 
+  OR,
+  AND,
+  NOT,
+
+  MOD,
+  DIV,
+
   END
 };
 

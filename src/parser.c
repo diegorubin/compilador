@@ -196,6 +196,30 @@ isrelationalop(token_t token)
   return 0;
 }
 
+isaddop(token_t token)
+{
+  switch(token) {
+    case '+':
+    case '-':
+    case OR:
+      return token;
+  }
+  return 0;
+}
+
+ismulop(token_t token)
+{
+  switch(token) {
+    case '*':
+    case '/':
+    case AND:
+    case DIV:
+    case MOD:
+      return token;
+  }
+  return 0;
+}
+
 void expression(void)
 {
   expr();
@@ -212,6 +236,51 @@ void expr(void)
   while(isaddop(lookahead)) {
     match(lookahead);
     term();
+  }
+}
+
+void term(void)
+{
+  factor();
+  while(ismulop(lookahead)) {
+    match(lookahead);
+    factor();
+  }
+}
+
+void factor(void) 
+{
+  switch(lookahead){
+    case UINT:
+      match(UINT);
+      break;
+    case FLOAT:
+      match(FLOAT);
+      break;
+    case ID:
+      match(ID);
+      if(lookahead == '('){
+        match('(');
+        exprlist();
+        match(')');
+      }
+      break;
+    case '(':
+      match('(');
+      expression();
+      match(')');
+      break;
+    default:
+      match(NOT); factor();
+  }
+}
+
+void exprlist(void)
+{
+  expression();
+  while(lookahead == ',') {
+    match(',');
+    expression();
   }
 }
 
