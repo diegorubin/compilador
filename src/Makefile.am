@@ -7,6 +7,7 @@ bin_PROGRAMS = compilador
 
 compilador_SOURCES = main.c \
 										 parser.c \
+										 keywords.c \
 										 lexer.c
 
 compilador_LDADD = ${COMPILADOR_LIBS}

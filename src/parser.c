@@ -151,3 +151,21 @@ void type(void)
   }
 }
 
+void stmt(void)
+{
+  switch(lookahead){
+    case BEGIN:
+      stmtblock();
+      break;
+    case IF:
+      ifstmt();
+      break;
+    case WHILE:
+      whilestmt();
+      break;
+    case REPEAT:
+      repstmt();
+      break;
+    case ID:
+      idstmt();
+}

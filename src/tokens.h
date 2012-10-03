@@ -5,12 +5,9 @@ typedef int token_t;
 
 enum {
   ID=1024,
-  NUM,
-  HEXA,
-  OCTA,
+  ASSGNMT,
+  UINT,
   FLOAT,
-  OTIMES,
-  COMMENT
 };
 
 #endif /*__TOKENS_H__*/

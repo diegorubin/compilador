@@ -7,9 +7,8 @@ FILE *sourcecode;
 
 int main(int argc, char **argv) {
 
-  char input[600];
+  sourcecode = stdin;
 
-  sourcecode = fmemopen (input, strlen(input), "r");
   lookahead = gettoken(sourcecode);
   program();
 
