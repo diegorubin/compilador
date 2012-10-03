@@ -9,12 +9,9 @@ int main(int argc, char **argv) {
 
   char input[600];
 
-  scanf("%[^\n]", input);
-  printf("= ");
-
   sourcecode = fmemopen (input, strlen(input), "r");
   lookahead = gettoken(sourcecode);
-  mybc();
+  program();
 
   return 0;
 }

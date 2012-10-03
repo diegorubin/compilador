@@ -3,17 +3,16 @@
 
 #include "lexer.h"
 #include "tokens.h"
+#include "keywords.h"
 
-int lookup(char *key);
-double store(double val, char *key);
-double recall(char *key);
-
-void push(double val);
-double pop(void);
-
-void Expr(void);
-void Term(void);
-void Factor(void);
+void program(void);
+void block(void);
+void declarations(void);
+void modules(void);
+void procedure(void);
+void function(void);
+void idlist(void);
+void type(void);
 
 #endif /* __PARSER_H__ */
 

@@ -9,8 +9,6 @@ token_t gettoken(FILE *buffer)
   char head;
   int token;
 
-  p = 0;
-
   /* skip spaces */
   while(isspace(head = getc(buffer))) if(head == '\n') return head;
   ungetc(head, buffer);

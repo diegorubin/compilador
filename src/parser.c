@@ -72,3 +72,82 @@ void block(void)
   stmtblock();
 }
 
+/* declartions -> 
+ *   [VAR idlist ':' type';' {idlist ':' type ';'}]
+ *   modules
+ */
+void declarations(void)
+{
+  if(lookahead == VAR) {
+    match(VAR);
+
+// XXX: trocar por um do while
+rep_idlist:
+    idlist();
+    match(':');
+    
+    type();
+    match(';');
+    if(lookahead == ID) goto rep_idlist;
+  }
+}
+
+void modules(void) 
+{
+  while(lookahead == PROCEDURE || lookahead == FUNCTION) {
+    if(lookahead == PROCEDURE) procedure();
+    else function();
+  }
+}
+
+void procedure(void)
+{
+  match(PROCEDURE);
+
+  match(ID);
+  formalparm();
+
+  match(';');
+
+  block();
+  match(';');
+
+}
+
+void function(void)
+{
+  match(FUNCTION);
+
+  match(ID);
+  formalparm();
+
+  match(':');
+  type();
+
+  match(';');
+
+  block();
+  match(';');
+
+}
+
+void idlist(void)
+{
+  match(ID);
+  while(lookahead == ',') {
+    match(',');
+    match(ID);
+  }
+}
+
+void type(void)
+{
+  switch(lookahead) {
+    case INTEGER:
+      match(INTEGER);
+      break;
+    case REAL:
+      match(REAL);
+  }
+}
+
