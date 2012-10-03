@@ -151,6 +151,70 @@ void type(void)
   }
 }
 
+void stmtblock(void) 
+{
+  match(BEGIN);
+  stmtlist();
+  match(END);
+}
+
+void stmtlist(void) 
+{
+  stmt();
+  while(lookahead == ';'){
+    match(';');
+    stmt();
+  }
+}
+
+void ifstmt(void)
+{
+  match(IF);
+  expression();
+  match(THEN);
+
+  stmt();
+
+  if(lookahead == ELSE) {
+    match(ELSE);
+    stmt();
+  }
+
+}
+
+isrelationalop(token_t token)
+{
+  switch(token) {
+    case '=':
+    case '<':
+    case '>':
+    case GEQ:
+    case LEQ:
+    case NEQ:
+      return token;
+  }
+  return 0;
+}
+
+void expression(void)
+{
+  expr();
+  if(isrelationalop(lookahead)){
+    match(lookahead);
+    expr();
+  }
+}
+
+void expr(void)
+{
+  if(lookahead == '-') match('-');
+  term();
+  while(isaddop(lookahead)) {
+    match(lookahead);
+    term();
+  }
+}
+
 void stmt(void)
 {
   switch(lookahead){
@@ -168,4 +232,5 @@ void stmt(void)
       break;
     case ID:
       idstmt();
+  }
 }

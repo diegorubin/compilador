@@ -14,6 +14,14 @@ enum {
   INTEGER,
   REAL,
 
+  IF,
+  THEN,
+  ELSE,
+  WHILE,
+  DO,
+  REPEAT,
+  UNTIL,
+
   END
 };
 

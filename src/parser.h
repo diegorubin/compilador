@@ -13,6 +13,16 @@ void procedure(void);
 void function(void);
 void idlist(void);
 void type(void);
+void stmtblock(void);
+void ifblock(void);
+void whileblock(void);
+void repblock(void);
+void idblock(void);
+
+void expr(void);
+void expression(void);
+
+int isrelationalop(token_t token);
 
 #endif /* __PARSER_H__ */
 

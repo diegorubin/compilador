@@ -8,6 +8,9 @@ enum {
   ASSGNMT,
   UINT,
   FLOAT,
+  GEQ,
+  LEQ,
+  NEQ,
 };
 
 #endif /*__TOKENS_H__*/
