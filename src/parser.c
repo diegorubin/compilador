@@ -24,36 +24,15 @@
  *  | repstmt | forstmt | gotostmt | casestmt | idstmt
  */
 
-/** further simplifacations for today only:
- * program -> PROGRAM ID ';' block '.'
- *
- * block -> declarations stmtblock
- *
- * declartions -> 
- *   [VAR idlist ':' type';' {idlist ':' type ';'}]
- *   modules
- *
- * modules -> {procedure | function}
- *
- * procedure -> PROCEDURE ID formalparm ';' block ';' 
- *
- * function -> FUNCTION ID formalparm ':' typeid ';' block ';' 
- *
- * stmtblock -> BEGIN stmtlist END
- *
- * stmtlist -> stmt {';' stmt}
- *
- * stmt -> 
- *    stmtblock | ifstmt | whilestmt | repstmt | idstmt
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "parser.h"
 
-/* program -> PROGRAM ID ';' block '.' */
+/**
+ * program -> PROGRAM ID ';' block '.' 
+ */
 void program(void)
 {
   match(PROGRAM);
@@ -65,14 +44,17 @@ void program(void)
   match('.');
 }
 
-/* block -> declarations stmtblock */
+/**
+ * block -> declarations stmtblock 
+ */
 void block(void)
 {
   declarations();
   stmtblock();
 }
 
-/* declartions -> 
+/**
+ * declartions -> 
  *   [VAR idlist ':' type';' {idlist ':' type ';'}]
  *   modules
  */
@@ -81,17 +63,19 @@ void declarations(void)
   if(lookahead == VAR) {
     match(VAR);
 
-// XXX: trocar por um do while
-rep_idlist:
-    idlist();
-    match(':');
-    
-    type();
-    match(';');
-    if(lookahead == ID) goto rep_idlist;
+    do {
+      idlist();
+      match(':');
+      
+      type();
+      match(';');
+    } while(lookahead == ID);
   }
 }
 
+/**
+ * modules -> {procedure | function} 
+ */
 void modules(void) 
 {
   while(lookahead == PROCEDURE || lookahead == FUNCTION) {
@@ -100,6 +84,9 @@ void modules(void)
   }
 }
 
+/**
+ * procedure -> PROCEDURE ID formalparm ';' block ';' 
+ */
 void procedure(void)
 {
   match(PROCEDURE);
@@ -114,6 +101,9 @@ void procedure(void)
 
 }
 
+/**
+ * function -> FUNCTION ID formalparm ':' typeid ';' block ';' 
+ */
 void function(void)
 {
   match(FUNCTION);
@@ -131,6 +121,7 @@ void function(void)
 
 }
 
+//XXX: Adicionar producao na gramatica
 void idlist(void)
 {
   match(ID);
@@ -140,6 +131,7 @@ void idlist(void)
   }
 }
 
+//XXX: Adicionar producao na gramatica
 void type(void)
 {
   switch(lookahead) {
@@ -151,6 +143,9 @@ void type(void)
   }
 }
 
+/**
+ * stmtblock -> BEGIN stmtlist END
+ */
 void stmtblock(void) 
 {
   match(BEGIN);
@@ -158,6 +153,9 @@ void stmtblock(void)
   match(END);
 }
 
+/**
+ * stmtlist -> stmt {';' stmt}
+ */
 void stmtlist(void) 
 {
   stmt();
@@ -167,6 +165,7 @@ void stmtlist(void)
   }
 }
 
+//XXX: Adicionar na gramatica
 void ifstmt(void)
 {
   match(IF);
@@ -181,6 +180,104 @@ void ifstmt(void)
   }
 
 }
+
+//XXX: Adicionar na gramatica
+void expression(void)
+{
+  expr();
+  if(isrelationalop(lookahead)){
+    match(lookahead);
+    expr();
+  }
+}
+
+//XXX: Adicionar na gramatica
+void expr(void)
+{
+  if(lookahead == '-') match('-');
+  term();
+  while(isaddop(lookahead)) {
+    match(lookahead);
+    term();
+  }
+}
+
+//XXX: Adicionar na gramatica
+void term(void)
+{
+  factor();
+  while(ismulop(lookahead)) {
+    match(lookahead);
+    factor();
+  }
+}
+
+//XXX: Adicionar na gramatica
+void factor(void) 
+{
+  switch(lookahead){
+    case UINT:
+      match(UINT);
+      break;
+    case FLOAT:
+      match(FLOAT);
+      break;
+    case ID:
+      match(ID);
+      if(lookahead == '('){
+        match('(');
+        exprlist();
+        match(')');
+      }
+      break;
+    case '(':
+      match('(');
+      expression();
+      match(')');
+      break;
+    default:
+      match(NOT); factor();
+  }
+}
+
+//XXX: Adicionar na gramatica
+void exprlist(void)
+{
+  expression();
+  while(lookahead == ',') {
+    match(',');
+    expression();
+  }
+}
+
+/**
+ * stmt -> 
+ *    stmtblock | ifstmt | whilestmt
+ *  | repstmt | forstmt | gotostmt | casestmt | idstmt
+ */
+void stmt(void)
+{
+  switch(lookahead){
+    case BEGIN:
+      stmtblock();
+      break;
+    case IF:
+      ifstmt();
+      break;
+    case WHILE:
+      whilestmt();
+      break;
+    case REPEAT:
+      repstmt();
+      break;
+    case ID:
+      idstmt();
+  }
+}
+
+/**
+ * Funções de auxilio
+ */
 
 isrelationalop(token_t token)
 {
@@ -220,86 +317,3 @@ ismulop(token_t token)
   return 0;
 }
 
-void expression(void)
-{
-  expr();
-  if(isrelationalop(lookahead)){
-    match(lookahead);
-    expr();
-  }
-}
-
-void expr(void)
-{
-  if(lookahead == '-') match('-');
-  term();
-  while(isaddop(lookahead)) {
-    match(lookahead);
-    term();
-  }
-}
-
-void term(void)
-{
-  factor();
-  while(ismulop(lookahead)) {
-    match(lookahead);
-    factor();
-  }
-}
-
-void factor(void) 
-{
-  switch(lookahead){
-    case UINT:
-      match(UINT);
-      break;
-    case FLOAT:
-      match(FLOAT);
-      break;
-    case ID:
-      match(ID);
-      if(lookahead == '('){
-        match('(');
-        exprlist();
-        match(')');
-      }
-      break;
-    case '(':
-      match('(');
-      expression();
-      match(')');
-      break;
-    default:
-      match(NOT); factor();
-  }
-}
-
-void exprlist(void)
-{
-  expression();
-  while(lookahead == ',') {
-    match(',');
-    expression();
-  }
-}
-
-void stmt(void)
-{
-  switch(lookahead){
-    case BEGIN:
-      stmtblock();
-      break;
-    case IF:
-      ifstmt();
-      break;
-    case WHILE:
-      whilestmt();
-      break;
-    case REPEAT:
-      repstmt();
-      break;
-    case ID:
-      idstmt();
-  }
-}
