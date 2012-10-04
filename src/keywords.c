@@ -1,6 +1,6 @@
 #include "keywords.h"
 
-char *keywords[]{
+char *keywords[] = {
   "BEGIN",
   "PROGRAM",
   "VAR",
