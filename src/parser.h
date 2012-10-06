@@ -14,15 +14,20 @@ void function(void);
 void idlist(void);
 void type(void);
 void stmtblock(void);
-void ifblock(void);
-void whileblock(void);
-void repblock(void);
-void idblock(void);
+void stmtlist(void);
+void ifstmt(void);
+void whilestmt(void);
+void repstmt(void);
+void stmt(void);
+void idstmt(void);
+void formalparm(void);
 
+void exprlist(void);
 void expressionlist(void);
 void expression(void);
 void expr(void);
 void term(void);
+void factor(void);
 
 int isrelationalop(token_t token);
 

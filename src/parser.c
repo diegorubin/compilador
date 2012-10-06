@@ -15,6 +15,9 @@
  *
  * function -> FUNCTION ID formalparm ':' typeid ';' block ';' 
  *
+ * formalparm -> ['(' [VAR] idlist ':' type 
+ *                {';' [VAR] idlist ':' type } ')']
+ *
  * stmtblock -> BEGIN stmtlist END
  *
  * stmtlist -> stmt {';' stmt}
@@ -27,7 +30,13 @@
  *
  * idlist -> ID {',' ID}
  *
+ * idstmt -> ID
+ *
  * ifstmt -> IF expression THEN stmt [ ELSE stmt ]
+ *
+ * whilestmt -> WHILE expression DO stmt
+ *
+ * repstmt -> REPEAT stmtlist UNTIL expression
  *
  * expression -> expr = expr | expr < expr | expr > expr |
  *               expr GEQ expr | expr LEQ expr | 
@@ -143,6 +152,30 @@ void function(void)
 }
 
 /**
+ * formalparm -> ['(' [VAR] idlist ':' type ')']
+ */
+void formalparm(void)
+{
+  if(lookahead == '(') {
+    match('(');
+
+    if(lookahead == VAR) match(VAR);
+    idlist();
+    match(':');
+    type();
+
+    while(lookahead == ';') {
+      if(lookahead == VAR) match(VAR);
+      idlist();
+      match(':');
+      type();
+    }
+
+    match(')');
+  }
+}
+
+/**
  * idlist -> ID {',' ID} 
  */
 void idlist(void)
@@ -152,6 +185,11 @@ void idlist(void)
     match(',');
     match(ID);
   }
+}
+
+void idstmt(void) 
+{
+  match(ID);
 }
 
 /**
@@ -206,6 +244,31 @@ void ifstmt(void)
     stmt();
   }
 
+}
+
+/**
+ * whilestmt -> WHILE expression DO stmt
+ */
+void whilestmt(void)
+{
+  match(WHILE);
+  expression();
+  match(DO);
+
+  stmt();
+}
+
+/**
+ * repstmt -> REPEAT stmtlist UNTIL expression
+ */
+void repstmt(void)
+{
+  match(REPEAT);
+
+  stmtlist();
+
+  match(UNTIL);
+  expression();
 }
 
 /*
