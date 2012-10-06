@@ -22,6 +22,27 @@
  * stmt -> 
  *    stmtblock | ifstmt | whilestmt
  *  | repstmt | forstmt | gotostmt | casestmt | idstmt
+ *
+ * type -> INTEGER | REAL
+ *
+ * idlist -> ID {',' ID}
+ *
+ * ifstmt -> IF expression THEN stmt [ ELSE stmt ]
+ *
+ * expression -> expr = expr | expr < expr | expr > expr |
+ *               expr GEQ expr | expr LEQ expr | 
+ *               expr NEQ expr 
+ *
+ * expr -> [-] term { '+' term | '-' term | OR term }
+ *
+ * exprlist -> expression { ',' expression }
+ *
+ * term -> factor { '*' factor | '/' factor | AND factor | 
+ *                  DIV factor | MOD factor }
+ *
+ * factor -> UINT | FLOAT | ID {'(' exprlist ')'} | 
+ *           '(' expression ')' | NOT factor
+ *
  */
 
 #include <stdio.h>
@@ -121,7 +142,9 @@ void function(void)
 
 }
 
-//XXX: Adicionar producao na gramatica
+/**
+ * idlist -> ID {',' ID} 
+ */
 void idlist(void)
 {
   match(ID);
@@ -131,7 +154,9 @@ void idlist(void)
   }
 }
 
-//XXX: Adicionar producao na gramatica
+/**
+ * type -> INTEGER | REAL 
+ */
 void type(void)
 {
   switch(lookahead) {
@@ -165,7 +190,9 @@ void stmtlist(void)
   }
 }
 
-//XXX: Adicionar na gramatica
+/**
+ * ifstmt -> IF expression THEN stmt [ ELSE stmt ]
+ */
 void ifstmt(void)
 {
   match(IF);
@@ -181,7 +208,11 @@ void ifstmt(void)
 
 }
 
-//XXX: Adicionar na gramatica
+/*
+ * expression -> expr = expr | expr '<' expr | 
+ *               expr '>' expr | expr GEQ expr | 
+ *               expr LEQ expr | expr NEQ expr 
+ */
 void expression(void)
 {
   expr();
@@ -191,7 +222,9 @@ void expression(void)
   }
 }
 
-//XXX: Adicionar na gramatica
+/** 
+ * expr -> [-] term { '+' term | '-' term | OR term }
+ */
 void expr(void)
 {
   if(lookahead == '-') match('-');
@@ -202,7 +235,10 @@ void expr(void)
   }
 }
 
-//XXX: Adicionar na gramatica
+/** 
+ * term -> factor { '*' factor | '/' factor | AND factor | 
+ *                  DIV factor | MOD factor }
+ */
 void term(void)
 {
   factor();
@@ -212,7 +248,10 @@ void term(void)
   }
 }
 
-//XXX: Adicionar na gramatica
+/** 
+ * factor -> UINT | FLOAT | ID {'(' exprlist ')'} | 
+ *           '(' expression ')' | NOT factor
+ */
 void factor(void) 
 {
   switch(lookahead){
@@ -240,7 +279,9 @@ void factor(void)
   }
 }
 
-//XXX: Adicionar na gramatica
+/** 
+ * exprlist -> expression { ',' expression }
+ */
 void exprlist(void)
 {
   expression();
