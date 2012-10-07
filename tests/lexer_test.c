@@ -12,15 +12,31 @@ FILE *sourcecode;
 
 int main(int argc, char **argv)
 {
-  plan_tests(1);
+  plan_tests(5);
 
   int token;
   char *input;
+
+  input = "BEGIN";
+  ok1(iskeyword(input) == BEGIN);
+
+  input = "abacaxi";
+  ok1(iskeyword(input) == 0);
 
   input = "abacaxi";
   sourcecode = fmemopen (input, strlen(input), "r");
   token = gettoken(sourcecode);
   ok1(token == ID);
+
+  input = "END";
+  sourcecode = fmemopen (input, strlen(input), "r");
+  token = gettoken(sourcecode);
+  ok1(token == END);
+
+  input = ".3455";
+  sourcecode = fmemopen (input, strlen(input), "r");
+  token = gettoken(sourcecode);
+  ok1(token == UINT);
 
   return exit_status();
 }

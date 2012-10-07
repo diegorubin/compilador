@@ -1,6 +1,7 @@
 #ifndef __LEXER_H__
 #define __LEXER_H__
 
+#include "keywords.h"
 #include "tokens.h"
 
 #define IDSIZE 32

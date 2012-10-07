@@ -14,9 +14,11 @@ parser_test_SOURCES = parser_test.c \
 TESTS=lexer_test parser_test
 
 lexer_test_LDADD = ${LEXER_LIBS} \
-                   $(top_srcdir)/src/lexer.o 
+                   $(top_srcdir)/src/lexer.o \
+                   $(top_srcdir)/src/keywords.o 
 
 parser_test_LDADD = ${PARSER_LIBS} \
                    $(top_srcdir)/src/lexer.o \
-                    $(top_srcdir)/src/parser.o
+                    $(top_srcdir)/src/parser.o \
+                   $(top_srcdir)/src/keywords.o 
 
