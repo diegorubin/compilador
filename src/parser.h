@@ -4,6 +4,8 @@
 #include "lexer.h"
 #include "tokens.h"
 
+#define MAXSYMLIST 0x1000
+
 void program(void);
 void block(void);
 void declarations(void);
@@ -29,6 +31,9 @@ void term(void);
 void factor(void);
 
 int isrelationalop(token_t token);
+char symlist[MAXSYMLIST][IDSIZE];
+
+int sympos;
 
 #endif /* __PARSER_H__ */
 

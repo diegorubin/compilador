@@ -91,13 +91,15 @@ void block(void)
 void declarations(void)
 {
   if(lookahead == VAR) {
-    match(VAR);
+    match(VAR);/** symbol type 1: variable **/
+
+    /** */ sympos = 0; /** */
 
     do {
-      idlist();
+      idlist();/** produce one symbol list **/
       match(':');
       
-      type();
+      type();/** to be used here **/
       match(';');
     } while(lookahead == ID);
   }
@@ -119,7 +121,7 @@ void modules(void)
  */
 void procedure(void)
 {
-  match(PROCEDURE);
+  match(PROCEDURE);/** symbol type 3:  procedure**/
 
   match(ID);
   formalparm();
@@ -136,7 +138,7 @@ void procedure(void)
  */
 void function(void)
 {
-  match(FUNCTION);
+  match(FUNCTION);/** symbol type 4:  function**/
 
   match(ID);
   formalparm();
@@ -153,6 +155,7 @@ void function(void)
 
 /**
  * formalparm -> ['(' [VAR] idlist ':' type ')']
+ * XXX: GRAMATICA ERRADA
  */
 void formalparm(void)
 {
@@ -180,9 +183,12 @@ void formalparm(void)
  */
 void idlist(void)
 {
+  /** */strcpy(symlist[sympos++],lexeme);/** */
   match(ID);
   while(lookahead == ',') {
     match(',');
+
+    /** */strcpy(symlist[sympos++],lexeme);/** */
     match(ID);
   }
 }
@@ -197,13 +203,25 @@ void idstmt(void)
  */
 void type(void)
 {
+  /** datatype **/
+  int dtype, i;
+
   switch(lookahead) {
     case INTEGER:
-      match(INTEGER);
+      match(dtype = INTEGER);
       break;
     case REAL:
-      match(REAL);
+      match(dtype = REAL);
   }
+  /** */
+  for(i = 0; i < sympos; i++) {
+    if(symtab_lookup(symlist[i])){
+      fprintf(stderr, "symbol \"%s\" already declared\n", symlist[i]);
+    } else {
+      symtab_insert(symlist[i], dtype);
+    }
+  }
+  /** */
 }
 
 /**
