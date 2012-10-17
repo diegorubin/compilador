@@ -154,8 +154,8 @@ void function(void)
 }
 
 /**
- * formalparm -> ['(' [VAR] idlist ':' type ')']
- * XXX: GRAMATICA ERRADA
+ * formalparm -> ['(' [VAR] idlist ':' type ')'
+ *                {';' [VAR] idlist ':' type } ')']
  */
 void formalparm(void)
 {

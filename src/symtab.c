@@ -22,10 +22,6 @@ int symtab_lookup(char const *symbol)
 {
   int i;
   for(i = symtab_nexentry - 1; i > 0; i--) {
-    /**XXX: RETIRAR
-     * Por isso os simbolos sao separados por 0,
-     * pois ele delimita uma string.
-     */
     if(strcmp(lextape+symtab[i][0], symbol) == 0) return i;
   }
   return 0;
