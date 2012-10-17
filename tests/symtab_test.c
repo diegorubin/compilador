@@ -7,9 +7,16 @@
 
 int main(int argc, char **argv)
 {
-  plan_tests(1);
+  plan_tests(3);
 
-  ok1("Symtab");
+  /* variavel nao declarada */
+  ok1(!symtab_lookup("xurisso"));
+
+  /* declarando variavel */
+  ok1(symtab_insert("xurisso", INTEGER));
+
+  /* buscando variavel declarada */
+  ok1(symtab_lookup("xurisso"));
 
   return exit_status();
 }

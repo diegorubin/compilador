@@ -14,7 +14,18 @@ int main(int argc, char **argv)
   int token;
   char *input;
 
-  input = "PROGRAM seila;\n VAR a:INTEGER; BEGIN a END.";
+  input = "\
+    PROGRAM seila;\
+\
+    VAR \
+      a:INTEGER;\
+      b,c,d:REAL;\
+\ 
+    BEGIN\
+      a \
+    END.\
+";
+
   sourcecode = fmemopen (input, strlen(input), "r");
 
   lookahead = gettoken(sourcecode);

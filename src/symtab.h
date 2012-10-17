@@ -1,6 +1,9 @@
 #ifndef __SYMTAB_H__
 #define __SYMTAB_H__
 
+#include "keywords.h"
+#include "tokens.h"
+
 #define MAXSYMTABENTRIES 0x100000
 #define MAXLEXTAPESIZE 0x1000000
 

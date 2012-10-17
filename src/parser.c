@@ -93,9 +93,9 @@ void declarations(void)
   if(lookahead == VAR) {
     match(VAR);/** symbol type 1: variable **/
 
-    /** */ sympos = 0; /** */
 
     do {
+      /** */ sympos = 0; /** */
       idlist();/** produce one symbol list **/
       match(':');
       
