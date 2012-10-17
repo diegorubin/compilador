@@ -22,7 +22,9 @@ int main(int argc, char **argv)
       b,c,d:REAL;\
 \ 
     BEGIN\
-      a \
+      a; \
+      naodeclarado; \
+      b \
     END.\
 ";
 

@@ -195,6 +195,11 @@ void idlist(void)
 
 void idstmt(void) 
 {
+  /** */
+  if(!symtab_lookup(lexeme)) {
+    fprintf(stderr, "variable not declared: %s\n", lexeme);
+  }
+  /** */
   match(ID);
 }
 
