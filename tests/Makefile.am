@@ -19,6 +19,7 @@ lexer_test_LDADD = ${LEXER_LIBS} \
 
 parser_test_LDADD = ${PARSER_LIBS} \
                    $(top_srcdir)/src/lexer.o \
-                    $(top_srcdir)/src/parser.o \
+                   $(top_srcdir)/src/parser.o \
+                   $(top_srcdir)/src/symtab.o \
                    $(top_srcdir)/src/keywords.o 
 

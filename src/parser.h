@@ -3,6 +3,7 @@
 
 #include "lexer.h"
 #include "tokens.h"
+#include "symtab.h"
 
 #define MAXSYMLIST 0x1000
 
