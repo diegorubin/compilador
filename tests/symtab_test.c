@@ -13,7 +13,7 @@ int main(int argc, char **argv)
   ok1(!symtab_lookup("xurisso"));
 
   /* declarando variavel */
-  ok1(symtab_insert("xurisso", INTEGER));
+  ok1(symtab_insert("xurisso", INTEGER, 1));
 
   /* buscando variavel declarada */
   ok1(symtab_lookup("xurisso"));

@@ -32,6 +32,8 @@ void term(void);
 void factor(void);
 
 int isrelationalop(token_t token);
+
+int idtype;
 char symlist[MAXSYMLIST][IDSIZE];
 
 int sympos;

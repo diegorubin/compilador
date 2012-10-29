@@ -91,7 +91,9 @@ void block(void)
 void declarations(void)
 {
   if(lookahead == VAR) {
-    match(VAR);/** symbol type 1: variable **/
+    match(VAR);
+    /** symbol type 1: variable **/
+    idtype = 1;
 
 
     do {
@@ -121,7 +123,10 @@ void modules(void)
  */
 void procedure(void)
 {
-  match(PROCEDURE);/** symbol type 3:  procedure**/
+  match(PROCEDURE);
+  /** symbol type 3:  procedure**/
+  idtype = 3;
+
 
   match(ID);
   formalparm();
@@ -138,7 +143,9 @@ void procedure(void)
  */
 void function(void)
 {
-  match(FUNCTION);/** symbol type 4:  function**/
+  match(FUNCTION);
+  /** symbol type 4:  function**/
+  idtype = 4;
 
   match(ID);
   formalparm();
@@ -223,7 +230,7 @@ void type(void)
     if(symtab_lookup(symlist[i])){
       fprintf(stderr, "symbol \"%s\" already declared\n", symlist[i]);
     } else {
-      symtab_insert(symlist[i], dtype);
+      symtab_insert(symlist[i], dtype, idtype);
     }
   }
   /** */
