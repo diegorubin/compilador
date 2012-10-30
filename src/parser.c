@@ -355,11 +355,32 @@ void factor(void)
       match(FLOAT);
       break;
     case ID:
+      /** in this context the symbol must be a 
+       * variable or a function using symtab_lookup call */
+
+      /** */
+      if((symbol_entry = symtab_lookup(lexeme)) == 0){
+        fprintf(stderr, "semantic: symbol not found\n");
+      } else {
+        switch(symtab[symbol_entry][2]) { /* column 2: id type */
+          case 1: /** this is a variable */
+          case 3: /** this is a function */
+            break;
+          default:
+            fprintf(stderr, "symbol in ilegal context");
+        }
+      }
+      strcpy(symbol, lexeme);
+      /** */
+
       match(ID);
+
       if(lookahead == '('){
+        /** this is context for function call **/
         match('(');
         exprlist();
         match(')');
+        /** subroutine call is here **/
       }
       break;
     case '(':
@@ -377,7 +398,11 @@ void factor(void)
  */
 void exprlist(void)
 {
-  expression();
+  expression(); 
+  
+  /** expression result stored in accumulator **/
+  /** push the accumulator onto the stack **/
+
   while(lookahead == ',') {
     match(',');
     expression();
