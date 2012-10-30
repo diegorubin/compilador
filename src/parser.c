@@ -362,7 +362,7 @@ void factor(void)
       if((symbol_entry = symtab_lookup(lexeme)) == 0){
         fprintf(stderr, "semantic: symbol not found\n");
       } else {
-        switch(symtab[symbol_entry][2]) { /* column 2: id type */
+        switch(symtab[symbol_entry][2]) { /* XXX:column 2: id type */
           case 1: /** this is a variable */
           case 3: /** this is a function */
             break;
@@ -381,6 +381,28 @@ void factor(void)
         exprlist();
         match(')');
         /** subroutine call is here **/
+      }else {
+        /** this is context for simple variable **/
+        /** **/
+        offset = symtab[symbol_entry][3]; /**XXX: Column 3: offset **/
+        if(offset == 0) {
+          /** the variable is global, then its identification
+           * itself is the variable address **/
+          /** **/
+          fprintf(target, "\tmov %s, %%eax\n", symbol);
+        }else {
+          /** in this context all symbols are looked up in the
+           * symbol table in order to compose the stack address:
+           *  <offset>(%ebp)
+           * 
+           * for instance, a variable at offset -4 would be written as
+           * -4(%ebp)
+           *
+           * a second variable with size 4 would be translated to 
+           * -8(%ebp)
+           *
+           **/
+        }
       }
       break;
     case '(':
@@ -406,6 +428,9 @@ void exprlist(void)
   while(lookahead == ',') {
     match(',');
     expression();
+
+    /** expression result stored in accumulator **/
+    /** push the accumulator onto the stack **/
   }
 }
 
