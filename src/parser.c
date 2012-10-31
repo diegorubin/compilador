@@ -2,18 +2,17 @@
  * 
  * program -> PROGRAM ID ';' block '.'
  *
- * block -> declarations stmtblock
+ * block -> declarations modules stmtblock
  * declartions -> 
  *   [CONST ID = constant ';' { ID = constant ';'}]
  *   [TYPE ID = type ';' { ID = type ';'}]
  *   [VAR idlist ':' type';' {idlist ':' type ';'}]
- *   modules
  *
  * modules -> {procedure | function}
  *
- * procedure -> PROCEDURE ID formalparm ';' block ';' 
+ * procedure -> PROCEDURE ID formalparm ';' declarations stmtblock ';' 
  *
- * function -> FUNCTION ID formalparm ':' typeid ';' block ';' 
+ * function -> FUNCTION ID formalparm ':' typeid ';' declarations stmtblock ';' 
  *
  * formalparm -> ['(' [VAR] idlist ':' type 
  *                {';' [VAR] idlist ':' type } ')']
@@ -308,11 +307,15 @@ void repstmt(void)
  */
 void expression(void)
 {
+  /** an inherited attribute is get from the left side of
+   * an assignment if any **/
   expr();
   if(isrelationalop(lookahead)){
     match(lookahead);
     expr();
   }
+  /** at this point we get a resulting data type as a 
+   * synthesized attribute **/
 }
 
 /** 
@@ -390,6 +393,7 @@ void factor(void)
            * itself is the variable address **/
           /** **/
           fprintf(target, "\tmov %s, %%eax\n", symbol);
+          /** **/
         }else {
           /** in this context all symbols are looked up in the
            * symbol table in order to compose the stack address:
@@ -401,13 +405,26 @@ void factor(void)
            * a second variable with size 4 would be translated to 
            * -8(%ebp)
            *
+           * on the other hand, a parameter in the first slot would be
+           * interpreted as
+           * 8(%ebp)
+           *
            **/
+          /** **/
+          fprintf(target, "\tmov %d(%%ebp), %%eax\n", offset);
+          /** **/
         }
       }
       break;
     case '(':
       match('(');
       expression();
+      /** at this point, expression has synthesized an
+       * attribute storing the resulting data type in the
+       * expression. however, the just calculated attribute
+       * might be greater than the l-attribute along the current
+       * expression, so that a promotion must occur.
+       **/
       match(')');
       break;
     default:
