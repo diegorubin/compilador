@@ -59,6 +59,9 @@
 
 #include "parser.h"
 
+int offset;
+extern FILE *target;
+
 /**
  * program -> PROGRAM ID ';' block '.' 
  */
@@ -229,7 +232,7 @@ void type(void)
     if(symtab_lookup(symlist[i])){
       fprintf(stderr, "symbol \"%s\" already declared\n", symlist[i]);
     } else {
-      symtab_insert(symlist[i], dtype, idtype);
+      symtab_insert(symlist[i], dtype, idtype, offset);
     }
   }
   /** */

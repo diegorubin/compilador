@@ -6,6 +6,7 @@
 #include "tap.h"
 
 FILE *sourcecode;
+FILE *target;
 
 int main(int argc, char **argv)
 {
@@ -29,6 +30,7 @@ int main(int argc, char **argv)
 ";
 
   sourcecode = fmemopen (input, strlen(input), "r");
+  target = open("source.out", "w");
 
   lookahead = gettoken(sourcecode);
   program();

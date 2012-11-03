@@ -16,6 +16,5 @@ depcomp
 install-sh
 missing
 stamp-h?
-mountmyenv
-mountmyenvtests
+source.out
 

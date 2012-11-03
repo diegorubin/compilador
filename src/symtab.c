@@ -12,12 +12,12 @@
  */
 
 int symtab[MAXSYMTABENTRIES][4];
-int symtab_nexentry = 1;
+symtab_nexentry = 1;
 
 char lextape[MAXLEXTAPESIZE];
-int lextape_nextentry = 0;
+lextape_nextentry = 0;
 
-int symtab_insert(char const *symbol, int dtype, int idtype)
+int symtab_insert(char const *symbol, int dtype, int idtype, int offset)
 {
   symtab[symtab_nexentry][0] = lextape_nextentry;
   symtab[symtab_nexentry][1] = dtype;

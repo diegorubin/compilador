@@ -36,6 +36,8 @@ int isrelationalop(token_t token);
 int idtype;
 char symlist[MAXSYMLIST][IDSIZE];
 
+char symbol[IDSIZE];
+
 int sympos;
 
 #endif /* __PARSER_H__ */
