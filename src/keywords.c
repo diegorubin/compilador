@@ -10,6 +10,7 @@ char *keywords[] = {
 
   "INTEGER",
   "REAL",
+  "BOOLEAN",
 
   "IF",
   "THEN",

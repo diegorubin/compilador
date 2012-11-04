@@ -523,3 +523,13 @@ ismulop(token_t token)
   return 0;
 }
 
+int typecheck(int type1, int type2)
+{
+	if (type1 == INTEGER && type2 == INTEGER) return INTEGER;
+	else if((type1 == REAL && type2 == INTEGER) ||
+	        (type1 == INTEGER && type2 == REAL) || 
+	        (type1 == REAL && type2 == REAL)) return REAL;
+	else if (type1 == BOOLEAN && type2 == BOOLEAN) return BOOLEAN;
+	else return ERR_TYPE_INVALID;
+}
+

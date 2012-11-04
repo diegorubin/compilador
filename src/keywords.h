@@ -13,6 +13,7 @@ enum {
 
   INTEGER,
   REAL,
+  BOOLEAN,
 
   IF,
   THEN,

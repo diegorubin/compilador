@@ -4,6 +4,7 @@
 #include "lexer.h"
 #include "tokens.h"
 #include "symtab.h"
+#include "errors.h"
 
 #define MAXSYMLIST 0x1000
 
@@ -32,6 +33,7 @@ void term(void);
 void factor(void);
 
 int isrelationalop(token_t token);
+int typecheck(int type1, int type2);
 
 int idtype;
 char symlist[MAXSYMLIST][IDSIZE];
