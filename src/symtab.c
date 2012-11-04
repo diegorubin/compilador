@@ -35,7 +35,7 @@ int symtab_lookup(char const *symbol)
 {
   int i;
   for(i = symtab_nextentry - 1; i > 0; i--) {
-    if(strcmp(lextape+symtab[i][0], symbol) == 0) return i;
+    if(strcmp(lextape+symtab[i][SYMTAB_COL_IDENTIFIER], symbol) == 0) return i;
   }
   return 0;
 }

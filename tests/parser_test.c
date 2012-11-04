@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <sys/stat.h> 
+#include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -10,32 +12,20 @@ FILE *target;
 
 int main(int argc, char **argv)
 {
-  plan_tests(1);
+  plan_tests(3);
 
   int token;
   char *input;
 
-  input = "\
-    PROGRAM seila;\
-\
-    VAR \
-      a:INTEGER;\
-      b,c,d:REAL;\
-\ 
-    BEGIN\
-      a; \
-      naodeclarado; \
-      b \
-    END.\
-";
-
-  sourcecode = fmemopen (input, strlen(input), "r");
+  sourcecode = fopen("exemplo.pas", "r");
   target = open("source.out", "w");
 
   lookahead = gettoken(sourcecode);
   program();
 
   ok1("Accepted Language");
+  ok1(symtab_lookup("a"));
+  ok1(symtab_lookup("vd"));
 
   return exit_status();
 }

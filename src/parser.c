@@ -100,7 +100,6 @@ void declarations(void)
 
 
     do {
-      /** */ sympos = 0; /** */
       idlist();/** produce one symbol list **/
       match(':');
       
@@ -250,11 +249,16 @@ void type(void)
       break;
     case REAL:
       match(dtype = REAL);
+      break;
+    case BOOLEAN:
+      match(dtype = BOOLEAN);
   }
   /** */
   for(i = 0; i < sympos; i++) {
     if(symtab_lookup(symlist[i])){
-      fprintf(stderr, "symbol \"%s\" already declared\n", symlist[i]);
+      fprintf(stderr, 
+          "in line %d\n:"
+          "symbol \"%s\" already declared\n",current_line, symlist[i]);
     } else {
       symtab_insert(symlist[i], dtype, idtype, offset);
     }
@@ -267,6 +271,7 @@ void type(void)
  */
 void idlist(void)
 {
+  /** */ sympos = 0; /** */
   /** */strcpy(symlist[sympos++],lexeme);/** */
   match(ID);
   while(lookahead == ',') {
@@ -415,8 +420,8 @@ void factor(void)
         fprintf(stderr, "semantic: symbol not found\n");
       } else {
         switch(symtab[symbol_entry][SYMTAB_COL_IDENTIFIER_TYPE]) {
-          case 1: /** this is a variable */
-          case 3: /** this is a function */
+          case SYMTAB_IDTYPE_VARIABLE:
+          case SYMTAB_IDTYPE_FUNCTION:
             break;
           default:
             fprintf(stderr, "symbol in ilegal context");
@@ -523,6 +528,9 @@ ismulop(token_t token)
   return 0;
 }
 
+/**
+ * Função para checagem de tipos
+ */
 int typecheck(int type1, int type2)
 {
 	if (type1 == INTEGER && type2 == INTEGER) return INTEGER;

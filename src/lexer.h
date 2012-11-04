@@ -11,6 +11,8 @@ extern FILE *sourcecode;
 
 char lexeme[IDSIZE];
 
+int current_line;
+
 token_t get_token(FILE *buffer);
 void match(int expected);
 

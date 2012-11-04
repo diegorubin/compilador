@@ -12,7 +12,8 @@ int isID(FILE *buffer)
   if (isalpha(head)) {
     lexeme[p++] = head;
 
-    while (isalnum(head = getc(buffer))) lexeme[p++] = head;
+    while (isalnum(head = getc(buffer)) || head == '_')
+      lexeme[p++] = head;
     ungetc(head, buffer);
 
     lexeme[p] = 0;
@@ -119,8 +120,12 @@ token_t gettoken(FILE *buffer)
   char head;
   int token;
 
-  /* skip spaces */
-  while(isspace(head = getc(buffer)));
+  /** 
+   * skip spaces 
+   * incrementa a contagem de linhas 
+   */
+  while(isspace(head = getc(buffer)))
+    if(head == '\n') current_line++;
   ungetc(head, buffer);
 
   if(token = isUINT(buffer)) return token;
@@ -138,8 +143,9 @@ void match(int expected)
       lookahead = gettoken(sourcecode);
   } else {
     fprintf(stderr,
+            "in line %d \n"
             "token mismatch: found %d but %d expected\n",
-            lookahead, expected);
+            current_line, lookahead, expected);
     exit(-1);
   }
 }
