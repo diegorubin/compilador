@@ -3,7 +3,7 @@
  * program -> PROGRAM ID ';' block '.'
  *
  * block -> declarations modules stmtblock
- * declartions -> 
+ * declarations -> 
  *   [CONST ID = constant ';' { ID = constant ';'}]
  *   [TYPE ID = type ';' { ID = type ';'}]
  *   [VAR idlist ':' type';' {idlist ':' type ';'}]
@@ -12,7 +12,7 @@
  *
  * procedure -> PROCEDURE ID formalparm ';' declarations stmtblock ';' 
  *
- * function -> FUNCTION ID formalparm ':' typeid ';' declarations stmtblock ';' 
+ * function -> FUNCTION ID formalparm ':' type ';' declarations stmtblock ';' 
  *
  * formalparm -> ['(' [VAR] idlist ':' type 
  *                {';' [VAR] idlist ':' type } ')']
@@ -37,7 +37,7 @@
  *
  * repstmt -> REPEAT stmtlist UNTIL expression
  *
- * expression -> expr = expr | expr < expr | expr > expr |
+ * expression -> expr = expr | expr '<' expr | expr '>' expr |
  *               expr GEQ expr | expr LEQ expr | 
  *               expr NEQ expr 
  *
@@ -82,11 +82,12 @@ void program(void)
 void block(void)
 {
   declarations();
+  modules();
   stmtblock();
 }
 
 /**
- * declartions -> 
+ * declarations -> 
  *   [VAR idlist ':' type';' {idlist ':' type ';'}]
  *   modules
  */
@@ -127,15 +128,15 @@ void procedure(void)
 {
   match(PROCEDURE);
   /** symbol type 3:  procedure**/
-  idtype = 3;
-
+  idtype = SYMTAB_IDTYPE_PROCEDURE;
 
   match(ID);
   formalparm();
 
   match(';');
 
-  block();
+  declarations();
+  stmtblock();
   match(';');
 
 }
@@ -147,7 +148,7 @@ void function(void)
 {
   match(FUNCTION);
   /** symbol type 4:  function**/
-  idtype = 4;
+  idtype = SYMTAB_IDTYPE_FUNCTION;
 
   match(ID);
   formalparm();
@@ -157,7 +158,8 @@ void function(void)
 
   match(';');
 
-  block();
+  declarations();
+  stmtblock();
   match(';');
 
 }
@@ -188,28 +190,50 @@ void formalparm(void)
 }
 
 /**
- * idlist -> ID {',' ID} 
+ * stmtblock -> BEGIN stmtlist END
  */
-void idlist(void)
+void stmtblock(void) 
 {
-  /** */strcpy(symlist[sympos++],lexeme);/** */
-  match(ID);
-  while(lookahead == ',') {
-    match(',');
+  match(BEGIN);
+  stmtlist();
+  match(END);
+}
 
-    /** */strcpy(symlist[sympos++],lexeme);/** */
-    match(ID);
+/**
+ * stmtlist -> stmt {';' stmt}
+ */
+void stmtlist(void) 
+{
+  stmt();
+  while(lookahead == ';'){
+    match(';');
+    stmt();
   }
 }
 
-void idstmt(void) 
+/**
+ * stmt -> 
+ *    stmtblock | ifstmt | whilestmt
+ *  | repstmt | forstmt | gotostmt | casestmt | idstmt
+ */
+void stmt(void)
 {
-  /** */
-  if(!symtab_lookup(lexeme)) {
-    fprintf(stderr, "variable not declared: %s\n", lexeme);
+  switch(lookahead){
+    case BEGIN:
+      stmtblock();
+      break;
+    case IF:
+      ifstmt();
+      break;
+    case WHILE:
+      whilestmt();
+      break;
+    case REPEAT:
+      repstmt();
+      break;
+    case ID:
+      idstmt();
   }
-  /** */
-  match(ID);
 }
 
 /**
@@ -239,25 +263,28 @@ void type(void)
 }
 
 /**
- * stmtblock -> BEGIN stmtlist END
+ * idlist -> ID {',' ID} 
  */
-void stmtblock(void) 
+void idlist(void)
 {
-  match(BEGIN);
-  stmtlist();
-  match(END);
+  /** */strcpy(symlist[sympos++],lexeme);/** */
+  match(ID);
+  while(lookahead == ',') {
+    match(',');
+
+    /** */strcpy(symlist[sympos++],lexeme);/** */
+    match(ID);
+  }
 }
 
-/**
- * stmtlist -> stmt {';' stmt}
- */
-void stmtlist(void) 
+void idstmt(void) 
 {
-  stmt();
-  while(lookahead == ';'){
-    match(';');
-    stmt();
+  /** */
+  if(!symtab_lookup(lexeme)) {
+    fprintf(stderr, "variable not declared: %s\n", lexeme);
   }
+  /** */
+  match(ID);
 }
 
 /**
@@ -331,6 +358,25 @@ void expr(void)
   while(isaddop(lookahead)) {
     match(lookahead);
     term();
+  }
+}
+
+/** 
+ * exprlist -> expression { ',' expression }
+ */
+void exprlist(void)
+{
+  expression(); 
+  
+  /** expression result stored in accumulator **/
+  /** push the accumulator onto the stack **/
+
+  while(lookahead == ',') {
+    match(',');
+    expression();
+
+    /** expression result stored in accumulator **/
+    /** push the accumulator onto the stack **/
   }
 }
 
@@ -432,50 +478,6 @@ void factor(void)
       break;
     default:
       match(NOT); factor();
-  }
-}
-
-/** 
- * exprlist -> expression { ',' expression }
- */
-void exprlist(void)
-{
-  expression(); 
-  
-  /** expression result stored in accumulator **/
-  /** push the accumulator onto the stack **/
-
-  while(lookahead == ',') {
-    match(',');
-    expression();
-
-    /** expression result stored in accumulator **/
-    /** push the accumulator onto the stack **/
-  }
-}
-
-/**
- * stmt -> 
- *    stmtblock | ifstmt | whilestmt
- *  | repstmt | forstmt | gotostmt | casestmt | idstmt
- */
-void stmt(void)
-{
-  switch(lookahead){
-    case BEGIN:
-      stmtblock();
-      break;
-    case IF:
-      ifstmt();
-      break;
-    case WHILE:
-      whilestmt();
-      break;
-    case REPEAT:
-      repstmt();
-      break;
-    case ID:
-      idstmt();
   }
 }
 
