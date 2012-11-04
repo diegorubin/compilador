@@ -95,7 +95,7 @@ void declarations(void)
   if(lookahead == VAR) {
     match(VAR);
     /** symbol type 1: variable **/
-    idtype = 1;
+    idtype = SYMTAB_IDTYPE_VARIABLE;
 
 
     do {
@@ -368,7 +368,7 @@ void factor(void)
       if((symbol_entry = symtab_lookup(lexeme)) == 0){
         fprintf(stderr, "semantic: symbol not found\n");
       } else {
-        switch(symtab[symbol_entry][2]) { /* XXX:column 2: id type */
+        switch(symtab[symbol_entry][SYMTAB_COL_IDENTIFIER_TYPE]) {
           case 1: /** this is a variable */
           case 3: /** this is a function */
             break;
@@ -390,7 +390,7 @@ void factor(void)
       }else {
         /** this is context for simple variable **/
         /** **/
-        offset = symtab[symbol_entry][3]; /**XXX: Column 3: offset **/
+        offset = symtab[symbol_entry][SYMTAB_COL_OFFSET];
         if(offset == 0) {
           /** the variable is global, then its identification
            * itself is the variable address **/

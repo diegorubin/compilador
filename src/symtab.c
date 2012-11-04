@@ -12,28 +12,29 @@
  */
 
 int symtab[MAXSYMTABENTRIES][4];
-symtab_nexentry = 1;
+symtab_nextentry = 1;
 
 char lextape[MAXLEXTAPESIZE];
 lextape_nextentry = 0;
 
 int symtab_insert(char const *symbol, int dtype, int idtype, int offset)
 {
-  symtab[symtab_nexentry][0] = lextape_nextentry;
-  symtab[symtab_nexentry][1] = dtype;
-  symtab[symtab_nexentry][2] = idtype;
+  symtab[symtab_nextentry][SYMTAB_COL_IDENTIFIER] = lextape_nextentry;
+  symtab[symtab_nextentry][SYMTAB_COL_DATA_TYPE] = dtype;
+  symtab[symtab_nextentry][SYMTAB_COL_IDENTIFIER_TYPE] = idtype;
+  symtab[symtab_nextentry][SYMTAB_COL_OFFSET] = offset;
 
   strcpy(lextape + lextape_nextentry, symbol);
   lextape_nextentry += strlen(symbol) + 1;
 
   /* return position which was inserted */
-  return symtab_nexentry++;
+  return symtab_nextentry++;
 }
 
 int symtab_lookup(char const *symbol)
 {
   int i;
-  for(i = symtab_nexentry - 1; i > 0; i--) {
+  for(i = symtab_nextentry - 1; i > 0; i--) {
     if(strcmp(lextape+symtab[i][0], symbol) == 0) return i;
   }
   return 0;
