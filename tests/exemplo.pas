@@ -1,17 +1,11 @@
 PROGRAM seila;
 
 VAR
-  a, b, c, d, casa:INTEGER;
+  a:REAL;
   vd:BOOLEAN;
-
-FUNCTION
-  simple_example(local1,local2:INTEGER):REAL;
-  BEGIN
-    simple_example := local1 * local2;
-  END;
+  b:INTEGER;
 
 BEGIN
-  a; 
-  b;
+  b := vd + a;
 END.
 

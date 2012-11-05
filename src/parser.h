@@ -41,6 +41,7 @@ char symlist[MAXSYMLIST][IDSIZE];
 char symbol[IDSIZE];
 
 int sympos;
+int currenttype;
 
 #endif /* __PARSER_H__ */
 

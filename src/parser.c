@@ -23,7 +23,8 @@
  *
  * stmt -> 
  *    stmtblock | ifstmt | whilestmt
- *  | repstmt | forstmt | gotostmt | casestmt | idstmt
+ *  | repstmt | forstmt | gotostmt | casestmt 
+ *  | idstmt ASSGNMT expression
  *
  * type -> INTEGER | REAL
  *
@@ -243,7 +244,8 @@ void stmtlist(void)
 /**
  * stmt -> 
  *    stmtblock | ifstmt | whilestmt
- *  | repstmt | forstmt | gotostmt | casestmt | idstmt
+ *  | repstmt | forstmt | gotostmt | casestmt
+ *  | idstmt ASSGNMT expression
  */
 void stmt(void)
 {
@@ -262,6 +264,8 @@ void stmt(void)
       break;
     case ID:
       idstmt();
+      match(ASSGNMT);
+      expr();
   }
 }
 
@@ -391,6 +395,7 @@ void expression(void)
  */
 void expr(void)
 {
+  printf("in expr\n");
   if(lookahead == '-') match('-');
   term();
   while(isaddop(lookahead)) {
