@@ -115,6 +115,24 @@ int isUINT(FILE *buffer)
   return 0;
 }
 
+int isASSGNMT(FILE *buffer)
+{
+  char head;
+
+  if((head = getc(buffer)) == ':') {
+    if((head = getc(buffer)) == '=')
+      return ASSGNMT;
+
+    ungetc(head, buffer);
+    ungetc(':', buffer);
+
+    return 0;
+  }
+
+  ungetc(head, buffer);
+  return 0;
+}
+
 token_t gettoken(FILE *buffer)
 {
   char head;
@@ -129,6 +147,7 @@ token_t gettoken(FILE *buffer)
   ungetc(head, buffer);
 
   if(token = isUINT(buffer)) return token;
+  if(token = isASSGNMT(buffer)) return token;
   if(token = isID(buffer)) {
     if(iskeyword(lexeme)) return iskeyword(lexeme);
     else return token;

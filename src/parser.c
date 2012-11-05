@@ -98,8 +98,8 @@ void declarations(void)
     /** symbol type 1: variable **/
     idtype = SYMTAB_IDTYPE_VARIABLE;
 
-
     do {
+      /** */ sympos = 0; /** */
       idlist();/** produce one symbol list **/
       match(':');
       
@@ -125,12 +125,27 @@ void modules(void)
  */
 void procedure(void)
 {
+  char procedurename[IDSIZE];
+
   match(PROCEDURE);
-  /** symbol type 3:  procedure**/
-  idtype = SYMTAB_IDTYPE_PROCEDURE;
+
+  /** Salvaremos o lexeme para nao conflitar com o idlist.*/
+  /** */
+  strcpy(procedurename, lexeme);
+  /** */
 
   match(ID);
+  
+  /** */ sympos = 0; /** */
   formalparm();
+
+  /** */
+  /** symbol type 3:  procedure**/
+  idtype = SYMTAB_IDTYPE_PROCEDURE;
+  offset = 0;
+  symtab_insert(procedurename, 0, idtype, offset);
+  /** */
+
 
   match(';');
 
@@ -145,14 +160,29 @@ void procedure(void)
  */
 void function(void)
 {
+  char functionname[IDSIZE];
+
   match(FUNCTION);
   /** symbol type 4:  function**/
-  idtype = SYMTAB_IDTYPE_FUNCTION;
+
+  /** Salvaremos o lexeme para nao conflitar com o idlist.*/
+  /** */
+  strcpy(functionname, lexeme);
+  /** */
 
   match(ID);
+  
+  /** */ sympos = 0; /** */
   formalparm();
 
   match(':');
+
+  /** */
+  sympos = 0;
+  idtype = SYMTAB_IDTYPE_FUNCTION;
+  strcpy(symlist[sympos++], functionname);
+  /** */
+
   type();
 
   match(';');
@@ -255,9 +285,10 @@ void type(void)
   }
   /** */
   for(i = 0; i < sympos; i++) {
+
     if(symtab_lookup(symlist[i])){
       fprintf(stderr, 
-          "in line %d\n:"
+          "in line %d:\n"
           "symbol \"%s\" already declared\n",current_line, symlist[i]);
     } else {
       symtab_insert(symlist[i], dtype, idtype, offset);
@@ -271,7 +302,6 @@ void type(void)
  */
 void idlist(void)
 {
-  /** */ sympos = 0; /** */
   /** */strcpy(symlist[sympos++],lexeme);/** */
   match(ID);
   while(lookahead == ',') {
@@ -284,10 +314,13 @@ void idlist(void)
 
 void idstmt(void) 
 {
+  int idaddress;
+
   /** */
-  if(!symtab_lookup(lexeme)) {
+  if((idaddress = symtab_lookup(lexeme) == 0)) {
     fprintf(stderr, "variable not declared: %s\n", lexeme);
   }
+  currenttype = symtab[idaddress][SYMTAB_COL_DATA_TYPE];
   /** */
   match(ID);
 }
@@ -539,5 +572,20 @@ int typecheck(int type1, int type2)
 	        (type1 == REAL && type2 == REAL)) return REAL;
 	else if (type1 == BOOLEAN && type2 == BOOLEAN) return BOOLEAN;
 	else return ERR_TYPE_INVALID;
+}
+
+/**
+ * Funções de debug
+ */
+int printtape(int len) 
+{
+  int j;
+  for(j = 0; j < len; j++) {
+    if(lextape[j])
+      printf("%c", lextape[j]);
+    else
+      printf("0");
+  }
+  printf("\n");
 }
 
