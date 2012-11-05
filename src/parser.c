@@ -26,7 +26,7 @@
  *  | repstmt | forstmt | gotostmt | casestmt 
  *  | idstmt ASSGNMT expression
  *
- * type -> INTEGER | REAL
+ * type -> INTEGER | REAL | BOOLEAN
  *
  * idlist -> ID {',' ID}
  *
@@ -265,12 +265,12 @@ void stmt(void)
     case ID:
       idstmt();
       match(ASSGNMT);
-      expr();
+      expression();
   }
 }
 
 /**
- * type -> INTEGER | REAL 
+ * type -> INTEGER | REAL | BOOLEAN
  */
 void type(void)
 {
@@ -395,13 +395,13 @@ void expression(void)
  */
 void expr(void)
 {
-  printf("in expr\n");
   if(lookahead == '-') match('-');
   term();
   while(isaddop(lookahead)) {
     match(lookahead);
     term();
   }
+
 }
 
 /** 
@@ -484,7 +484,7 @@ void factor(void)
           /** the variable is global, then its identification
            * itself is the variable address **/
           /** **/
-          fprintf(target, "\tmov %s, %%eax\n", symbol);
+          //fprintf(target, "\tmov %s, %%eax\n", symbol);
           /** **/
         }else {
           /** in this context all symbols are looked up in the

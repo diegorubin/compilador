@@ -18,7 +18,7 @@ int main(int argc, char **argv)
   char *input;
 
   sourcecode = fopen("exemplo.pas", "r");
-  target = open("source.out", "w");
+  target = fopen("source.out", "w");
 
   lookahead = gettoken(sourcecode);
   program();
