@@ -9,6 +9,7 @@ compilador_SOURCES = main.c \
 										 keywords.c \
 										 parser.c \
 										 lexer.c \
+										 builtin_functions.c \
 										 symtab.c
 
 compilador_LDADD = ${COMPILADOR_LIBS}
