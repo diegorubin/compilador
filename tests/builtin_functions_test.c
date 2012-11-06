@@ -7,7 +7,8 @@
 
 int main(int argc, char **argv)
 {
-  plan_tests(0);
+  plan_tests(1);
+  ok1("pending.");
 
   return exit_status();
 }

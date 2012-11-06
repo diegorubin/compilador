@@ -10,24 +10,88 @@
 FILE *sourcecode;
 FILE *target;
 
+void test_clearenv() 
+{
+  current_line = 1;
+  lextape_nextentry = 0;
+  symtab_nextentry = 1;
+}
+
 int main(int argc, char **argv)
 {
-  plan_tests(4);
+  plan_tests(3);
 
   int token;
   char *input;
 
-  sourcecode = fopen("exemplo.pas", "r");
+  /* Simple program with declarations of variables only */
+  input = "\
+    PROGRAM seila;\
+\
+    VAR \
+      a:INTEGER;\
+      b,c,d:REAL;\
+\
+    BEGIN\
+    END.\
+";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
 
   lookahead = gettoken(sourcecode);
   program();
 
-  ok1("Accepted Language");
-  ok1(symtab_lookup("a"));
-  ok1(symtab_lookup("vd"));
+  test_clearenv();
+  ok1("Simple program with declarations of variables only");
 
-  ok1(symtab_lookup("sum"));
+  /*Complete procedure declaration*/
+  input = "\
+    PROCEDURE proc;\
+\
+    VAR \
+      a:INTEGER;\
+      b,c,d:REAL;\
+\
+    BEGIN\
+    END;\
+";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
+  target = fopen("source.out", "w");
+
+  lookahead = gettoken(sourcecode);
+  procedure();
+  
+  test_clearenv();
+  ok1("Complete procedure declaration");
+
+  /*Creating functions and procedures (module)*/
+  input = "\
+    FUNCTION conv(VAR x:INTEGER):REAL;\
+\
+    BEGIN\
+      conv:= x;\
+    END;\
+\
+    PROCEDURE proc;\
+\
+    VAR \
+      a:INTEGER;\
+      b,c,d:REAL;\
+\
+    BEGIN\
+    END;\
+";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
+  target = fopen("source.out", "w");
+
+  lookahead = gettoken(sourcecode);
+  modules();
+  
+  test_clearenv();
+  ok1("Creating functions and procedures (module)");
 
   return exit_status();
 }
