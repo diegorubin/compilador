@@ -163,8 +163,9 @@ void match(int expected)
   } else {
     fprintf(stderr,
             "in line %d \n"
-            "token mismatch: found %d but %d expected\n",
-            current_line, lookahead, expected);
+            "token mismatch: found %d but %d expected\n"
+            "lexeme: %s\n",
+            current_line, lookahead, expected, lexeme);
     exit(-1);
   }
 }

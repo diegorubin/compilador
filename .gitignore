@@ -18,3 +18,9 @@ missing
 stamp-h?
 source.out
 
+src/compilador
+tests/lexer_test
+tests/parser_test
+tests/builtin_functions_test
+
+

@@ -12,7 +12,7 @@ FILE *target;
 
 int main(int argc, char **argv)
 {
-  plan_tests(3);
+  plan_tests(4);
 
   int token;
   char *input;
@@ -26,6 +26,8 @@ int main(int argc, char **argv)
   ok1("Accepted Language");
   ok1(symtab_lookup("a"));
   ok1(symtab_lookup("vd"));
+
+  ok1(symtab_lookup("sum"));
 
   return exit_status();
 }

@@ -5,7 +5,14 @@ VAR
   vd:BOOLEAN;
   b:INTEGER;
 
+FUNCTION
+  sum(VAR x,y:INTEGER):INTEGER;
+  BEGIN
+    sum := x + y
+  END;
+
 BEGIN
-  b := vd + a;
+ a:= 1;
+ b:= 2;
 END.
 

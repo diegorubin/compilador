@@ -68,6 +68,13 @@ extern FILE *target;
  */
 void program(void)
 {
+  /**
+   * Seta variavel que exibi linha atual caso
+   * aconteça algum erro ou alerta.
+   */
+  current_line = 1; 
+  /** */
+
   match(PROGRAM);
   match(ID);
   match(';');
@@ -455,7 +462,9 @@ void factor(void)
 
       /** */
       if((symbol_entry = symtab_lookup(lexeme)) == 0){
-        fprintf(stderr, "semantic: symbol not found\n");
+        fprintf(stderr, 
+               "in line %d\n"
+               "semantic: symbol '%s' not found\n", current_line, lexeme);
       } else {
         switch(symtab[symbol_entry][SYMTAB_COL_IDENTIFIER_TYPE]) {
           case SYMTAB_IDTYPE_VARIABLE:
