@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 
   /*Assign expressions*/
   /* add x to symtab for text -> fake declaration */
-  fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
   input = "x := 3 + 4;";
 
   sourcecode = fmemopen (input, strlen(input), "r");
@@ -113,8 +113,8 @@ int main(int argc, char **argv)
   ok1("Assign expressions");
 
   /*Multiple assign expressions*/
-  fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
-  fake_declaration("y", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("Y", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
   input = "\
     x := 3 + 4;\
     y := x + 4\
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
   ok1("Boolean expression");
 
   /*if stmt*/
-  fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
 
   input = "\
     IF 3 + 4 < 10 THEN\
@@ -161,7 +161,7 @@ int main(int argc, char **argv)
   ok1("if stmt");
 
   /*if stmt case insensitive*/
-  fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
 
   input = "\
     if 3 + 4 < 10 then\

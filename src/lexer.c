@@ -6,17 +6,16 @@
 
 int isID(FILE *buffer)
 {
-  int p = 0;
-
   char head = getc(buffer);
   if (isalpha(head)) {
-    lexeme[p++] = head;
+    put_lexeme(head);
 
     while (isalnum(head = getc(buffer)) || head == '_')
-      lexeme[p++] = head;
+      put_lexeme(head);
+    
     ungetc(head, buffer);
+    finalize_lexeme();
 
-    lexeme[p] = 0;
     return ID;
   }
   ungetc(head, buffer);
@@ -25,15 +24,16 @@ int isID(FILE *buffer)
 
 int isNUM(FILE *buffer)
 {
-  int p = 0;
-
   char head = getc(buffer);
 
   if (isdigit(head)) {
-    lexeme[p++] = head;
+    put_lexeme(head);
 
-    while (isdigit(head = getc(buffer)));
+    while (isdigit(head = getc(buffer))) put_lexeme(head);
+
+    finalize_lexeme();
     ungetc(head, buffer);
+
     return UINT;
   }
   ungetc(head, buffer);
@@ -48,6 +48,8 @@ int isexp(FILE *buffer)
      * podemos afirmar se ele está em minusculo
      */
     char reale = head;
+
+    put_lexeme(reale);
     head = getc(buffer);
 
     /* o sinal é opcional */
@@ -55,13 +57,20 @@ int isexp(FILE *buffer)
       ungetc(head, buffer);
 
     if(isdigit(head = getc(buffer))) {
-      while(isdigit(head = getc(buffer)));
+      put_lexeme(head);
+
+      while(isdigit(head = getc(buffer))) put_lexeme(head);
+
+      finalize_lexeme();
       ungetc(head, buffer);
 
       return 1;
     }
 
+    get_lexeme();
     ungetc(head,buffer);
+    
+    finalize_lexeme();
     ungetc(reale,buffer);
 
     return 0;
@@ -138,6 +147,8 @@ token_t gettoken(FILE *buffer)
   char head;
   int token;
 
+  clear_lexeme();
+
   /** 
    * skip spaces 
    * incrementa a contagem de linhas 
@@ -168,5 +179,31 @@ void match(int expected)
             current_line, lookahead, expected, lexeme);
     exit(-1);
   }
+}
+
+void clear_lexeme() 
+{
+  lexeme_pointer = 0;
+  lexeme[lexeme_pointer] = 0;
+}
+
+void put_lexeme(char c)
+{
+  if(islower(c)) c = towupper(c);
+  lexeme[lexeme_pointer++] = c;
+  lexeme[lexeme_pointer] = 0;
+}
+
+char get_lexeme()
+{
+  char c = lexeme[--lexeme_pointer];
+  lexeme[lexeme_pointer] = 0;
+
+  return c;
+}
+
+void finalize_lexeme()
+{
+  lexeme[lexeme_pointer] = 0;
 }
 

@@ -47,6 +47,7 @@ int main(int argc, char **argv)
   sourcecode = fmemopen (input, strlen(input), "r");
   token = gettoken(sourcecode);
   ok1(token == FLOAT);
+  printf("lexeme: %s\n", lexeme);
   ok1(!strcmp(lexeme, "1.3455"));
 
   return exit_status();
