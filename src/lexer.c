@@ -91,7 +91,7 @@ int isUINT(FILE *buffer)
     }
 
     if(isexp(buffer)) {
-      return UINT;
+      return FLOAT;
     }
 
     return UINT;
@@ -105,7 +105,7 @@ int isUINT(FILE *buffer)
 
       isexp(buffer);
 
-      return UINT;
+      return FLOAT;
     }
     ungetc('.', buffer);
     return 0;

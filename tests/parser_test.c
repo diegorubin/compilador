@@ -24,7 +24,7 @@ void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
 
 int main(int argc, char **argv)
 {
-  plan_tests(6);
+  plan_tests(8);
 
   int token;
   char *input;
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
   ok1("Multiple assign expressions");
 
   /*Boolean expression*/
-  input = "((3 + 4) < 10)";
+  input = "3 + 4 < 10";
 
   sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
@@ -142,11 +142,10 @@ int main(int argc, char **argv)
   ok1("Boolean expression");
 
   /*if stmt*/
-  /*
   fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
 
   input = "\
-    IF((3+4) < 10) THEN\
+    IF 3 + 4 < 10 THEN\
       x:= 10\
     ELSE\
       x:= 1\
@@ -159,8 +158,27 @@ int main(int argc, char **argv)
   ifstmt();
   
   test_clearenv();
-  ok1("Assign expressions");
-  */
+  ok1("if stmt");
+
+  /*if stmt case insensitive*/
+  fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+
+  input = "\
+    if 3 + 4 < 10 then\
+      x:= 10\
+    else\
+      x:= 1\
+";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
+  target = fopen("source.out", "w");
+
+  lookahead = gettoken(sourcecode);
+  ifstmt();
+  
+  test_clearenv();
+  ok1("if stmt case insensitive");
+
   return exit_status();
 }
 

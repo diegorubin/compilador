@@ -40,7 +40,7 @@
  *
  * expression -> expr = expr | expr '<' expr | expr '>' expr |
  *               expr GEQ expr | expr LEQ expr | 
- *               expr NEQ expr 
+ *               expr NEQ expr | expr
  *
  * expr -> [-] term { '+' term | '-' term | OR term }
  *
@@ -382,7 +382,7 @@ void repstmt(void)
 /*
  * expression -> expr = expr | expr '<' expr | 
  *               expr '>' expr | expr GEQ expr | 
- *               expr LEQ expr | expr NEQ expr 
+ *               expr LEQ expr | expr NEQ expr | expr
  */
 void expression(void)
 {
