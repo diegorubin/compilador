@@ -127,9 +127,22 @@ int main(int argc, char **argv)
   stmtlist();
   
   test_clearenv();
-  ok1("Assign expressions");
+  ok1("Multiple assign expressions");
+
+  /*Boolean expression*/
+  input = "((3 + 4) < 10)";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
+  target = fopen("source.out", "w");
+
+  lookahead = gettoken(sourcecode);
+  expression();
+  
+  test_clearenv();
+  ok1("Boolean expression");
 
   /*if stmt*/
+  /*
   fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
 
   input = "\
@@ -147,7 +160,7 @@ int main(int argc, char **argv)
   
   test_clearenv();
   ok1("Assign expressions");
-
+  */
   return exit_status();
 }
 
