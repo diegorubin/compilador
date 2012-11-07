@@ -17,9 +17,14 @@ void test_clearenv()
   symtab_nextentry = 1;
 }
 
+void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
+{
+  symtab_insert(identifier, dtype, idtype, offset);
+}
+
 int main(int argc, char **argv)
 {
-  plan_tests(3);
+  plan_tests(6);
 
   int token;
   char *input;
@@ -92,6 +97,56 @@ int main(int argc, char **argv)
   
   test_clearenv();
   ok1("Creating functions and procedures (module)");
+
+  /*Assign expressions*/
+  /* add x to symtab for text -> fake declaration */
+  fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  input = "x := 3 + 4;";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
+  target = fopen("source.out", "w");
+
+  lookahead = gettoken(sourcecode);
+  stmt();
+  
+  test_clearenv();
+  ok1("Assign expressions");
+
+  /*Multiple assign expressions*/
+  fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("y", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  input = "\
+    x := 3 + 4;\
+    y := x + 4\
+";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
+  target = fopen("source.out", "w");
+
+  lookahead = gettoken(sourcecode);
+  stmtlist();
+  
+  test_clearenv();
+  ok1("Assign expressions");
+
+  /*if stmt*/
+  fake_declaration("x", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+
+  input = "\
+    IF((3+4) < 10) THEN\
+      x:= 10\
+    ELSE\
+      x:= 1\
+";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
+  target = fopen("source.out", "w");
+
+  lookahead = gettoken(sourcecode);
+  ifstmt();
+  
+  test_clearenv();
+  ok1("Assign expressions");
 
   return exit_status();
 }
