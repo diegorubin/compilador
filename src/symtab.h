@@ -1,6 +1,8 @@
 #ifndef __SYMTAB_H__
 #define __SYMTAB_H__
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "keywords.h"
 #include "tokens.h"
 
@@ -19,6 +21,7 @@ enum {
   SYMTAB_IDTYPE_CONSTANT,
   SYMTAB_IDTYPE_PROCEDURE,
   SYMTAB_IDTYPE_FUNCTION,
+  SYMTAB_IDTYPE_PARAMETER,
 };
 
 int symtab[MAXSYMTABENTRIES][4];
@@ -30,6 +33,9 @@ int symtab_nextentry;
 
 int symtab_insert(char const *identifier, int dtype, int idtype, int offset);
 int symtab_lookup(char const *identifier);
+
+void symtab_dispose_local_variables(void);
+void symtab_print(void);
 
 #endif /* __SYMTAB_H__*/
 

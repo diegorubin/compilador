@@ -7,7 +7,8 @@
  * 1: Tipo de dado do identificador
  * 2: Tipo do identificador {1 => Variable, 
  *                           3 => Procedure,
- *                           4 => Function}
+ *                           4 => Function,
+ *                           5 => Parameter}
  *
  */
 
@@ -38,5 +39,34 @@ int symtab_lookup(char const *symbol)
     if(strcmp(lextape+symtab[i][SYMTAB_COL_IDENTIFIER], symbol) == 0) return i;
   }
   return 0;
+}
+
+void symtab_dispose_local_variables(void)
+{
+  while(symtab[--symtab_nextentry][SYMTAB_COL_IDENTIFIER_TYPE] != SYMTAB_IDTYPE_FUNCTION &&
+        symtab[symtab_nextentry][SYMTAB_COL_IDENTIFIER_TYPE] != SYMTAB_IDTYPE_PROCEDURE);
+  symtab_nextentry++;
+}
+
+/* funcoes para log */
+/* escreve em um arquivo o tabela de simbolos e o lextape */
+void symtab_print(void)
+{
+  FILE *log_tab = fopen(".symtab.log", "w");
+
+  fprintf(log_tab, "\n\nArquivo gerado automaticamente.\n\n");
+
+  int i;
+  for(i = symtab_nextentry - 1; i > 0; i--) {
+    fprintf(log_tab, 
+            "%s, %d, %d, %d\n",
+            lextape+symtab[i][SYMTAB_COL_IDENTIFIER],
+            symtab[i][SYMTAB_COL_DATA_TYPE],
+            symtab[i][SYMTAB_COL_IDENTIFIER_TYPE],
+            symtab[i][SYMTAB_COL_OFFSET]); 
+  }
+
+  fclose(log_tab);
+
 }
 

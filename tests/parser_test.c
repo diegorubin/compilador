@@ -24,7 +24,7 @@ void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
 
 int main(int argc, char **argv)
 {
-  plan_tests(8);
+  plan_tests(10);
 
   int token;
   char *input;
@@ -97,6 +97,37 @@ int main(int argc, char **argv)
   
   test_clearenv();
   ok1("Creating functions and procedures (module)");
+
+  /* Cleaning variables of a module */
+  input = "\
+    FUNCTION conv(VAR x:INTEGER):REAL;\
+\
+    BEGIN\
+      conv:= x;\
+    END;\
+\
+    PROCEDURE proc;\
+\
+    VAR \
+      x:INTEGER;\
+\
+    BEGIN\
+      x := 3 + 4\
+    END;\
+";
+
+  sourcecode = fmemopen (input, strlen(input), "r");
+  target = fopen("source.out", "w");
+
+  lookahead = gettoken(sourcecode);
+  modules();
+  
+  /* variavel local da funcao nao pode ser acessada mais*/
+  ok1(!symtab_lookup("X"));
+
+  test_clearenv();
+  ok1("Creating functions and procedures (module)");
+
 
   /*Assign expressions*/
   /* add x to symtab for text -> fake declaration */
