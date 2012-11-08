@@ -87,22 +87,32 @@ int isUINT(FILE *buffer)
   if(numtype){
 
     if((head = getc(buffer)) == '.') {
+
+      put_lexeme('.');
+
       if(isdigit(head = getc(buffer))) {
-        while(isdigit(head = getc(buffer)));
+
+        put_lexeme(head);
+        while(isdigit(head = getc(buffer))) put_lexeme(head);
+
+        finalize_lexeme();
         ungetc(head, buffer);
 
         isexp(buffer);
 
         return FLOAT;
       }
+
+      finalize_lexeme();
       ungetc(head, buffer);
-      return 0;
+
+      return FLOAT;
     }
+    ungetc(head, buffer);
 
     if(isexp(buffer)) {
       return FLOAT;
     }
-
     return UINT;
 
   }
@@ -116,6 +126,7 @@ int isUINT(FILE *buffer)
 
       return FLOAT;
     }
+    ungetc(head, buffer);
     ungetc('.', buffer);
     return 0;
   }
