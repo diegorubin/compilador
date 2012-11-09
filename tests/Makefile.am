@@ -21,19 +21,23 @@ TESTS=lexer_test parser_test symtab_test builtin_functions_test
 
 lexer_test_LDADD = ${LEXER_LIBS} \
                    $(top_srcdir)/src/lexer.o \
-                   $(top_srcdir)/src/keywords.o 
+                   $(top_srcdir)/src/keywords.o \
+                   -lpthread
 
 parser_test_LDADD = ${PARSER_LIBS} \
                    $(top_srcdir)/src/lexer.o \
                    $(top_srcdir)/src/parser.o \
                    $(top_srcdir)/src/symtab.o \
                    $(top_srcdir)/src/debug.o \
-                   $(top_srcdir)/src/keywords.o 
+                   $(top_srcdir)/src/keywords.o \
+                   -lpthread
 
 symtab_test_LDADD = ${SYMTAB_LIBS} \
                    $(top_srcdir)/src/debug.o \
-                   $(top_srcdir)/src/symtab.o
+                   $(top_srcdir)/src/symtab.o \
+                   -lpthread
 
 builtin_functions_test_LDADD = ${BUILTIN_FUNCTIONS_LIBS} \
-                   $(top_srcdir)/src/builtin_functions.o
+                   $(top_srcdir)/src/builtin_functions.o \
+                   -lpthread
 

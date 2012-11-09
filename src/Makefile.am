@@ -13,5 +13,5 @@ compilador_SOURCES = main.c \
 										 builtin_functions.c \
 										 symtab.c
 
-compilador_LDADD = ${COMPILADOR_LIBS}
+compilador_LDADD = ${COMPILADOR_LIBS} -lpthread
 
