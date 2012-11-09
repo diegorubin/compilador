@@ -6,6 +6,7 @@
 
 #include "../src/parser.h"
 #include "tap.h"
+#include "../src/debug.h"
 
 FILE *sourcecode;
 FILE *target;
@@ -25,6 +26,10 @@ void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
 int main(int argc, char **argv)
 {
   plan_tests(10);
+
+  printf("inicializando debugger\n");
+  debug_init();
+  printf("debugger inicializado\n");
 
   int token;
   char *input;
@@ -210,6 +215,7 @@ int main(int argc, char **argv)
   test_clearenv();
   ok1("if stmt case insensitive");
 
+  debug_finalize();
   return exit_status();
 }
 

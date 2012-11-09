@@ -27,9 +27,11 @@ parser_test_LDADD = ${PARSER_LIBS} \
                    $(top_srcdir)/src/lexer.o \
                    $(top_srcdir)/src/parser.o \
                    $(top_srcdir)/src/symtab.o \
+                   $(top_srcdir)/src/debug.o \
                    $(top_srcdir)/src/keywords.o 
 
 symtab_test_LDADD = ${SYMTAB_LIBS} \
+                   $(top_srcdir)/src/debug.o \
                    $(top_srcdir)/src/symtab.o
 
 builtin_functions_test_LDADD = ${BUILTIN_FUNCTIONS_LIBS} \

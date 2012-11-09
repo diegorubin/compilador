@@ -9,6 +9,7 @@ compilador_SOURCES = main.c \
 										 keywords.c \
 										 parser.c \
 										 lexer.c \
+										 debug.c \
 										 builtin_functions.c \
 										 symtab.c
 
