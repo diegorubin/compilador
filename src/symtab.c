@@ -52,7 +52,7 @@ void symtab_dispose_local_variables(void)
 /* escreve em um arquivo o tabela de simbolos e o lextape */
 void symtab_print(void)
 {
-  FILE *log_tab = fopen(".symtab.log", "w");
+  FILE *log_tab = fopen("/tmp/cdb", "w");
 
   fprintf(log_tab, "\n\nArquivo gerado automaticamente.\n\n");
 
