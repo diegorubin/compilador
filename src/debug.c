@@ -1,47 +1,49 @@
 #include "debug.h"
 
+initialized = 0;
+
 void debug_init(void)
 {
+
   gbuffer = "/tmp/mypas";
 
   mkfifo(gbuffer, 0666);
 
   pthread_create(&t_cdb,NULL,call_cdb,NULL);
 
-  debugfd = open(gbuffer, O_WRONLY);
+  initialized = 1;
 
 }
 
 void debug_finalize(void)
 {
-  close(debugfd);
+  pthread_cancel(t_cdb);
+
+  kill(pidofcdb, SIGKILL);
+
   unlink(gbuffer);
 }
 
 void debug_send_message(char *message)
 {
-  write(debugfd, "Hi", sizeof("Hi"));
+  debugfd = open(gbuffer, O_WRONLY);
+  write(debugfd, message, strlen(message));
+  close(debugfd);
 }
 
 int debug_isinitialized(void)
 {
-  return debugfd;
+  return initialized;
 }
 
 void *call_cdb()
 {
   char *arguments[1];
-  int pid; 
 
-  printf("opa\n");
-
-  pid = fork();
-  if(!pid){
+  pidofcdb = fork();
+  if(!pidofcdb){
     arguments[0] = strdup("/usr/bin/cdb");
     execv("/usr/bin/cdb",arguments);
-  }else{
-    fprintf(stderr, "Não foi possível executar o debugger.\n");
-    exit(1);
   }
 }
 

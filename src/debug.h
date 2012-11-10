@@ -7,17 +7,20 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <signal.h>
 #include <pthread.h>
 #include <string.h>
 
 enum {
-  WAITING=260,
-  SYMTABCLEAR,
-  SYMTABINSERT,
+  DEBUG_WAITING=260,
+  DEBUG_SYMTABCLEAR,
+  DEBUG_SYMTABINSERT,
 };
 
 int debugfd;
 char *gbuffer;
+
+int pidofcdb;
 
 void debug_init();
 void debug_finalize();

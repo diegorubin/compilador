@@ -27,9 +27,7 @@ int main(int argc, char **argv)
 {
   plan_tests(10);
 
-  printf("inicializando debugger\n");
   debug_init();
-  printf("debugger inicializado\n");
 
   int token;
   char *input;

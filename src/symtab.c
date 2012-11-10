@@ -52,17 +52,35 @@ void symtab_dispose_local_variables(void)
 /* escreve em um arquivo o tabela de simbolos e o lextape */
 void symtab_print(void)
 {
+  char message[2048];
+  int i;
+
   if(debug_isinitialized() > 0 ) {
 
-    int i;
-    //for(i = symtab_nextentry - 1; i > 0; i--) {
-    //  fprintf(fd, 
-    //          "%s, %d, %d, %d\n",
-    //          lextape+symtab[i][SYMTAB_COL_IDENTIFIER],
-    //          symtab[i][SYMTAB_COL_DATA_TYPE],
-    //          symtab[i][SYMTAB_COL_IDENTIFIER_TYPE],
-    //          symtab[i][SYMTAB_COL_OFFSET]); 
-    //}
+    sprintf(message,
+            "%d\n",
+            DEBUG_SYMTABCLEAR);
+    debug_send_message(message);
+
+    for(i = symtab_nextentry - 1; i > 0; i--) {
+      sprintf(message,
+              "%d\n",
+              DEBUG_SYMTABINSERT);
+      debug_send_message(message);
+
+      sprintf(message,
+              "%s,%d,%d,%d\n",
+              lextape+symtab[i][SYMTAB_COL_IDENTIFIER],
+              symtab[i][SYMTAB_COL_DATA_TYPE],
+              symtab[i][SYMTAB_COL_IDENTIFIER_TYPE],
+              symtab[i][SYMTAB_COL_OFFSET]); 
+
+      debug_send_message(message);
+    }
+    sprintf(message,
+            "%d\n",
+            DEBUG_WAITING);
+    debug_send_message(message);
 
   }
 }
