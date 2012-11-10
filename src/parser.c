@@ -126,9 +126,7 @@ void modules(void)
     if(lookahead == PROCEDURE) procedure();
     else function();
 
-    symtab_print();
     symtab_dispose_local_variables();
-    symtab_print();
   }
 }
 

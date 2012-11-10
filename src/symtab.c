@@ -28,6 +28,11 @@ int symtab_insert(char const *symbol, int dtype, int idtype, int offset)
   strcpy(lextape + lextape_nextentry, symbol);
   lextape_nextentry += strlen(symbol) + 1;
 
+  /* Debug: 
+   * Imprimindo symtab no debugger
+   */
+  symtab_print();
+  /** */
   /* return position which was inserted */
   return symtab_nextentry++;
 }

@@ -16,6 +16,7 @@ void test_clearenv()
   current_line = 1;
   lextape_nextentry = 0;
   symtab_nextentry = 1;
+  debug_clear();
 }
 
 void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
@@ -44,8 +45,12 @@ int main(int argc, char **argv)
     END.\
 ";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
+  FILE *test = fmemopen (input, strlen(input), "r");
+
   target = fopen("source.out", "w");
+
+  sourcecode = (FILE *) debug_change_sourcecode(test);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   program();
