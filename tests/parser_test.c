@@ -8,6 +8,7 @@
 #include "tap.h"
 #include "../src/debug.h"
 
+FILE *input;
 FILE *sourcecode;
 FILE *target;
 
@@ -22,6 +23,10 @@ void test_clearenv()
 void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
 {
   symtab_insert(identifier, dtype, idtype, offset);
+}
+
+void init_test(char *input) 
+{
 }
 
 int main(int argc, char **argv)
@@ -45,11 +50,9 @@ int main(int argc, char **argv)
     END.\
 ";
 
-  FILE *test = fmemopen (input, strlen(input), "r");
-
   target = fopen("source.out", "w");
-
-  sourcecode = (FILE *) debug_change_sourcecode(test);
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
@@ -70,8 +73,10 @@ int main(int argc, char **argv)
     END;\
 ";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   procedure();
@@ -97,8 +102,11 @@ int main(int argc, char **argv)
     END;\
 ";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
+
   target = fopen("source.out", "w");
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   modules();
@@ -124,8 +132,10 @@ int main(int argc, char **argv)
     END;\
 ";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   modules();
@@ -142,8 +152,10 @@ int main(int argc, char **argv)
   fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
   input = "x := 3 + 4;";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   stmt();
@@ -159,8 +171,10 @@ int main(int argc, char **argv)
     y := x + 4\
 ";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   stmtlist();
@@ -171,8 +185,10 @@ int main(int argc, char **argv)
   /*Boolean expression*/
   input = "3 + 4 < 10";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   expression();
@@ -190,8 +206,10 @@ int main(int argc, char **argv)
       x:= 1\
 ";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   ifstmt();
@@ -209,8 +227,10 @@ int main(int argc, char **argv)
       x:= 1\
 ";
 
-  sourcecode = fmemopen (input, strlen(input), "r");
   target = fopen("source.out", "w");
+  input = fmemopen (input, strlen(input), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
   ifstmt();
