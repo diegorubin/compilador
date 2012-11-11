@@ -61,6 +61,7 @@
 #include "parser.h"
 
 int offset;
+int dtype;
 extern FILE *target;
 
 /**
@@ -125,8 +126,6 @@ void modules(void)
   while(lookahead == PROCEDURE || lookahead == FUNCTION) {
     if(lookahead == PROCEDURE) procedure();
     else function();
-
-    symtab_dispose_local_variables();
   }
 }
 
@@ -135,27 +134,21 @@ void modules(void)
  */
 void procedure(void)
 {
-  char procedurename[IDSIZE];
-
   match(PROCEDURE);
 
-  /** Salvaremos o lexeme para nao conflitar com o idlist.*/
-  /** */
-  strcpy(procedurename, lexeme);
+  /** 
+   * Add to symtab 
+   **/
+  idtype = SYMTAB_IDTYPE_PROCEDURE;
+  offset = 0;
+  symtab_insert(lexeme, 0, idtype, offset);
   /** */
 
   match(ID);
   
   /** */ sympos = 0; /** */
+
   formalparm();
-
-  /** */
-  /** symbol type 3:  procedure**/
-  idtype = SYMTAB_IDTYPE_PROCEDURE;
-  offset = 0;
-  symtab_insert(procedurename, 0, idtype, offset);
-  /** */
-
 
   match(';');
 
@@ -163,6 +156,7 @@ void procedure(void)
   stmtblock();
   match(';');
 
+  symtab_dispose_local_variables();
 }
 
 /**
@@ -170,30 +164,34 @@ void procedure(void)
  */
 void function(void)
 {
-  char functionname[IDSIZE];
-
+  int pos;
   match(FUNCTION);
-  /** symbol type 4:  function**/
 
-  /** Salvaremos o lexeme para nao conflitar com o idlist.*/
   /** */
-  strcpy(functionname, lexeme);
+  offset = 0;
+  idtype = SYMTAB_IDTYPE_FUNCTION;
+  pos = symtab_insert(lexeme, 0, idtype, offset);
   /** */
 
   match(ID);
   
-  /** */ sympos = 0; /** */
+  /** */ 
+  sympos = 0; 
+  idtype = SYMTAB_IDTYPE_PARAMETER;
+  /** */
   formalparm();
 
   match(':');
 
   /** */
   sympos = 0;
-  idtype = SYMTAB_IDTYPE_FUNCTION;
-  strcpy(symlist[sympos++], functionname);
   /** */
 
   type();
+
+  /** */
+  symtab_update_dtype(pos,dtype);
+  /** */
 
   match(';');
 
@@ -201,6 +199,7 @@ void function(void)
   stmtblock();
   match(';');
 
+  symtab_dispose_local_variables();
 }
 
 /**
@@ -284,7 +283,7 @@ void stmt(void)
 void type(void)
 {
   /** datatype **/
-  int dtype, i;
+  int i;
 
   switch(lookahead) {
     case INTEGER:
@@ -471,6 +470,7 @@ void factor(void)
         switch(symtab[symbol_entry][SYMTAB_COL_IDENTIFIER_TYPE]) {
           case SYMTAB_IDTYPE_VARIABLE:
           case SYMTAB_IDTYPE_FUNCTION:
+          case SYMTAB_IDTYPE_PARAMETER:
             break;
           default:
             fprintf(stderr, "symbol in ilegal context");

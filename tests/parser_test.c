@@ -36,10 +36,10 @@ int main(int argc, char **argv)
   debug_init();
 
   int token;
-  char *input;
+  char *inputcode;
 
   /* Simple program with declarations of variables only */
-  input = "\
+  inputcode = "\
     PROGRAM seila;\
 \
     VAR \
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 ";
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
   ok1("Simple program with declarations of variables only");
 
   /*Complete procedure declaration*/
-  input = "\
+  inputcode = "\
     PROCEDURE proc;\
 \
     VAR \
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 ";
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
   ok1("Complete procedure declaration");
 
   /*Creating functions and procedures (module)*/
-  input = "\
+  inputcode = "\
     FUNCTION conv(VAR x:INTEGER):REAL;\
 \
     BEGIN\
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
 
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
   ok1("Creating functions and procedures (module)");
 
   /* Cleaning variables of a module */
-  input = "\
+  inputcode = "\
     FUNCTION conv(VAR x:INTEGER):REAL;\
 \
     BEGIN\
@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 ";
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
@@ -150,10 +150,10 @@ int main(int argc, char **argv)
   /*Assign expressions*/
   /* add x to symtab for text -> fake declaration */
   fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
-  input = "x := 3 + 4;";
+  inputcode = "x := 3 + 4;";
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
@@ -166,13 +166,13 @@ int main(int argc, char **argv)
   /*Multiple assign expressions*/
   fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
   fake_declaration("Y", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
-  input = "\
+  inputcode = "\
     x := 3 + 4;\
     y := x + 4\
 ";
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
@@ -183,10 +183,10 @@ int main(int argc, char **argv)
   ok1("Multiple assign expressions");
 
   /*Boolean expression*/
-  input = "3 + 4 < 10";
+  inputcode = "3 + 4 < 10";
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
   /*if stmt*/
   fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
 
-  input = "\
+  inputcode = "\
     IF 3 + 4 < 10 THEN\
       x:= 10\
     ELSE\
@@ -207,7 +207,7 @@ int main(int argc, char **argv)
 ";
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 
@@ -220,7 +220,7 @@ int main(int argc, char **argv)
   /*if stmt case insensitive*/
   fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
 
-  input = "\
+  inputcode = "\
     if 3 + 4 < 10 then\
       x:= 10\
     else\
@@ -228,7 +228,7 @@ int main(int argc, char **argv)
 ";
 
   target = fopen("source.out", "w");
-  input = fmemopen (input, strlen(input), "r");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
   sourcecode = (FILE *) debug_change_sourcecode(input);
   debug_send_sourcecode(sourcecode);
 

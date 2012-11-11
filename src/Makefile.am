@@ -11,6 +11,7 @@ compilador_SOURCES = main.c \
 										 lexer.c \
 										 debug.c \
 										 builtin_functions.c \
+										 gencode.c \
 										 symtab.c
 
 compilador_LDADD = ${COMPILADOR_LIBS} -lpthread

@@ -39,6 +39,7 @@ int symtab_nextentry;
 
 int symtab_insert(char const *identifier, int dtype, int idtype, int offset);
 int symtab_lookup(char const *identifier);
+void symtab_update_dtype(int pos, int dtype);
 
 void symtab_dispose_local_variables(void);
 void symtab_print(void);

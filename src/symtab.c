@@ -53,6 +53,18 @@ void symtab_dispose_local_variables(void)
   symtab_nextentry++;
 }
 
+/*
+ * Esta função foi criada para auxiliar na declaracao
+ * de procedimentos/funcoes e sua parametros.
+ * Nós só temos acesso ao tipo da função após a declaração
+ * dos parametros. Portando poderemos utilizar está
+ * função para atualizar o tipo.
+ */
+void symtab_update_dtype(int pos, int dtype)
+{
+  symtab[pos][SYMTAB_COL_DATA_TYPE] = dtype;
+}
+
 /* funcoes para log */
 /* escreve em um arquivo o tabela de simbolos e o lextape */
 void symtab_print(void)
