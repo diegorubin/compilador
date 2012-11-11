@@ -471,6 +471,7 @@ void factor(void)
           case SYMTAB_IDTYPE_VARIABLE:
           case SYMTAB_IDTYPE_FUNCTION:
           case SYMTAB_IDTYPE_PARAMETER:
+          case SYMTAB_IDTYPE_PROCEDURE:
             break;
           default:
             fprintf(stderr, "symbol in ilegal context");

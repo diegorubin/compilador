@@ -25,13 +25,9 @@ void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
   symtab_insert(identifier, dtype, idtype, offset);
 }
 
-void init_test(char *input) 
-{
-}
-
 int main(int argc, char **argv)
 {
-  plan_tests(10);
+  plan_tests(11);
 
   debug_init();
 
@@ -146,7 +142,6 @@ int main(int argc, char **argv)
   test_clearenv();
   ok1("Creating functions and procedures (module)");
 
-
   /*Assign expressions*/
   /* add x to symtab for text -> fake declaration */
   fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
@@ -237,6 +232,25 @@ int main(int argc, char **argv)
   
   test_clearenv();
   ok1("if stmt case insensitive");
+
+  /*call builtin function*/
+  insert_builtins_in_symtab();
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+
+  inputcode = "\
+    write(x); \
+";
+
+  target = fopen("source.out", "w");
+  input = fmemopen(inputcode, strlen(inputcode), "r");
+  sourcecode = (FILE *) debug_change_sourcecode(input);
+  debug_send_sourcecode(sourcecode);
+
+  lookahead = gettoken(sourcecode);
+  factor();
+  
+  test_clearenv();
+  ok1("call builtin function");
 
   debug_finalize();
   return exit_status();

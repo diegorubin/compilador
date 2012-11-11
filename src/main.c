@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "builtin_functions.h"
 #include "parser.h"
 #include "gencode.h"
 
@@ -23,6 +24,8 @@ int main(int argc, char **argv) {
   /*** Debug: envia codigo para a janela de debug */
   debug_send_sourcecode(sourcecode);
   /*** */
+
+  insert_builtins_in_symtab();
 
   lookahead = gettoken(sourcecode);
   program();

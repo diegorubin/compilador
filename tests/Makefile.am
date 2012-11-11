@@ -29,6 +29,7 @@ parser_test_LDADD = ${PARSER_LIBS} \
                    $(top_srcdir)/src/parser.o \
                    $(top_srcdir)/src/symtab.o \
                    $(top_srcdir)/src/debug.o \
+                   $(top_srcdir)/src/builtin_functions.o \
                    $(top_srcdir)/src/keywords.o \
                    -lpthread
 
@@ -38,6 +39,8 @@ symtab_test_LDADD = ${SYMTAB_LIBS} \
                    -lpthread
 
 builtin_functions_test_LDADD = ${BUILTIN_FUNCTIONS_LIBS} \
+                   $(top_srcdir)/src/debug.o \
+                   $(top_srcdir)/src/symtab.o \
                    $(top_srcdir)/src/builtin_functions.o \
                    -lpthread
 
