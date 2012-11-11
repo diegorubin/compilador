@@ -103,7 +103,10 @@ void block(void)
 void declarations(void)
 {
   if(lookahead == VAR) {
+
     match(VAR);
+    bsssection();
+
     /** symbol type 1: variable **/
     idtype = SYMTAB_IDTYPE_VARIABLE;
 

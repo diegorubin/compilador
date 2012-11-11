@@ -26,7 +26,7 @@ void debug_finalize(void)
 
 void debug_send_message(char *message)
 {
-  debugfd = open(gbuffer, O_WRONLY);
+  debugfd = open(gbuffer, O_WRONLY | O_FSYNC | O_NDELAY);
   write(debugfd, message, strlen(message));
   close(debugfd);
 }

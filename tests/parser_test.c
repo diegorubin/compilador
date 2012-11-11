@@ -17,6 +17,10 @@ void test_clearenv()
   current_line = 1;
   lextape_nextentry = 0;
   symtab_nextentry = 1;
+
+  fclose(target);
+  fclose(input);
+
   debug_clear();
 }
 

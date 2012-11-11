@@ -1,6 +1,7 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 
+#include "gencode.h"
 #include "lexer.h"
 #include "tokens.h"
 #include "symtab.h"
