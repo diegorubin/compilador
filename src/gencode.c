@@ -31,6 +31,8 @@ void gencode_block(const char *symbol)
  */
 void gencode_end_program(void)
 {
+	fprintf(target,"\tmovl $1, %%eax\n"); /* syscall do linux para sair */
+	fprintf(target,"\tmovl $0, %%ebx\n"); /* status da saida do programa */
 	fprintf(target,"\tint $0x80\n");
 }
 

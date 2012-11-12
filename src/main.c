@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
 
 #include "builtin_functions.h"
 #include "parser.h"
@@ -15,39 +16,56 @@ FILE *target;
  */
 void asssembly_and_link(void)
 {
+  int status = 0;
   char *arguments[4];
+  pid_t pidas, pidld;
+  
+  pidas = fork();
+  if(pidas >= 0) {
+    if(pidas == 0) {
+      printf("Montando...\n");
 
-  pid_t pid = fork();
-  if(pid >= 0) {
-    if(pid == 0) {
       arguments[0] = "/usr/bin/as";
       arguments[1] = "source.out";
       arguments[2] = "-o";
       arguments[3] = "source.o";
+
+      execvp("/usr/bin/as", arguments);
+      
+      exit(0);
     } else {
+
     }
-
-
-    execv("/usr/bin/as", arguments);
 
   } else {
     fprintf(stderr, "Assembly failed!\n");
   }
 
-  wait();
+  waitpid(pidas,&status,0);
 
-  pid = fork();
-  if(!pid >= 0) {
-    arguments[0] = "/usr/bin/ld";
-    arguments[1] = "source.o";
-    arguments[2] = "-o";
-    arguments[3] = "source";
+  pidld = fork();
+  if(pidld >= 0) {
 
-    execv("/usr/bin/ld", arguments);
+    if(pidld == 0) {
+      printf("Linkando...\n");
+
+      arguments[0] = "/usr/bin/ld";
+      arguments[1] = "source.o";
+      arguments[2] = "-o";
+      arguments[3] = "source";
+
+      execvp("/usr/bin/ld", arguments);
+
+      exit(0);
+    } else {
+    }
 
   } else {
     fprintf(stderr, "Linker failed!\n");
   }
+
+  waitpid(pidld,&status,0);
+
 }
 
 int main(int argc, char **argv) 
