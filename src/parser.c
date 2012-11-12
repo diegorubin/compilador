@@ -123,8 +123,6 @@ void declarations(void)
 
     match(VAR);
 
-    /** */ gencode_bsssection(); /** */
-
     /** symbol type 1: variable **/
     idtype = SYMTAB_IDTYPE_VARIABLE;
 

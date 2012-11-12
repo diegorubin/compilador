@@ -14,7 +14,7 @@ void gencode_program(const char *symbol)
  */
 void gencode_bsssection(void)
 {
-	fprintf(target,"\t.section .bss\n");
+  fprintf(target,"\t.section .bss\n");
 }
 
 /**
@@ -23,7 +23,7 @@ void gencode_bsssection(void)
  */
 void gencode_block(const char *symbol)
 {
-	fprintf(target,"\t_%s:\n", symbol);
+	fprintf(target,"_%s:\n", symbol);
 }
 
 /**
