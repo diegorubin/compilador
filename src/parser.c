@@ -24,13 +24,13 @@
  * stmt -> 
  *    stmtblock | ifstmt | whilestmt
  *  | repstmt | forstmt | gotostmt | casestmt 
- *  | idstmt ASSGNMT expression
+ *  | idstmt
  *
  * type -> INTEGER | REAL | BOOLEAN
  *
  * idlist -> ID {',' ID}
  *
- * idstmt -> ID
+ * idstmt -> ID [ ASSGNMT expression | '(' exprlist ')' ]
  *
  * ifstmt -> IF expression THEN stmt [ ELSE stmt ]
  *
@@ -272,7 +272,7 @@ void stmtlist(void)
  * stmt -> 
  *    stmtblock | ifstmt | whilestmt
  *  | repstmt | forstmt | gotostmt | casestmt
- *  | idstmt ASSGNMT expression
+ *  | idstmt
  */
 void stmt(void)
 {
@@ -291,8 +291,7 @@ void stmt(void)
       break;
     case ID:
       idstmt();
-      match(ASSGNMT);
-      expression();
+      break;
   }
 }
 
@@ -343,6 +342,9 @@ void idlist(void)
   }
 }
 
+/**
+ * idstmt -> ID [ ASSGNMT expression | '(' exprlist ')' ]
+ */
 void idstmt(void) 
 {
   int idaddress;
@@ -353,7 +355,20 @@ void idstmt(void)
   }
   currenttype = symtab[idaddress][SYMTAB_COL_DATA_TYPE];
   /** */
+
   match(ID);
+
+  switch(lookahead) {
+    case '(':
+      match('(');
+      expression();
+      match(')');
+      break;
+    case ASSGNMT:
+      match(ASSGNMT);
+      expression();
+      break;
+  }
 }
 
 /**
