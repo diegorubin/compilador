@@ -9,7 +9,49 @@
 FILE *sourcecode;
 FILE *target;
 
-int main(int argc, char **argv) {
+/**
+ * Está função tem como objetivo montar e linkar o código
+ * gerado durante a tradução.
+ */
+void asssembly_and_link(void)
+{
+  char *arguments[4];
+
+  pid_t pid = fork();
+  if(pid >= 0) {
+    if(pid == 0) {
+      arguments[0] = "/usr/bin/as";
+      arguments[1] = "source.out";
+      arguments[2] = "-o";
+      arguments[3] = "source.o";
+    } else {
+    }
+
+
+    execv("/usr/bin/as", arguments);
+
+  } else {
+    fprintf(stderr, "Assembly failed!\n");
+  }
+
+  wait();
+
+  pid = fork();
+  if(!pid >= 0) {
+    arguments[0] = "/usr/bin/ld";
+    arguments[1] = "source.o";
+    arguments[2] = "-o";
+    arguments[3] = "source";
+
+    execv("/usr/bin/ld", arguments);
+
+  } else {
+    fprintf(stderr, "Linker failed!\n");
+  }
+}
+
+int main(int argc, char **argv) 
+{
 
   /*** Debug: inicializa ambiente */
   debug_init();
@@ -30,9 +72,17 @@ int main(int argc, char **argv) {
   lookahead = gettoken(sourcecode);
   program();
 
+  /** */
+  fclose(target);
+  /** */
+
   /*** Debug: finaliza ambiente */
   debug_finalize();
   /*** */
+
+  /** */
+  asssembly_and_link();
+  /** */
 
   return 0;
 }

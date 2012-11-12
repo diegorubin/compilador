@@ -64,6 +64,8 @@ int offset;
 int dtype;
 extern FILE *target;
 
+char programname[IDSIZE];
+
 /**
  * program -> PROGRAM ID ';' block '.' 
  */
@@ -77,12 +79,22 @@ void program(void)
   /** */
 
   match(PROGRAM);
+
+  /**
+   * Iremos salvar o nome do programa para ser utilizado na label
+   * da tradução do bloco principal de código.
+   */ 
+  strcpy(programname, lexeme);
+  gencode_program("start"); 
+  /** */
+
   match(ID);
   match(';');
 
   block();
 
   match('.');
+  gencode_end_program();
 }
 
 /**
@@ -92,6 +104,11 @@ void block(void)
 {
   declarations();
   modules();
+
+  /** */
+  gencode_block("start");
+  /** */
+
   stmtblock();
 }
 
@@ -105,7 +122,8 @@ void declarations(void)
   if(lookahead == VAR) {
 
     match(VAR);
-    bsssection();
+
+    /** */ gencode_bsssection(); /** */
 
     /** symbol type 1: variable **/
     idtype = SYMTAB_IDTYPE_VARIABLE;

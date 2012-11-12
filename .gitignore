@@ -19,6 +19,7 @@ stamp-h?
 source.out
 
 # binarios
+source
 src/compilador
 tests/lexer_test
 tests/parser_test

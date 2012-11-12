@@ -6,7 +6,10 @@
 
 extern FILE *target;
 
-void bsssection(void);
+void gencode_program(const char *symbol);
+void gencode_bsssection(void);
+void gencode_block(const char *symbol);
+void gencode_end_program(void);
 
 #endif // __GENCODE__H__
 
