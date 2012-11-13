@@ -368,7 +368,7 @@ void idstmt(void)
   switch(lookahead) {
     case '(':
       match('(');
-      expression();
+      exprlist();
       match(')');
       break;
     case ASSGNMT:
