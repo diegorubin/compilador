@@ -168,6 +168,14 @@ token_t gettoken(FILE *buffer)
     if(head == '\n') current_line++;
   ungetc(head, buffer);
 
+  /**
+   * skip comment
+   */
+  if(head == '{') {
+    while((head = getc(buffer)) != '}');
+    head = getc(buffer);
+  }
+
   if(token = isUINT(buffer)) return token;
   if(token = isASSGNMT(buffer)) return token;
   if(token = isID(buffer)) {
