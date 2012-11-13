@@ -18,6 +18,25 @@ void gencode_bsssection(void)
 }
 
 /**
+ * Gera o código inicial de um procedimento
+ */
+void gencode_procedure_start(void)
+{
+  fprintf(target,"\tpush %%ebp\n");
+  fprintf(target,"\tmovl %%esp, %%ebp\n");
+}
+
+/**
+ * Gera o código final de um procedimento
+ */
+void gencode_procedure_end(void)
+{
+  fprintf(target,"\tmovl  %%ebp, %%esp\n");
+  fprintf(target,"\tpop  %%ebp\n");
+  fprintf(target,"\tret\n");
+}
+
+/**
  * Imprime no arquivo de saida o inicio de um bloco de comandos,
  * tanto para funções e procedimentos como para o programa principal.
  */

@@ -94,7 +94,10 @@ void program(void)
   block();
 
   match('.');
+
+  /** */
   gencode_end_program();
+  /** */
 }
 
 /**
@@ -128,10 +131,10 @@ void declarations(void)
 
     do {
       /** */ sympos = 0; /** */
-      idlist();/** produce one symbol list **/
+      idlist();
       match(':');
       
-      type();/** to be used here **/
+      type();
       match(';');
     } while(lookahead == ID);
   }
@@ -219,7 +222,9 @@ void function(void)
   stmtblock();
   match(';');
 
+  /** */
   symtab_dispose_local_variables();
+  /** */
 }
 
 /**
@@ -422,15 +427,11 @@ void repstmt(void)
  */
 void expression(void)
 {
-  /** an inherited attribute is get from the left side of
-   * an assignment if any **/
   expr();
   if(isrelationalop(lookahead)){
     match(lookahead);
     expr();
   }
-  /** at this point we get a resulting data type as a 
-   * synthesized attribute **/
 }
 
 /** 
@@ -454,15 +455,9 @@ void exprlist(void)
 {
   expression(); 
   
-  /** expression result stored in accumulator **/
-  /** push the accumulator onto the stack **/
-
   while(lookahead == ',') {
     match(',');
     expression();
-
-    /** expression result stored in accumulator **/
-    /** push the accumulator onto the stack **/
   }
 }
 
@@ -493,10 +488,6 @@ void factor(void)
       match(FLOAT);
       break;
     case ID:
-      /** in this context the symbol must be a 
-       * variable or a function using symtab_lookup call */
-
-      /** */
       if((symbol_entry = symtab_lookup(lexeme)) == 0){
         fprintf(stderr, 
                "in line %d\n"
@@ -506,7 +497,6 @@ void factor(void)
           case SYMTAB_IDTYPE_VARIABLE:
           case SYMTAB_IDTYPE_FUNCTION:
           case SYMTAB_IDTYPE_PARAMETER:
-          case SYMTAB_IDTYPE_PROCEDURE:
             break;
           default:
             fprintf(stderr, "symbol in ilegal context");
@@ -528,42 +518,18 @@ void factor(void)
         /** **/
         offset = symtab[symbol_entry][SYMTAB_COL_OFFSET];
         if(offset == 0) {
-          /** the variable is global, then its identification
-           * itself is the variable address **/
           /** **/
-          //fprintf(target, "\tmov %s, %%eax\n", symbol);
+          /*TODO: mover do rotulo global para eax*/
           /** **/
         }else {
-          /** in this context all symbols are looked up in the
-           * symbol table in order to compose the stack address:
-           *  <offset>(%ebp)
-           * 
-           * for instance, a variable at offset -4 would be written as
-           * -4(%ebp)
-           *
-           * a second variable with size 4 would be translated to 
-           * -8(%ebp)
-           *
-           * on the other hand, a parameter in the first slot would be
-           * interpreted as
-           * 8(%ebp)
-           *
-           **/
           /** **/
-          fprintf(target, "\tmov %d(%%ebp), %%eax\n", offset);
-          /** **/
+          /*TODO: mover do offset da tabela para eax*/
         }
       }
       break;
     case '(':
       match('(');
       expression();
-      /** at this point, expression has synthesized an
-       * attribute storing the resulting data type in the
-       * expression. however, the just calculated attribute
-       * might be greater than the l-attribute along the current
-       * expression, so that a promotion must occur.
-       **/
       match(')');
       break;
     default:

@@ -15,13 +15,22 @@
 #define MAXSYMTABENTRIES 0x100000
 #define MAXLEXTAPESIZE 0x1000000
 
+/**
+ * Constantes que descrevem cada coluna da 
+ * tabela de simbolos.
+ */
 enum {
   SYMTAB_COL_IDENTIFIER=0,
   SYMTAB_COL_DATA_TYPE,
   SYMTAB_COL_IDENTIFIER_TYPE,
   SYMTAB_COL_OFFSET,
+  SYMTAB_COL_NPARAMS,
+  SYMTAB_COL_REFPARAMS,
 };
 
+/**
+ * Constantes utilizadas na coluna tipo de variavel
+ */
 enum {
   SYMTAB_IDTYPE_VARIABLE=1,
   SYMTAB_IDTYPE_CONSTANT,
@@ -30,7 +39,19 @@ enum {
   SYMTAB_IDTYPE_PARAMETER,
 };
 
-int symtab[MAXSYMTABENTRIES][4];
+/* 
+ * Tabela de simbolos onde serão armazenados
+ * todoas as variaveis, constantes, procedimentos e
+ * funções.
+ */
+int symtab[MAXSYMTABENTRIES][6];
+
+/*
+ * O objetivo desta segunda tabela é armazenar as
+ * informações dos parametros das funções e 
+ * procedimentos criados.
+ */
+int symtab_params[MAXSYMTABENTRIES][6];
 int symbol_entry;
 
 char lextape[MAXLEXTAPESIZE];

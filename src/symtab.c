@@ -12,7 +12,7 @@
  *
  */
 
-int symtab[MAXSYMTABENTRIES][4];
+int symtab[MAXSYMTABENTRIES][6];
 symtab_nextentry = 1;
 
 char lextape[MAXLEXTAPESIZE];
@@ -54,8 +54,8 @@ void symtab_dispose_local_variables(void)
 }
 
 /*
- * Esta função foi criada para auxiliar na declaracao
- * de procedimentos/funcoes e sua parametros.
+ * Esta função foi criada para auxiliar a declaracao
+ * de procedimentos/funcoes e seus parametros.
  * Nós só temos acesso ao tipo da função após a declaração
  * dos parametros. Portando poderemos utilizar está
  * função para atualizar o tipo.
