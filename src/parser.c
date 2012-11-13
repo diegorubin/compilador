@@ -62,6 +62,7 @@
 
 int offset;
 int dtype;
+int datatype;
 extern FILE *target;
 
 char programname[IDSIZE];
@@ -428,6 +429,7 @@ void repstmt(void)
 void expression(void)
 {
   expr();
+
   if(isrelationalop(lookahead)){
     match(lookahead);
     expr();
@@ -480,11 +482,30 @@ void term(void)
  */
 void factor(void) 
 {
+  int currenttype;
   switch(lookahead){
     case UINT:
+
+      /** */
+      if((currenttype = typecheck(UINT, datatype)) == ERR_TYPE_INVALID){
+        fprintf(stderr, "Invalid type\n");
+      } else {
+        datatype = currenttype;
+      }
+      /** */
+
       match(UINT);
       break;
     case FLOAT:
+
+      /** */
+      if((currenttype = typecheck(UINT, datatype)) == ERR_TYPE_INVALID){
+        fprintf(stderr, "Invalid type\n");
+      } else {
+        datatype = currenttype;
+      }
+      /** */
+
       match(FLOAT);
       break;
     case ID:
@@ -497,6 +518,15 @@ void factor(void)
           case SYMTAB_IDTYPE_VARIABLE:
           case SYMTAB_IDTYPE_FUNCTION:
           case SYMTAB_IDTYPE_PARAMETER:
+
+            /** */
+            if((currenttype = typecheck(UINT, datatype)) == ERR_TYPE_INVALID){
+              fprintf(stderr, "Invalid type");
+            } else {
+              datatype = currenttype;
+            }
+            /** */
+
             break;
           default:
             fprintf(stderr, "symbol in ilegal context");
