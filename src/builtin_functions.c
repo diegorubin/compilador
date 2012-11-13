@@ -7,6 +7,13 @@ char *builtins[] = {
 
 void builtin_write(FILE *target) 
 {
+  fprintf(target, "_write:\n");
+  fprintf(target, "\tmovl $4, %%eax\n");
+  fprintf(target, "\tmovl $1, %%ebx\n");
+  fprintf(target, "\tmovl %%ebp, %%ebx\n"); /*TODO: checar local do parametro*/
+  fprintf(target, "\tmovl $12, %%edx\n");
+  fprintf(target, "\tint $0x80\n");
+  fprintf(target, "\tret\n");
 }
 
 void builtin_read(FILE *target)
@@ -30,5 +37,13 @@ int isbuiltin(char const *identifier)
     if(strcmp(builtins[i-WRITE], identifier) == 0) return i;
   }
   return 0;
+}
+
+/*
+ * Função para escrever os procedimentos criados no arquivo alvo.
+ */
+int builtin_write_functions(FILE *target)
+{
+  builtin_write(target);
 }
 

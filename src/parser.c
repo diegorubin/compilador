@@ -142,6 +142,7 @@ void declarations(void)
  */
 void modules(void) 
 {
+  builtin_write_functions(target);
   while(lookahead == PROCEDURE || lookahead == FUNCTION) {
     if(lookahead == PROCEDURE) procedure();
     else function();
