@@ -251,7 +251,7 @@ int main(int argc, char **argv)
   debug_send_sourcecode(sourcecode);
 
   lookahead = gettoken(sourcecode);
-  factor();
+  idstmt();
   
   test_clearenv();
   ok1("call builtin function");

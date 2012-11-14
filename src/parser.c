@@ -428,6 +428,9 @@ void repstmt(void)
  */
 void expression(void)
 {
+  /** */
+  datatype = INTEGER;
+  /** */
   expr();
 
   if(isrelationalop(lookahead)){
@@ -487,7 +490,8 @@ void factor(void)
     case UINT:
 
       /** */
-      if((currenttype = typecheck(UINT, datatype)) == ERR_TYPE_INVALID){
+      if(((currenttype = typecheck(INTEGER, datatype)) == ERR_TYPE_INVALID)
+          && (datatype != 0)){
         fprintf(stderr, "Invalid type\n");
       } else {
         datatype = currenttype;
@@ -499,7 +503,8 @@ void factor(void)
     case FLOAT:
 
       /** */
-      if((currenttype = typecheck(UINT, datatype)) == ERR_TYPE_INVALID){
+      if(((currenttype = typecheck(FLOAT, datatype)) == ERR_TYPE_INVALID)
+          && (datatype != 0)){
         fprintf(stderr, "Invalid type\n");
       } else {
         datatype = currenttype;
@@ -520,7 +525,8 @@ void factor(void)
           case SYMTAB_IDTYPE_PARAMETER:
 
             /** */
-            if((currenttype = typecheck(UINT, datatype)) == ERR_TYPE_INVALID){
+            if(((currenttype = typecheck(symtab[symbol_entry][SYMTAB_COL_DATA_TYPE], datatype)) == ERR_TYPE_INVALID)
+                && (datatype != 0)){
               fprintf(stderr, "Invalid type");
             } else {
               datatype = currenttype;
