@@ -18,6 +18,7 @@ symtab_nextentry = 1;
 char lextape[MAXLEXTAPESIZE];
 lextape_nextentry = 0;
 
+/* funções da tabela de simbolos */
 int symtab_insert(char const *symbol, int dtype, int idtype, int offset)
 {
   symtab[symtab_nextentry][SYMTAB_COL_IDENTIFIER] = lextape_nextentry;
@@ -65,6 +66,23 @@ void symtab_update_dtype(int pos, int dtype)
   symtab[pos][SYMTAB_COL_DATA_TYPE] = dtype;
 }
 
+/* funções da tabela de parametros */
+int symtab_param_insert(int idpos, int dtype)
+{
+  symtab[symtab_param_nextentry][0] = idpos;
+  symtab[symtab_param_nextentry][1] = dtype;
+
+  return symtab_param_nextentry++;
+}
+
+int symtab_param_lookup(int idpos, int parampos)
+{
+  int i;
+  for(i = 0; i < symtab_param_nextentry - 1; i++) {
+    if(symtab_params[i][0] == idpos) return i + parampos;
+  }
+  return 0;
+}
 /* funcoes para log */
 /* escreve em um arquivo o tabela de simbolos e o lextape */
 void symtab_print(void)

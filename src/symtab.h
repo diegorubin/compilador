@@ -51,16 +51,23 @@ int symtab[MAXSYMTABENTRIES][6];
  * informações dos parametros das funções e 
  * procedimentos criados.
  */
-int symtab_params[MAXSYMTABENTRIES][6];
+int symtab_params[MAXSYMTABENTRIES][2];
+
 int symbol_entry;
 
 char lextape[MAXLEXTAPESIZE];
 int lextape_nextentry;
 int symtab_nextentry;
+int symtab_param_nextentry;
 
+/* funções para a tabela de simbolos */
 int symtab_insert(char const *identifier, int dtype, int idtype, int offset);
 int symtab_lookup(char const *identifier);
 void symtab_update_dtype(int pos, int dtype);
+
+/* funções para a tabela de parametros */
+int symtab_param_insert(int idpos, int dtype);
+int symtab_param_lookup(int idpos, int parampos);
 
 void symtab_dispose_local_variables(void);
 void symtab_print(void);
