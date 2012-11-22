@@ -73,6 +73,11 @@ char programname[IDSIZE];
 int nparams;
 
 /**
+ * L-Attribute de function ou procedure.
+ */
+int current_module_pos;
+
+/**
  * program -> PROGRAM ID ';' block '.' 
  */
 void program(void)
@@ -170,7 +175,7 @@ void procedure(void)
    **/
   idtype = SYMTAB_IDTYPE_PROCEDURE;
   offset = 0;
-  symtab_insert(lexeme, 0, idtype, offset);
+  current_module_pos = symtab_insert(lexeme, 0, idtype, offset);
   /** */
 
   match(ID);
@@ -193,13 +198,12 @@ void procedure(void)
  */
 void function(void)
 {
-  int pos;
   match(FUNCTION);
 
   /** */
   offset = 0;
   idtype = SYMTAB_IDTYPE_FUNCTION;
-  pos = symtab_insert(lexeme, 0, idtype, offset);
+  current_module_pos = symtab_insert(lexeme, 0, idtype, offset);
   /** */
 
   match(ID);
@@ -219,8 +223,8 @@ void function(void)
   type();
 
   /** */
-  symtab_update_dtype(pos,dtype);
-  symtab_update_nparams(pos,nparams);
+  symtab_update_dtype(current_module_pos, dtype);
+  symtab_update_nparams(current_module_pos, nparams);
   /** */
 
   match(';');
@@ -340,6 +344,9 @@ void type(void)
           "symbol \"%s\" already declared\n",current_line, symlist[i]);
     } else {
       symtab_insert(symlist[i], dtype, idtype, offset);
+      
+      if(idtype == SYMTAB_IDTYPE_PARAMETER)
+        symtab_param_insert(current_module_pos, dtype);
     }
   }
   /** */

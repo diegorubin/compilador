@@ -17,6 +17,7 @@ void test_clearenv()
   current_line = 1;
   lextape_nextentry = 0;
   symtab_nextentry = 1;
+  symtab_param_nextentry = 1;
 
   fclose(target);
   fclose(input);
@@ -31,7 +32,7 @@ void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
 
 int main(int argc, char **argv)
 {
-  plan_tests(12);
+  plan_tests(15);
 
   debug_init();
 
@@ -142,7 +143,12 @@ int main(int argc, char **argv)
   
   /* variavel local da funcao nao pode ser acessada mais*/
   ok1(!symtab_lookup("X"));
-  ok1(symtab[symtab_lookup("CONV")][SYMTAB_COL_NPARAMS] == 3);
+
+  int convpos = symtab_lookup("CONV");
+  ok1(symtab[convpos][SYMTAB_COL_NPARAMS] == 3);
+  ok1(symtab_params[symtab_param_lookup(convpos,0)][1] == INTEGER);
+  ok1(symtab_params[symtab_param_lookup(convpos,1)][1] == INTEGER);
+  ok1(symtab_params[symtab_param_lookup(convpos,2)][1] == BOOLEAN);
 
   test_clearenv();
   ok1("Creating functions and procedures (module)");

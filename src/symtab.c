@@ -81,8 +81,8 @@ void symtab_update_nparams(int pos, int nparams)
 /* funções da tabela de parametros */
 int symtab_param_insert(int idpos, int dtype)
 {
-  symtab[symtab_param_nextentry][0] = idpos;
-  symtab[symtab_param_nextentry][1] = dtype;
+  symtab_params[symtab_param_nextentry][0] = idpos;
+  symtab_params[symtab_param_nextentry][1] = dtype;
 
   return symtab_param_nextentry++;
 }
