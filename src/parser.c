@@ -68,6 +68,11 @@ extern FILE *target;
 char programname[IDSIZE];
 
 /**
+ * L-Attribute de formalparm.
+ */
+int nparams;
+
+/**
  * program -> PROGRAM ID ';' block '.' 
  */
 void program(void)
@@ -215,6 +220,7 @@ void function(void)
 
   /** */
   symtab_update_dtype(pos,dtype);
+  symtab_update_nparams(pos,nparams);
   /** */
 
   match(';');
@@ -234,6 +240,7 @@ void function(void)
  */
 void formalparm(void)
 {
+  nparams = 0;
   if(lookahead == '(') {
     match('(');
 
@@ -243,6 +250,10 @@ void formalparm(void)
     type();
 
     while(lookahead == ';') {
+      match(';');
+
+      /** */ sympos = 0; /** */
+
       if(lookahead == VAR) match(VAR);
       idlist();
       match(':');
@@ -339,12 +350,18 @@ void type(void)
  */
 void idlist(void)
 {
-  /** */strcpy(symlist[sympos++],lexeme);/** */
+  /** */
+  strcpy(symlist[sympos++],lexeme);
+  nparams++;
+  /** */
   match(ID);
   while(lookahead == ',') {
     match(',');
 
-    /** */strcpy(symlist[sympos++],lexeme);/** */
+    /** */
+    strcpy(symlist[sympos++],lexeme);
+    nparams++;
+    /** */
     match(ID);
   }
 }

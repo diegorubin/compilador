@@ -31,7 +31,7 @@ void fake_declaration(char const *identifier, int dtype, int idtype, int offset)
 
 int main(int argc, char **argv)
 {
-  plan_tests(11);
+  plan_tests(12);
 
   debug_init();
 
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
 
   /* Cleaning variables of a module */
   inputcode = "\
-    FUNCTION conv(VAR x:INTEGER):REAL;\
+    FUNCTION conv(VAR x,y:INTEGER;VAR trunc:BOOLEAN):REAL;\
 \
     BEGIN\
       conv:= x;\
@@ -142,6 +142,7 @@ int main(int argc, char **argv)
   
   /* variavel local da funcao nao pode ser acessada mais*/
   ok1(!symtab_lookup("X"));
+  ok1(symtab[symtab_lookup("CONV")][SYMTAB_COL_NPARAMS] == 3);
 
   test_clearenv();
   ok1("Creating functions and procedures (module)");

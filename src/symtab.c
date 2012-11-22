@@ -12,7 +12,7 @@
  *
  */
 
-int symtab[MAXSYMTABENTRIES][6];
+int symtab[MAXSYMTABENTRIES][5];
 symtab_nextentry = 1;
 
 char lextape[MAXLEXTAPESIZE];
@@ -54,7 +54,7 @@ void symtab_dispose_local_variables(void)
   symtab_nextentry++;
 }
 
-/*
+/**
  * Esta função foi criada para auxiliar a declaracao
  * de procedimentos/funcoes e seus parametros.
  * Nós só temos acesso ao tipo da função após a declaração
@@ -64,6 +64,18 @@ void symtab_dispose_local_variables(void)
 void symtab_update_dtype(int pos, int dtype)
 {
   symtab[pos][SYMTAB_COL_DATA_TYPE] = dtype;
+}
+
+/**
+ * Esta função foi criada par auxilixa a declaracao
+ * de procedimentos/funcoes e seus parametros.
+ * Apos adicionar todos os parametros teremos o numero
+ * de parametros a assim poderemos atualizar a tabela
+ * de simbolos.
+ */
+void symtab_update_nparams(int pos, int nparams)
+{
+  symtab[pos][SYMTAB_COL_NPARAMS] = nparams;
 }
 
 /* funções da tabela de parametros */

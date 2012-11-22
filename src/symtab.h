@@ -25,7 +25,6 @@ enum {
   SYMTAB_COL_IDENTIFIER_TYPE,
   SYMTAB_COL_OFFSET,
   SYMTAB_COL_NPARAMS,
-  SYMTAB_COL_REFPARAMS,
 };
 
 /**
@@ -44,7 +43,7 @@ enum {
  * todoas as variaveis, constantes, procedimentos e
  * funções.
  */
-int symtab[MAXSYMTABENTRIES][6];
+int symtab[MAXSYMTABENTRIES][5];
 
 /*
  * O objetivo desta segunda tabela é armazenar as
@@ -64,6 +63,7 @@ int symtab_param_nextentry;
 int symtab_insert(char const *identifier, int dtype, int idtype, int offset);
 int symtab_lookup(char const *identifier);
 void symtab_update_dtype(int pos, int dtype);
+void symtab_update_nparams(int pos, int nparams);
 
 /* funções para a tabela de parametros */
 int symtab_param_insert(int idpos, int dtype);
