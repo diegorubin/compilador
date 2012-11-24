@@ -20,9 +20,10 @@ source.out
 
 # binarios
 source
-src/compilador
+src/mypas
 tests/lexer_test
 tests/parser_test
+tests/symtab_test
 tests/builtin_functions_test
 
 # logs
