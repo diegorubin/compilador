@@ -1,7 +1,7 @@
 #ifndef __TOKENS_H__
 #define __TOKENS_H__
 
-#include "keywords.h"
+#include <keywords.h>
 
 typedef int token_t;
 

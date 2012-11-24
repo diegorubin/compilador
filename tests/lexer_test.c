@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 #include <string.h>
 
-#include "../src/lexer.h"
+#include <lexer.h>
 #include "tap.h"
 
 FILE *sourcecode;

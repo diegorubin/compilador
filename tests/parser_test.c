@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../src/parser.h"
+#include <parser.h>
+#include <debug.h>
 #include "tap.h"
-#include "../src/debug.h"
 
 FILE *input;
 FILE *sourcecode;

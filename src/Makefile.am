@@ -3,6 +3,8 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
+DEFAULT_INCLUDES = -I ../includes
+
 bin_PROGRAMS = mypas
 
 mypas_SOURCES = main.c \

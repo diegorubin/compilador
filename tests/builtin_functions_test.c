@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../src/builtin_functions.h"
+#include <builtin_functions.h>
 #include "tap.h"
 
 int main(int argc, char **argv)

@@ -3,6 +3,8 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
+DEFAULT_INCLUDES = -I ../includes
+
 bin_PROGRAMS = lexer_test parser_test symtab_test builtin_functions_test
 
 lexer_test_SOURCES = lexer_test.c \
