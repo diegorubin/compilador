@@ -3,10 +3,12 @@
 /**
  * Imprime no arquivo de saida a tradução do comando program.
  */
-void gencode_program(const char *symbol)
+void gencode_set_main_entry_point(const char *symbol)
 {
   fprintf(target, "\t.section .text\n");
-  fprintf(target, "\t.globl _%s\n", symbol);
+  fprintf(target, ".globl _%s\n", symbol);
+  fprintf(target, "\t.type main, @function\n");
+  fprintf(target, "_%s:\n", symbol);
 }
 
 /**
@@ -50,8 +52,25 @@ void gencode_block(const char *symbol)
  */
 void gencode_end_program(void)
 {
+  fprintf(target,"\t# encerrando programa\n");
 	fprintf(target,"\tmovl $1, %%eax\n"); /* syscall do linux para sair */
 	fprintf(target,"\tmovl $0, %%ebx\n"); /* status da saida do programa */
 	fprintf(target,"\tint $0x80\n");
+}
+
+/**
+ * Imprime no arquivo de saida a estrutura de chamada de função.
+ */
+void gencode_callfunction(const char *symbol)
+{
+	fprintf(target,"\tcall _%s\n", symbol);
+}
+
+/**
+ * Imprime no arquivo de saida a estrutura de chamada de procedimento.
+ */
+void gencode_callprocedure(const char *symbol)
+{
+	fprintf(target,"\tcall _%s\n", symbol);
 }
 

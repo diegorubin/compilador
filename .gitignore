@@ -17,6 +17,7 @@ install-sh
 missing
 stamp-h?
 source.out
+source.s
 
 # binarios
 source

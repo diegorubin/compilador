@@ -12,6 +12,8 @@ enum {
   READ,
 };
 
+void insert_builtins_in_symtab(void);
+
 int isbuiltin(char const *identifier);
 
 void builtin_write(FILE *target);

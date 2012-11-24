@@ -96,7 +96,6 @@ void program(void)
    * da tradução do bloco principal de código.
    */ 
   strcpy(programname, lexeme);
-  gencode_program("start"); 
   /** */
 
   match(ID);
@@ -106,9 +105,6 @@ void program(void)
 
   match('.');
 
-  /** */
-  gencode_end_program();
-  /** */
 }
 
 /**
@@ -120,10 +116,15 @@ void block(void)
   modules();
 
   /** */
-  gencode_block("start");
+  gencode_set_main_entry_point("start"); 
   /** */
 
   stmtblock();
+
+  /** */
+  gencode_end_program();
+  /** */
+
 }
 
 /**
@@ -156,7 +157,15 @@ void declarations(void)
  */
 void modules(void) 
 {
+  /**
+   * O objetivo desta função é adicionar no arquivo
+   * de saida do compilador as funções que foram 
+   * desenvolvidas diretamente em assembly e que 
+   * podem ser utilizadas pelo desenvolvedor.
+   * Como a funçõa write.
+   */
   builtin_write_functions(target);
+  /** */
   while(lookahead == PROCEDURE || lookahead == FUNCTION) {
     if(lookahead == PROCEDURE) procedure();
     else function();
@@ -379,12 +388,15 @@ void idlist(void)
 void idstmt(void) 
 {
   int idaddress;
+  char idlabel[IDSIZE];
 
   /** */
   if((idaddress = symtab_lookup(lexeme) == 0)) {
-    fprintf(stderr, "variable not declared: %s\n", lexeme);
+    fprintf(stderr, "symbol not declared: %s\n", lexeme);
   }
   currenttype = symtab[idaddress][SYMTAB_COL_DATA_TYPE];
+
+  strcpy(idlabel,lexeme);
   /** */
 
   match(ID);
@@ -394,6 +406,11 @@ void idstmt(void)
       match('(');
       exprlist();
       match(')');
+
+      /** */
+      gencode_callprocedure(idlabel);
+      /** */
+
       break;
     case ASSGNMT:
       match(ASSGNMT);
@@ -562,6 +579,7 @@ void factor(void)
             fprintf(stderr, "symbol in ilegal context");
         }
       }
+      /** */
       strcpy(symbol, lexeme);
       /** */
 
@@ -573,6 +591,8 @@ void factor(void)
         exprlist();
         match(')');
         /** subroutine call is here **/
+        gencode_callfunction(symbol);
+        /** */
       }else {
         /** this is context for simple variable **/
         /** **/

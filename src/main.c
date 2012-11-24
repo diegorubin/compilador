@@ -26,7 +26,7 @@ void asssembly_and_link(void)
       printf("Montando...\n");
 
       arguments[0] = "/usr/bin/as";
-      arguments[1] = "source.out";
+      arguments[1] = "source.s";
       arguments[2] = "-o";
       arguments[3] = "source.o";
 
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
   debug_init();
   /***  */
 
-  target = fopen("source.out", "w");
+  target = fopen("source.s", "w");
 
   /*** Debug: copia entrada em uma stream manipulavel */
   sourcecode = debug_change_sourcecode(stdin);
