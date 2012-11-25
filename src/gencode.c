@@ -5,6 +5,7 @@
  */
 void gencode_set_main_entry_point(const char *symbol)
 {
+  fprintf(target, ".data\n newline: .string \"\\n\"\n");
   fprintf(target, "\t.section .text\n");
   fprintf(target, ".globl _%s\n", symbol);
   fprintf(target, "\t.type main, @function\n");

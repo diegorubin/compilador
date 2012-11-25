@@ -10,24 +10,34 @@ void builtin_write(FILE *target)
   fprintf(target, "_WRITE:\n");
 
   /* inicializando funcao */
-  fprintf(target, "\tpush %%ebp\n");
+  fprintf(target, "\tpushl %%ebp\n");
   fprintf(target, "\tmovl %%esp, %%ebp\n");
 
-  fprintf(target, "\tmovl $4, %%eax\n");
+  /* preparando syscall */
   fprintf(target, "\tmovl $4, %%eax\n");
   fprintf(target, "\tmovl $1, %%ebx\n");
 
   /* mover string para ecx */
-  fprintf(target, "\tmovl $5, %%ecx\n");
+  fprintf(target, "\tmovl 8(%%ebp), %%ecx\n");
 
   /* tamanho da string */
   fprintf(target, "\tmovl $12, %%edx\n");
 
+  /* syscall */
+  fprintf(target, "\tint $0x80\n");
+
+  /* nova linha */
+  fprintf(target, "\n\t#imprimindo nova linha\n");
+  fprintf(target, "\tmovl $4, %%eax\n");
+  fprintf(target, "\tmovl $1, %%ebx\n");
+  fprintf(target, "\tmovl $newline, %%ecx\n");
+  fprintf(target, "\tmovl $1, %%edx\n");
   fprintf(target, "\tint $0x80\n");
 
   /* fechando funcao */
+  fprintf(target, "\n\t#encerrando funcao\n");
   fprintf(target, "\tmovl %%ebp, %%esp\n");
-  fprintf(target, "\tpop %%ebp\n");
+  fprintf(target, "\tpopl %%ebp\n");
   fprintf(target, "\tret\n");
 }
 
