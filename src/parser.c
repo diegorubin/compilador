@@ -672,18 +672,3 @@ int typecheck(int type1, int type2)
 	else return ERR_TYPE_INVALID;
 }
 
-/**
- * Funções de debug
- */
-int printtape(int len) 
-{
-  int j;
-  for(j = 0; j < len; j++) {
-    if(lextape[j])
-      printf("%c", lextape[j]);
-    else
-      printf("0");
-  }
-  printf("\n");
-}
-

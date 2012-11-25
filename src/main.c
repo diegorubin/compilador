@@ -71,21 +71,15 @@ void asssembly_and_link(void)
 int main(int argc, char **argv) 
 {
 
-  /*** Debug: inicializa ambiente */
-  debug_init();
-  /***  */
-
+  sourcecode = stdin;
   target = fopen("source.s", "w");
 
-  /*** Debug: copia entrada em uma stream manipulavel */
-  sourcecode = debug_change_sourcecode(stdin);
-  /*** */
-
-  /*** Debug: envia codigo para a janela de debug */
-  debug_send_sourcecode(sourcecode);
-  /*** */
-
+  /**
+   * Neste ponto as funções previamente criadas, serão
+   * adicionadas na tabela de símbolos.
+   */
   insert_builtins_in_symtab();
+  /** */
 
   lookahead = gettoken(sourcecode);
   program();
@@ -93,10 +87,6 @@ int main(int argc, char **argv)
   /** */
   fclose(target);
   /** */
-
-  /*** Debug: finaliza ambiente */
-  debug_finalize();
-  /*** */
 
   /** */
   asssembly_and_link();
