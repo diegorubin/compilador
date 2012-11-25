@@ -13,15 +13,21 @@ void builtin_write(FILE *target)
   fprintf(target, "\tpushl %%ebp\n");
   fprintf(target, "\tmovl %%esp, %%ebp\n");
 
+  /* value uint to ascii */
+  fprintf(target, "\tmovl 8(%%ebp), %%eax\n");
+  fprintf(target, "\taddl $48, %%eax\n");
+  fprintf(target, "\taddl %%eax, 8(%%ebp)\n");
+
   /* preparando syscall */
   fprintf(target, "\tmovl $4, %%eax\n");
+  /* file description : screen*/
   fprintf(target, "\tmovl $1, %%ebx\n");
 
   /* mover string para ecx */
   fprintf(target, "\tmovl 8(%%ebp), %%ecx\n");
 
   /* tamanho da string */
-  fprintf(target, "\tmovl $12, %%edx\n");
+  fprintf(target, "\tmovl $1, %%edx\n");
 
   /* syscall */
   fprintf(target, "\tint $0x80\n");
@@ -51,7 +57,7 @@ void insert_builtins_in_symtab(void)
   int offset = 0;
   for(i = WRITE; i <= READ; i++){
     symtab_insert(builtins[i-WRITE], 0, SYMTAB_IDTYPE_PROCEDURE, offset);
-    /*TODO: Adicionar parametros na tabela de parametros*/
+    symtab_param_insert(i, INTEGER);
   }
 }
 

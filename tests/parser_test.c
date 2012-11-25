@@ -263,7 +263,7 @@ int main(int argc, char **argv)
   test_clearenv();
   ok1("call builtin function");
 
-  debug_finalize();
+  //debug_finalize();
   return exit_status();
 }
 

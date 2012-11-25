@@ -75,3 +75,17 @@ void gencode_callprocedure(const char *symbol)
 	fprintf(target,"\tcall _%s\n", symbol);
 }
 
+/** expression result stored in accumulator **/
+/** push the accumulator onto the stack **/
+void gencode_push_accumulator_onto_stack(void)
+{
+  fprintf(target,"\n\t#Enviando acumulador pra stack\n");
+  fprintf(target,"\tpush %%eax\n");
+}
+
+void gencode_uint_move_to_accumulator(const char *uint)
+{
+  fprintf(target,"\n\t#Enviando inteiro para acumulador\n");
+  fprintf(target,"\tmovl $%s,%%eax\n", uint);
+}
+

@@ -499,11 +499,18 @@ void expr(void)
  */
 void exprlist(void)
 {
+  /** this is the context for passing parameters to procedures
+   * or functions */
   expression(); 
-  
+  /** */
+  gencode_push_accumulator_onto_stack();
+  /** */
   while(lookahead == ',') {
     match(',');
     expression();
+    /** */
+    gencode_push_accumulator_onto_stack();
+    /** */
   }
 }
 
@@ -537,6 +544,7 @@ void factor(void)
       } else {
         datatype = currenttype;
       }
+      gencode_uint_move_to_accumulator(lexeme);
       /** */
 
       match(UINT);
