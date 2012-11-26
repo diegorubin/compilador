@@ -142,7 +142,9 @@ void declarations(void)
     idtype = SYMTAB_IDTYPE_VARIABLE;
 
     do {
-      /** */ sympos = 0; /** */
+      /** */ 
+      sympos = 0; 
+      /** */
       idlist();
       match(':');
       
@@ -268,7 +270,11 @@ void function(void)
  */
 void formalparm(void)
 {
+  /** */
   nparams = 0;
+  offset = 8;
+  /** */
+
   if(lookahead == '(') {
     match('(');
 
@@ -280,7 +286,10 @@ void formalparm(void)
     while(lookahead == ';') {
       match(';');
 
-      /** */ sympos = 0; /** */
+      /** */ 
+      sympos = 0; 
+      offset = 8;
+      /** */
 
       if(lookahead == VAR) match(VAR);
       idlist();
@@ -367,8 +376,19 @@ void type(void)
           "in line %d:\n"
           "symbol \"%s\" already declared\n",current_line, symlist[i]);
     } else {
+      /** */
+      switch(dtype) {
+        case INTEGER:
+        case BOOLEAN:
+          offset = offset + 4;
+          break;
+        case REAL:
+          offset = offset + 8;
+          break;
+      }
       symtab_insert(symlist[i], dtype, idtype, offset);
-      
+      /** */
+
       if(idtype == SYMTAB_IDTYPE_PARAMETER)
         symtab_param_insert(current_module_pos, dtype);
     }
