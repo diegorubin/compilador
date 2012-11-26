@@ -189,7 +189,10 @@ void procedure(void)
 
   match(ID);
   
-  /** */ sympos = 0; /** */
+  /** */ 
+  sympos = 0; 
+  idtype = SYMTAB_IDTYPE_PARAMETER;
+  /** */
 
   formalparm();
 
@@ -588,6 +591,7 @@ void factor(void)
 
             break;
           default:
+            printf("\nsymbol -> %s:tipo %d\n",lexeme, symtab[symbol_entry][SYMTAB_COL_IDENTIFIER_TYPE]);
             fprintf(stderr, 
                     "in line %d:\n"
                     "symbol in ilegal context\n", current_line);
