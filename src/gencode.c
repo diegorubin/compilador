@@ -47,6 +47,30 @@ void gencode_procedure_end(void)
 }
 
 /**
+ * Gera o código inicial de uma funcao 
+ */
+void gencode_function_start(const char *symbol)
+{
+  fprintf(target,"\n\t#inicio de uma funcao\n\n");
+
+  gencode_start_label(symbol);
+  fprintf(target,"\t.type _%s,@function\n", symbol);
+
+  fprintf(target,"\tpushl %%ebp\n");
+  fprintf(target,"\tmovl %%esp, %%ebp\n");
+}
+
+/**
+ * Gera o código final de uma funcao 
+ */
+void gencode_function_end(void)
+{
+  fprintf(target,"\tmovl  %%ebp, %%esp\n");
+  fprintf(target,"\tpop  %%ebp\n");
+  fprintf(target,"\tret\n");
+}
+
+/**
  * Imprime no arquivo de saida o inicio de um bloco de comandos,
  * tanto para funções e procedimentos como para o programa principal.
  */

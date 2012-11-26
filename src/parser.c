@@ -225,6 +225,10 @@ void function(void)
   current_module_pos = symtab_insert(lexeme, 0, idtype, offset);
   /** */
 
+  /** */
+  gencode_function_start(lexeme);
+  /** */
+
   match(ID);
   
   /** */ 
@@ -253,6 +257,7 @@ void function(void)
   match(';');
 
   /** */
+  gencode_function_end();
   symtab_dispose_local_variables();
   /** */
 }
@@ -598,7 +603,6 @@ void factor(void)
 
             break;
           default:
-            printf("\nsymbol -> %s:tipo %d\n",lexeme, symtab[symbol_entry][SYMTAB_COL_IDENTIFIER_TYPE]);
             fprintf(stderr, 
                     "in line %d:\n"
                     "symbol in ilegal context\n", current_line);
@@ -611,6 +615,7 @@ void factor(void)
       match(ID);
 
       if(lookahead == '('){
+      printf("call %s\n",lexeme);
         /** this is context for function call **/
         match('(');
         exprlist();
