@@ -187,6 +187,10 @@ void procedure(void)
   current_module_pos = symtab_insert(lexeme, 0, idtype, offset);
   /** */
 
+  /** */
+  gencode_procedure_start(lexeme);
+  /** */
+
   match(ID);
   
   /** */ 
@@ -202,7 +206,10 @@ void procedure(void)
   stmtblock();
   match(';');
 
+  /** */
+  gencode_procedure_end();
   symtab_dispose_local_variables();
+  /** */
 }
 
 /**

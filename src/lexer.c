@@ -222,7 +222,7 @@ void clear_lexeme()
 
 void put_lexeme(char c)
 {
-  if(islower(c)) c = towupper(c);
+  if(islower(c)) c = toupper(c);
   lexeme[lexeme_pointer++] = c;
   lexeme[lexeme_pointer] = 0;
 }

@@ -25,9 +25,14 @@ void gencode_bsssection(void)
 /**
  * Gera o código inicial de um procedimento
  */
-void gencode_procedure_start(void)
+void gencode_procedure_start(const char *symbol)
 {
-  fprintf(target,"\tpush %%ebp\n");
+  fprintf(target,"\n\t#inicio de um procedimento\n\n");
+
+  gencode_start_label(symbol);
+  fprintf(target,"\t.type _%s,@function\n", symbol);
+
+  fprintf(target,"\tpushl %%ebp\n");
   fprintf(target,"\tmovl %%esp, %%ebp\n");
 }
 
@@ -97,7 +102,7 @@ void gencode_start_if_expression()
   sprintf(label, "L%d", ++label_count);
 
   fprintf(target,"\tcompl (%%esp),%%eax\n");
-  fprintf(target,"\tjge .%s\n", label);
+  fprintf(target,"\tjge ._%s\n", label);
   gencode_start_label(label);
 }
 

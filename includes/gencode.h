@@ -11,7 +11,9 @@ void gencode_bsssection(void);
 void gencode_block(const char *symbol);
 void gencode_end_program(void);
 
-void gencode_procedure_start(void);
+void gencode_start_label(const char *symbol);
+
+void gencode_procedure_start(const char *symbol);
 void gencode_procedure_end(void);
 
 void gencode_callfunction(const char *symbol);
