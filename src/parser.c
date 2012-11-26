@@ -553,6 +553,8 @@ void term(void)
 void factor(void) 
 {
   int currenttype;
+  char functionname[IDSIZE];
+
   switch(lookahead){
     case UINT:
 
@@ -615,14 +617,23 @@ void factor(void)
       match(ID);
 
       if(lookahead == '('){
-      printf("call %s\n",lexeme);
-        /** this is context for function call **/
+        /** this is context for function call
+         * iremos salvar o identificador da 
+         * funcao para nao conflitar com as 
+         * identificadores utilizados na
+         * expressao.
+         */
+        strcpy(functionname, symbol);
+        /** */
+
         match('(');
         exprlist();
         match(')');
+
         /** subroutine call is here **/
-        gencode_callfunction(symbol);
+        gencode_callfunction(functionname);
         /** */
+
       }else {
         /** this is context for simple variable **/
         /** **/

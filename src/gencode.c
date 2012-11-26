@@ -125,8 +125,8 @@ void gencode_start_if_expression()
   char label[100];
   sprintf(label, "L%d", ++label_count);
 
-  fprintf(target,"\tcompl (%%esp),%%eax\n");
-  fprintf(target,"\tjge ._%s\n", label);
+  fprintf(target,"\tcmpl (%%esp),%%eax\n");
+  fprintf(target,"\tjge _%s\n", label);
   gencode_start_label(label);
 }
 
