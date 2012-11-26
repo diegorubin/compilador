@@ -17,6 +17,10 @@ void gencode_procedure_end(void);
 void gencode_callfunction(const char *symbol);
 void gencode_callprocedure(const char *symbol);
 
+void gencode_push_accumulator_onto_stack(void);
 void gencode_uint_move_to_accumulator(const char *uint);
+
+void gencode_start_if_expression();
+
 #endif // __GENCODE__H__
 

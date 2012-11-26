@@ -153,6 +153,27 @@ int isASSGNMT(FILE *buffer)
   return 0;
 }
 
+void skip_spaces(FILE *buffer) 
+{
+  char head;
+  while(isspace(head = getc(buffer))){
+    if(head == '\n') current_line++;
+  }
+  ungetc(head, buffer);
+}
+
+void skip_comments(FILE *buffer)
+{
+  char head = getc(buffer);
+  if(head == '{') {
+    while((head = getc(buffer)) != '}'){
+      if(head == '\n') current_line++;
+    }
+  } else {
+    ungetc(head, buffer);
+  }
+}
+
 token_t gettoken(FILE *buffer)
 {
   char head;
@@ -160,21 +181,14 @@ token_t gettoken(FILE *buffer)
 
   clear_lexeme();
 
-  /** 
-   * skip spaces 
-   * incrementa a contagem de linhas 
-   */
-  while(isspace(head = getc(buffer)))
-    if(head == '\n') current_line++;
+  while(isspace(head = getc(buffer)) || head == '{') {
+    ungetc(head, buffer);
+
+    skip_spaces(buffer);
+    skip_comments(buffer);
+  }
   ungetc(head, buffer);
 
-  /**
-   * skip comment
-   */
-  if(head == '{') {
-    while((head = getc(buffer)) != '}');
-    head = getc(buffer);
-  }
 
   if(token = isUINT(buffer)) return token;
   if(token = isASSGNMT(buffer)) return token;

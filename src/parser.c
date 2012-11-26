@@ -428,6 +428,10 @@ void ifstmt(void)
   expression();
   match(THEN);
 
+  /** */
+  gencode_start_if_expression();
+  /** */
+
   stmt();
 
   if(lookahead == ELSE) {
@@ -584,7 +588,9 @@ void factor(void)
 
             break;
           default:
-            fprintf(stderr, "symbol in ilegal context");
+            fprintf(stderr, 
+                    "in line %d:\n"
+                    "symbol in ilegal context\n", current_line);
         }
       }
       /** */

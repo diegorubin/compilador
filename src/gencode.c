@@ -1,5 +1,7 @@
 #include "gencode.h"
 
+int label_count = 0;
+
 /**
  * Imprime no arquivo de saida a tradução do comando program.
  */
@@ -43,7 +45,7 @@ void gencode_procedure_end(void)
  * Imprime no arquivo de saida o inicio de um bloco de comandos,
  * tanto para funções e procedimentos como para o programa principal.
  */
-void gencode_block(const char *symbol)
+void gencode_start_label(const char *symbol)
 {
 	fprintf(target,"_%s:\n", symbol);
 }
@@ -87,5 +89,15 @@ void gencode_uint_move_to_accumulator(const char *uint)
 {
   fprintf(target,"\n\t#Enviando inteiro para acumulador\n");
   fprintf(target,"\tmovl $%s,%%eax\n", uint);
+}
+
+void gencode_start_if_expression()
+{
+  char label[100];
+  sprintf(label, "L%d", ++label_count);
+
+  fprintf(target,"\tcompl (%%esp),%%eax\n");
+  fprintf(target,"\tjge .%s\n", label);
+  gencode_start_label(label);
 }
 
