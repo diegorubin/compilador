@@ -120,13 +120,51 @@ void gencode_uint_move_to_accumulator(const char *uint)
   fprintf(target,"\tmovl $%s,%%eax\n", uint);
 }
 
-void gencode_start_if_expression()
+int gencode_start_if_expression()
 {
   char label[100];
-  sprintf(label, "L%d", ++label_count);
+  sprintf(label, "IF%d", ++label_count);
 
   fprintf(target,"\tcmpl (%%esp),%%eax\n");
-  fprintf(target,"\tjge _%s\n", label);
+  fprintf(target,"\tjz _%s\n", label);
+
+  return label_count;
+}
+
+int gencode_start_else_expression(int labelif)
+{
+  char label[100];
+  sprintf(label, "ELSE%d", ++label_count);
+
+  fprintf(target, "\tjmp _%s\n", label);
+  sprintf(label, "IF%d", labelif);
+  gencode_start_label(label);
+
+  return label_count;
+}
+
+int gencode_start_while()
+{
+  char label[100];
+  sprintf(label, "WHILE_START%d", ++label_count);
+
+  gencode_start_label(label);
+
+  return label_count;
+}
+
+int gencode_start_do(int lblwhile)
+{
+  fprintf(target,"\tcmpl (%%esp),%%eax\n");
+  fprintf(target, "\tjz _WHILE_END%d\n", lblwhile);
+}
+
+int gencode_end_while(int lblwhile)
+{
+  char label[100];
+  sprintf(label, "WHILE_END%d", lblwhile);
+
+  fprintf(target, "\tjmp _WHILE_START%d\n", lblwhile);
   gencode_start_label(label);
 }
 

@@ -24,7 +24,12 @@ void gencode_callprocedure(const char *symbol);
 void gencode_push_accumulator_onto_stack(void);
 void gencode_uint_move_to_accumulator(const char *uint);
 
-void gencode_start_if_expression();
+int gencode_start_if_expression();
+int gencode_start_else_expression(int labelif);
+
+int gencode_start_while();
+int gencode_start_do(int lblwhile);
+int gencode_end_while(int lblwhile);
 
 #endif // __GENCODE__H__
 

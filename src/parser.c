@@ -459,19 +459,38 @@ void idstmt(void)
  */
 void ifstmt(void)
 {
+  char label_if[100];
+  char label_else[100];
+  int lbl;
+
   match(IF);
   expression();
   match(THEN);
 
   /** */
-  gencode_start_if_expression();
+  lbl = gencode_start_if_expression();
+  sprintf(label_if, "IF%d", lbl);
   /** */
 
   stmt();
 
   if(lookahead == ELSE) {
     match(ELSE);
+
+    /** */
+    lbl = gencode_start_else_expression(lbl);
+    sprintf(label_else, "ELSE%d", lbl);
+    /** */
+
     stmt();
+
+    /** */
+    gencode_start_label(label_else);
+    /** */
+  } else {
+    /** */
+    gencode_start_label(label_if);
+    /** */
   }
 
 }
@@ -481,11 +500,28 @@ void ifstmt(void)
  */
 void whilestmt(void)
 {
+  int lbl;
+
   match(WHILE);
+
+  /** */
+  lbl = gencode_start_while();
+  /** */
+
   expression();
+
   match(DO);
 
+  /** */
+  lbl = gencode_start_do(lbl);
+  /** */
+
+
   stmt();
+
+  /** */
+  lbl = gencode_end_while(lbl);
+  /** */
 }
 
 /**
