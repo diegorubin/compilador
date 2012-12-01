@@ -513,14 +513,14 @@ void whilestmt(void)
   match(DO);
 
   /** */
-  lbl = gencode_start_do(lbl);
+  gencode_start_do(lbl);
   /** */
 
 
   stmt();
 
   /** */
-  lbl = gencode_end_while(lbl);
+  gencode_end_while(lbl);
   /** */
 }
 
@@ -529,12 +529,23 @@ void whilestmt(void)
  */
 void repstmt(void)
 {
+  int lbl;
+
   match(REPEAT);
+
+  /** */
+  lbl = gencode_start_repeat();
+  /** */
 
   stmtlist();
 
   match(UNTIL);
   expression();
+
+  /** */
+  gencode_end_repeat(lbl);
+  /** */
+
 }
 
 /*

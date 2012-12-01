@@ -28,8 +28,11 @@ int gencode_start_if_expression();
 int gencode_start_else_expression(int labelif);
 
 int gencode_start_while();
-int gencode_start_do(int lblwhile);
-int gencode_end_while(int lblwhile);
+void gencode_start_do(int lblwhile);
+void gencode_end_while(int lblwhile);
+
+int gencode_start_repeat();
+void gencode_end_repeat(int lblrepeat);
 
 #endif // __GENCODE__H__
 

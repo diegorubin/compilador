@@ -153,18 +153,34 @@ int gencode_start_while()
   return label_count;
 }
 
-int gencode_start_do(int lblwhile)
+void gencode_start_do(int lblwhile)
 {
   fprintf(target,"\tcmpl (%%esp),%%eax\n");
   fprintf(target, "\tjz _WHILE_END%d\n", lblwhile);
 }
 
-int gencode_end_while(int lblwhile)
+void gencode_end_while(int lblwhile)
 {
   char label[100];
   sprintf(label, "WHILE_END%d", lblwhile);
 
   fprintf(target, "\tjmp _WHILE_START%d\n", lblwhile);
   gencode_start_label(label);
+}
+
+int gencode_start_repeat()
+{
+  char label[100];
+  sprintf(label, "REPEAT_START%d", ++label_count);
+
+  gencode_start_label(label);
+
+  return label_count;
+}
+
+void gencode_end_repeat(int lblrepeat)
+{
+  fprintf(target,"\tcmpl (%%esp),%%eax\n");
+  fprintf(target, "\tjnz _REPEAT_START%d\n", lblrepeat);
 }
 
