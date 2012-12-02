@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <tokens.h>
 
 extern FILE *target;
 
@@ -22,7 +23,7 @@ void gencode_callfunction(const char *symbol);
 void gencode_callprocedure(const char *symbol);
 
 void gencode_push_accumulator_onto_stack(void);
-void gencode_uint_move_to_accumulator(const char *uint);
+void gencode_uint_push(const char *uint);
 
 int gencode_start_if_expression();
 int gencode_start_else_expression(int labelif);
@@ -33,6 +34,11 @@ void gencode_end_while(int lblwhile);
 
 int gencode_start_repeat();
 void gencode_end_repeat(int lblrepeat);
+
+void gencode_neg();
+void gencode_execute_add(int op);
+void gencode_global_var_push(const char *var);
+void gencode_local_var_push(int offset);
 
 #endif // __GENCODE__H__
 

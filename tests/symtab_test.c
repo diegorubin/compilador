@@ -34,8 +34,8 @@ int main(int argc, char **argv)
   ok1(symtab_insert("y", INTEGER, SYMTAB_IDTYPE_PARAMETER, 4));
 
   /* e variaveis locais*/
-  ok1(symtab_insert("a", INTEGER, SYMTAB_IDTYPE_VARIABLE, 4));
-  ok1(symtab_insert("b", INTEGER, SYMTAB_IDTYPE_VARIABLE, 4));
+  ok1(symtab_insert("a", INTEGER, SYMTAB_IDTYPE_LOCAL_VARIABLE, 4));
+  ok1(symtab_insert("b", INTEGER, SYMTAB_IDTYPE_LOCAL_VARIABLE, 4));
 
   symtab_dispose_local_variables();
 

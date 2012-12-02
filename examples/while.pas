@@ -3,7 +3,7 @@ program w;
 var i:integer;
 
 begin
-  i := 0;
+  i := -1;
 
   while(i < 10) do
   begin

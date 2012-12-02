@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 
   /*Assign expressions*/
   /* add x to symtab for text -> fake declaration */
-  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_GLOBAL_VARIABLE, 0);
   inputcode = "x := 3 + 4;";
 
   target = fopen("source.out", "w");
@@ -170,8 +170,8 @@ int main(int argc, char **argv)
   ok1("Assign expressions");
 
   /*Multiple assign expressions*/
-  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
-  fake_declaration("Y", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_GLOBAL_VARIABLE, 0);
+  fake_declaration("Y", INTEGER, SYMTAB_IDTYPE_GLOBAL_VARIABLE, 0);
   inputcode = "\
     x := 3 + 4;\
     y := x + 4\
@@ -203,7 +203,7 @@ int main(int argc, char **argv)
   ok1("Boolean expression");
 
   /*if stmt*/
-  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_GLOBAL_VARIABLE, 0);
 
   inputcode = "\
     IF 3 + 4 < 10 THEN\
@@ -224,7 +224,7 @@ int main(int argc, char **argv)
   ok1("if stmt");
 
   /*if stmt case insensitive*/
-  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_GLOBAL_VARIABLE, 0);
 
   inputcode = "\
     if 3 + 4 < 10 then\
@@ -246,7 +246,7 @@ int main(int argc, char **argv)
 
   /*call builtin function*/
   insert_builtins_in_symtab();
-  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_VARIABLE, 0);
+  fake_declaration("X", INTEGER, SYMTAB_IDTYPE_GLOBAL_VARIABLE, 0);
 
   inputcode = "\
     write(x); \

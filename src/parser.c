@@ -23,8 +23,7 @@
  *
  * stmt -> 
  *    stmtblock | ifstmt | whilestmt
- *  | repstmt | forstmt | gotostmt | casestmt 
- *  | idstmt
+ *  | repstmt | forstmt | idstmt
  *
  * type -> INTEGER | REAL | BOOLEAN
  *
@@ -112,6 +111,10 @@ void program(void)
  */
 void block(void)
 {
+  /** symbol type 1: variable */
+  idtype = SYMTAB_IDTYPE_GLOBAL_VARIABLE;
+  /** */
+
   declarations();
   modules();
 
@@ -137,9 +140,6 @@ void declarations(void)
   if(lookahead == VAR) {
 
     match(VAR);
-
-    /** symbol type 1: variable **/
-    idtype = SYMTAB_IDTYPE_VARIABLE;
 
     do {
       /** */ 
@@ -204,6 +204,9 @@ void procedure(void)
 
   match(';');
 
+  /** symbol type 6: local variable */
+  idtype = SYMTAB_IDTYPE_LOCAL_VARIABLE;
+  /** */
   declarations();
   stmtblock();
   match(';');
@@ -254,7 +257,11 @@ void function(void)
 
   match(';');
 
+  /** symbol type 6: local variable */
+  idtype = SYMTAB_IDTYPE_LOCAL_VARIABLE;
+  /** */
   declarations();
+
   stmtblock();
   match(';');
 
@@ -326,8 +333,7 @@ void stmtlist(void)
 /**
  * stmt -> 
  *    stmtblock | ifstmt | whilestmt
- *  | repstmt | forstmt | gotostmt | casestmt
- *  | idstmt
+ *  | repstmt | forstmt | idstmt
  */
 void stmt(void)
 {
@@ -377,14 +383,18 @@ void type(void)
           "symbol \"%s\" already declared\n",current_line, symlist[i]);
     } else {
       /** */
-      switch(dtype) {
-        case INTEGER:
-        case BOOLEAN:
-          offset = offset + 4;
-          break;
-        case REAL:
-          offset = offset + 8;
-          break;
+      if(idtype == SYMTAB_IDTYPE_GLOBAL_VARIABLE) {
+        offset = 0;
+      } else {
+        switch(dtype) {
+          case INTEGER:
+          case BOOLEAN:
+            offset = offset + 4;
+            break;
+          case REAL:
+            offset = offset + 8;
+            break;
+        }
       }
       symtab_insert(symlist[i], dtype, idtype, offset);
       /** */
@@ -555,13 +565,15 @@ void repstmt(void)
  */
 void expression(void)
 {
+  int op;
+
   /** */
   datatype = INTEGER;
   /** */
   expr();
 
   if(isrelationalop(lookahead)){
-    match(lookahead);
+    match(op = lookahead);
     expr();
   }
 }
@@ -571,13 +583,33 @@ void expression(void)
  */
 void expr(void)
 {
-  if(lookahead == '-') match('-');
-  term();
-  while(isaddop(lookahead)) {
-    match(lookahead);
-    term();
+
+  int neg = 0;
+  int op;
+
+  if(lookahead == '-') {
+    match('-');
+
+    /** */
+    neg = 1;
+    /** */
   }
 
+  term();
+
+  while(isaddop(lookahead)) {
+    match(op = lookahead);
+    term();
+
+    /** */
+    gencode_execute_add(op);
+    /** */
+
+  }
+
+  /** */
+  if(neg) gencode_neg();
+  /** */
 }
 
 /** 
@@ -632,7 +664,7 @@ void factor(void)
       } else {
         datatype = currenttype;
       }
-      gencode_uint_move_to_accumulator(lexeme);
+      gencode_uint_push(lexeme);
       /** */
 
       match(UINT);
@@ -657,7 +689,8 @@ void factor(void)
                "semantic: symbol '%s' not found\n", current_line, lexeme);
       } else {
         switch(symtab[symbol_entry][SYMTAB_COL_IDENTIFIER_TYPE]) {
-          case SYMTAB_IDTYPE_VARIABLE:
+          case SYMTAB_IDTYPE_GLOBAL_VARIABLE:
+          case SYMTAB_IDTYPE_LOCAL_VARIABLE:
           case SYMTAB_IDTYPE_FUNCTION:
           case SYMTAB_IDTYPE_PARAMETER:
 
@@ -706,12 +739,13 @@ void factor(void)
         /** **/
         offset = symtab[symbol_entry][SYMTAB_COL_OFFSET];
         if(offset == 0) {
-          /** **/
-          /*TODO: mover do rotulo global para eax*/
-          /** **/
+          /** */
+          gencode_global_var_push(lexeme);
+          /** */
         }else {
-          /** **/
-          /*TODO: mover do offset da tabela para eax*/
+          /** */
+          gencode_local_var_push(offset);
+          /** */
         }
       }
       break;

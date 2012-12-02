@@ -114,10 +114,25 @@ void gencode_push_accumulator_onto_stack(void)
   fprintf(target,"\tpush %%eax\n");
 }
 
-void gencode_uint_move_to_accumulator(const char *uint)
+void gencode_uint_push(const char *uint)
 {
-  fprintf(target,"\n\t#Enviando inteiro para acumulador\n");
+  fprintf(target,"\n\t#Enviando inteiro para topo da pilha\n");
   fprintf(target,"\tmovl $%s,%%eax\n", uint);
+  fprintf(target,"\tpushl %%eax\n");
+}
+
+void gencode_global_var_push(const char *var)
+{
+  fprintf(target,"\n\t#Enviando variavel global para topo da pilha\n");
+  fprintf(target,"\tmovl $%s,%%eax\n", var);
+  fprintf(target,"\tpushl %%eax\n");
+}
+
+void gencode_local_var_push(int offset)
+{
+  fprintf(target,"\n\t#Enviando variavel local para topo da pilha\n");
+  fprintf(target,"\tmovl %d(%%ebp),%%eax\n", offset);
+  fprintf(target,"\tpushl %%eax\n");
 }
 
 int gencode_start_if_expression()
@@ -125,7 +140,6 @@ int gencode_start_if_expression()
   char label[100];
   sprintf(label, "IF%d", ++label_count);
 
-  fprintf(target,"\tcmpl (%%esp),%%eax\n");
   fprintf(target,"\tjz _%s\n", label);
 
   return label_count;
@@ -155,7 +169,6 @@ int gencode_start_while()
 
 void gencode_start_do(int lblwhile)
 {
-  fprintf(target,"\tcmpl (%%esp),%%eax\n");
   fprintf(target, "\tjz _WHILE_END%d\n", lblwhile);
 }
 
@@ -180,7 +193,41 @@ int gencode_start_repeat()
 
 void gencode_end_repeat(int lblrepeat)
 {
-  fprintf(target,"\tcmpl (%%esp),%%eax\n");
   fprintf(target, "\tjnz _REPEAT_START%d\n", lblrepeat);
+}
+
+void gencode_neg()
+{
+  fprintf(target,"\n\t#negando topo da pilha\n");
+  fprintf(target,"\tpop %%eax\n");
+  fprintf(target,"\tneg %%eax\n");
+  fprintf(target,"\tpush %%eax\n");
+}
+
+void gencode_execute_add(int op)
+{
+  switch(op) {
+    case '+':
+      fprintf(target,"\n\t#relizando soma\n");
+      fprintf(target,"\tpopl %%eax\n");
+      fprintf(target,"\tpopl %%ebx\n");
+      fprintf(target,"\taddl %%ebx, %%eax\n");
+      fprintf(target,"\tpush %%eax\n");
+      break;
+    case '-':
+      fprintf(target,"\n\t#relizando subtracao\n");
+      fprintf(target,"\tpopl %%eax\n");
+      fprintf(target,"\tpopl %%ebx\n");
+      fprintf(target,"\tsubl %%ebx, %%eax\n");
+      fprintf(target,"\tpush %%eax\n");
+      break;
+    case OR:
+      fprintf(target,"\n\t#relizando ou\n");
+      fprintf(target,"\tpopl %%eax\n");
+      fprintf(target,"\tpopl %%ebx\n");
+      fprintf(target,"\tor %%ebx, %%eax\n");
+      fprintf(target,"\tpush %%eax\n");
+      break;
+  }
 }
 
