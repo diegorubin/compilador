@@ -39,6 +39,8 @@ void gencode_neg();
 void gencode_execute_add(int op);
 void gencode_global_var_push(const char *var);
 void gencode_local_var_push(int offset);
+void gencode_global_assgnmt(const char *var);
+void gencode_local_assgnmt(int offset);
 
 void gencode_declare_global_var(const char *symbol, int len);
 

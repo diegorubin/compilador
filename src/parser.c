@@ -185,7 +185,7 @@ void procedure(void)
    * Add to symtab 
    **/
   idtype = SYMTAB_IDTYPE_PROCEDURE;
-  offset = 0;
+  offset = 1;
   current_module_pos = symtab_insert(lexeme, 0, idtype, offset);
   /** */
 
@@ -197,6 +197,7 @@ void procedure(void)
   
   /** */ 
   sympos = 0; 
+  offset = 4;
   idtype = SYMTAB_IDTYPE_PARAMETER;
   /** */
 
@@ -206,8 +207,10 @@ void procedure(void)
 
   /** symbol type 6: local variable */
   idtype = SYMTAB_IDTYPE_LOCAL_VARIABLE;
+  offset = 0;
   /** */
   declarations();
+
   stmtblock();
   match(';');
 
@@ -225,7 +228,7 @@ void function(void)
   match(FUNCTION);
 
   /** */
-  offset = 0;
+  offset = 1;
   idtype = SYMTAB_IDTYPE_FUNCTION;
   current_module_pos = symtab_insert(lexeme, 0, idtype, offset);
   /** */
@@ -238,6 +241,7 @@ void function(void)
   
   /** */ 
   sympos = 0; 
+  offset = 4;
   idtype = SYMTAB_IDTYPE_PARAMETER;
   /** */
   formalparm();
@@ -259,6 +263,7 @@ void function(void)
 
   /** symbol type 6: local variable */
   idtype = SYMTAB_IDTYPE_LOCAL_VARIABLE;
+  offset = 0;
   /** */
   declarations();
 
@@ -279,7 +284,6 @@ void formalparm(void)
 {
   /** */
   nparams = 0;
-  offset = 8;
   /** */
 
   if(lookahead == '(') {
@@ -295,7 +299,6 @@ void formalparm(void)
 
       /** */ 
       sympos = 0; 
-      offset = 8;
       /** */
 
       if(lookahead == VAR) match(VAR);
@@ -382,39 +385,26 @@ void type(void)
           "in line %d:\n"
           "symbol \"%s\" already declared\n",current_line, symlist[i]);
     } else {
-      /** */
+
+      /** 
+       * Recuperando tamanho do tipo do dado
+       */
+
+      len = data_len(dtype);
       if(idtype == SYMTAB_IDTYPE_GLOBAL_VARIABLE) {
-        /**
-         * Declaração de variavel global.
-         * O offset é zero, orém devemos dizer o tamanho
-         * da variavel.
-         * Futuramente será criado uma função cujo objetivo
-         * é centralizar esse calculo de tamanho.
-         */
         offset = 0;
-        switch(dtype) {
-          case INTEGER:
-          case BOOLEAN:
-            len = 4;
-            break;
-          case REAL:
-            len = 8;
-            break;
-        }
         gencode_declare_global_var(symlist[i], len);
       } else {
-        switch(dtype) {
-          case INTEGER:
-          case BOOLEAN:
-            offset = offset + 4;
-            break;
-          case REAL:
-            offset = offset + 8;
-            break;
+
+        len = data_len(dtype);
+        if(idtype == SYMTAB_IDTYPE_PARAMETER) {
+          offset = offset + len;
+        }
+        else {
+          offset = offset - len;
         }
       }
       symtab_insert(symlist[i], dtype, idtype, offset);
-      /** */
 
       if(idtype == SYMTAB_IDTYPE_PARAMETER)
         symtab_param_insert(current_module_pos, dtype);
@@ -453,9 +443,13 @@ void idstmt(void)
   char idlabel[IDSIZE];
 
   /** */
-  if((idaddress = symtab_lookup(lexeme) == 0)) {
+  if((idaddress = symtab_lookup(lexeme)) == 0) {
     fprintf(stderr, "symbol not declared: %s\n", lexeme);
   }
+
+  /** 
+   * L-Attribute: utilizado na checagem de tipos.
+   */
   currenttype = symtab[idaddress][SYMTAB_COL_DATA_TYPE];
 
   strcpy(idlabel,lexeme);
@@ -477,6 +471,14 @@ void idstmt(void)
     case ASSGNMT:
       match(ASSGNMT);
       expression();
+
+      /** */
+      if(symtab[idaddress][SYMTAB_COL_OFFSET] == 0)
+        gencode_global_assgnmt(idlabel);
+      else
+        gencode_local_assgnmt(symtab[idaddress][SYMTAB_COL_OFFSET]);
+      /** */
+
       break;
   }
 }
@@ -592,6 +594,7 @@ void expression(void)
   if(isrelationalop(lookahead)){
     match(op = lookahead);
     expr();
+
   }
 }
 
@@ -816,6 +819,25 @@ ismulop(token_t token)
       return token;
   }
   return 0;
+}
+/**
+ * Função para calcular tamanho do tipo do dado.
+ */
+int data_len(int data_type)
+{
+  int len;
+
+  switch(data_type) {
+    case INTEGER:
+    case BOOLEAN:
+      len = 4;
+      break;
+    case REAL:
+      len = 8;
+      break;
+  }
+
+  return len;
 }
 
 /**

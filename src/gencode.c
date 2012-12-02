@@ -231,6 +231,20 @@ void gencode_execute_add(int op)
   }
 }
 
+void gencode_global_assgnmt(const char *var)
+{
+  fprintf(target, "\n\t#atribuicao de variavel global\n");
+  fprintf(target,"\tpopl %%eax\n");
+  fprintf(target,"\tmovl %%eax, %s\n", var);
+}
+
+void gencode_local_assgnmt(int offset)
+{
+  fprintf(target, "\n\t#atribuicao de variavel local\n");
+  fprintf(target,"\tpopl %%eax\n");
+  fprintf(target,"\tmovl %%eax, %d(%%ebp)\n", offset);
+}
+
 void gencode_declare_global_var(const char *symbol, int len)
 {
   fprintf(target,"\t.common %s,%d,%d\n",symbol,len,len);

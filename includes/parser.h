@@ -34,6 +34,7 @@ void term(void);
 void factor(void);
 
 int isrelationalop(token_t token);
+int data_len(int data_type);
 int typecheck(int type1, int type2);
 
 int idtype;
