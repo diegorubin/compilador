@@ -362,7 +362,7 @@ void stmt(void)
 void type(void)
 {
   /** datatype **/
-  int i;
+  int i, len;
 
   switch(lookahead) {
     case INTEGER:
@@ -384,7 +384,24 @@ void type(void)
     } else {
       /** */
       if(idtype == SYMTAB_IDTYPE_GLOBAL_VARIABLE) {
+        /**
+         * Declaração de variavel global.
+         * O offset é zero, orém devemos dizer o tamanho
+         * da variavel.
+         * Futuramente será criado uma função cujo objetivo
+         * é centralizar esse calculo de tamanho.
+         */
         offset = 0;
+        switch(dtype) {
+          case INTEGER:
+          case BOOLEAN:
+            len = 4;
+            break;
+          case REAL:
+            len = 8;
+            break;
+        }
+        gencode_declare_global_var(symlist[i], len);
       } else {
         switch(dtype) {
           case INTEGER:

@@ -231,3 +231,8 @@ void gencode_execute_add(int op)
   }
 }
 
+void gencode_declare_global_var(const char *symbol, int len)
+{
+  fprintf(target,"\t.common %s,%d,%d\n",symbol,len,len);
+}
+
