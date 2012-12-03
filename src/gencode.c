@@ -231,6 +231,9 @@ void gencode_end_repeat(int lblrepeat)
   fprintf(target, "\tjz _REPEAT_START%d\n", lblrepeat);
 }
 
+/**
+ * Nega o conteudo que está no topo da pilha.
+ */
 void gencode_neg()
 {
   fprintf(target,"\n\t#negando topo da pilha\n");
@@ -239,6 +242,10 @@ void gencode_neg()
   fprintf(target,"\tpush %%eax\n");
 }
 
+/**
+ * Soma, subtrai ou realiza ou lógico utilizando os dois ultimos 
+ * valores encontrados na pilha.
+ */
 void gencode_execute_add(int op)
 {
   switch(op) {
@@ -266,6 +273,9 @@ void gencode_execute_add(int op)
   }
 }
 
+/**
+ * Move topo da pilha para uma variavel global.
+ */
 void gencode_global_assgnmt(const char *var)
 {
   fprintf(target, "\n\t#atribuicao de variavel global\n");
@@ -273,6 +283,9 @@ void gencode_global_assgnmt(const char *var)
   fprintf(target,"\tmovl %%eax, %s\n", var);
 }
 
+/**
+ * Move topo da pilha para uma variavel local.
+ */
 void gencode_local_assgnmt(int offset)
 {
   fprintf(target, "\n\t#atribuicao de variavel local\n");
@@ -280,6 +293,9 @@ void gencode_local_assgnmt(int offset)
   fprintf(target,"\tmovl %%eax, %d(%%ebp)\n", offset);
 }
 
+/**
+ * Traduz declaração de uma variavel global.
+ */
 void gencode_declare_global_var(const char *symbol, int len)
 {
   fprintf(target,"\t.common %s,%d,%d\n",symbol,len,len);
