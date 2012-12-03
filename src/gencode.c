@@ -9,7 +9,7 @@ void gencode_set_main_entry_point(const char *symbol)
 {
   fprintf(target, ".data\n newline: .string \"\\n\"\n");
   fprintf(target, "\t.section .text\n");
-  fprintf(target, ".globl _%s\n", symbol);
+  fprintf(target, ".global _%s\n", symbol);
   fprintf(target, "\t.type main, @function\n");
   fprintf(target, "_%s:\n", symbol);
 }
@@ -76,7 +76,7 @@ void gencode_function_end(void)
  */
 void gencode_start_label(const char *symbol)
 {
-	fprintf(target,"_%s:\n", symbol);
+  fprintf(target,"_%s:\n", symbol);
 }
 
 /**
@@ -85,9 +85,9 @@ void gencode_start_label(const char *symbol)
 void gencode_end_program(void)
 {
   fprintf(target,"\t# encerrando programa\n");
-	fprintf(target,"\tmovl $1, %%eax\n"); /* syscall do linux para sair */
-	fprintf(target,"\tmovl $0, %%ebx\n"); /* status da saída do programa */
-	fprintf(target,"\tint $0x80\n");
+  fprintf(target,"\tmovl $1, %%eax\n"); /* syscall do linux para sair */
+  fprintf(target,"\tmovl $0, %%ebx\n"); /* status da saída do programa */
+  fprintf(target,"\tint $0x80\n");
 }
 
 /**
@@ -95,7 +95,7 @@ void gencode_end_program(void)
  */
 void gencode_callfunction(const char *symbol)
 {
-	fprintf(target,"\tcall _%s\n", symbol);
+  fprintf(target,"\tcall _%s\n", symbol);
 }
 
 /**
@@ -103,7 +103,7 @@ void gencode_callfunction(const char *symbol)
  */
 void gencode_callprocedure(const char *symbol)
 {
-	fprintf(target,"\tcall _%s\n", symbol);
+  fprintf(target,"\tcall _%s\n", symbol);
 }
 
 /**
@@ -271,6 +271,38 @@ void gencode_execute_add(int op)
       fprintf(target,"\tpushl %%eax\n");
       break;
   }
+}
+
+/**
+ * Tradução de expressões relacionais.
+ */
+void gencode_execute_relational(int op)
+{
+  fprintf(target,"\n\t#Realizand operação relacional.\n");
+  fprintf(target,"\tpopl %%eax\n");
+  fprintf(target,"\tpopl %%ebx\n");
+  fprintf(target,"\tcmpl %%eax,%%ebx\n");
+  switch(op){
+    case NEQ:
+      fprintf(target,"\tsetne %%al\n");
+      break;
+    case LEQ:
+      fprintf(target,"\tsetle %%al\n");
+      break;
+    case '<':
+      fprintf(target,"\tsetl %%al\n");
+      break;
+    case GEQ:
+      fprintf(target,"\tsetge %%al\n");
+      break;
+    case '>':
+      fprintf(target,"\tsetg %%al\n");
+      break;
+    case '=':
+      fprintf(target,"\tsete %%al\n");
+      break;
+  }
+
 }
 
 /**
