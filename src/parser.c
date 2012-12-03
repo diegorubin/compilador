@@ -82,7 +82,7 @@ int current_module_pos;
 void program(void)
 {
   /**
-   * Seta variável que exibi linha atual caso
+   * Seta variável que exibe linha atual caso
    * aconteça algum erro ou alerta.
    */
   current_line = 1; 
@@ -111,7 +111,7 @@ void program(void)
  */
 void block(void)
 {
-  /** symbol type 1: variable */
+  /** tipo do simbolo 1: variavel */
   idtype = SYMTAB_IDTYPE_GLOBAL_VARIABLE;
   /** */
 
@@ -182,7 +182,7 @@ void procedure(void)
   match(PROCEDURE);
 
   /** 
-   * Add to symtab 
+   * Adicionar procedimento na tabela de simbolos
    **/
   idtype = SYMTAB_IDTYPE_PROCEDURE;
   offset = 1;
@@ -205,7 +205,7 @@ void procedure(void)
 
   match(';');
 
-  /** symbol type 6: local variable */
+  /** tipo do simbolo 6: variavel local */
   idtype = SYMTAB_IDTYPE_LOCAL_VARIABLE;
   offset = 0;
   /** */
@@ -261,7 +261,7 @@ void function(void)
 
   match(';');
 
-  /** symbol type 6: local variable */
+  /** tipo do simbolo 6: variavel local */
   idtype = SYMTAB_IDTYPE_LOCAL_VARIABLE;
   offset = 0;
   /** */
@@ -637,8 +637,10 @@ void expr(void)
  */
 void exprlist(void)
 {
-  /** this is the context for passing parameters to procedures
-   * or functions */
+  /**
+   * Contexto de passagem de parametros para procedimentos ou 
+   * funções.
+   */
   expression(); 
   /** */
   gencode_push_accumulator_onto_stack();
@@ -737,7 +739,7 @@ void factor(void)
       match(ID);
 
       if(lookahead == '('){
-        /** this is context for function call
+        /** 
          * iremos salvar o identificador da 
          * funcao para nao conflitar com as 
          * identificadores utilizados na
@@ -750,12 +752,12 @@ void factor(void)
         exprlist();
         match(')');
 
-        /** subroutine call is here **/
+        /** chamada de função **/
         gencode_callfunction(functionname);
         /** */
 
       }else {
-        /** this is context for simple variable **/
+        /** contexto de variavel simples **/
         /** **/
         offset = symtab[symbol_entry][SYMTAB_COL_OFFSET];
         if(offset == 0) {
