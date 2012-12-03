@@ -106,14 +106,18 @@ void gencode_callprocedure(const char *symbol)
 	fprintf(target,"\tcall _%s\n", symbol);
 }
 
-/** expression result stored in accumulator **/
-/** push the accumulator onto the stack **/
+/**
+ * Coloca valor do acumulador no topo da pilha.
+ */
 void gencode_push_accumulator_onto_stack(void)
 {
   fprintf(target,"\n\t#Enviando acumulador pra stack\n");
   fprintf(target,"\tpush %%eax\n");
 }
 
+/**
+ * Coloca uma constante inteira sem sinal no topo da pilha.
+ */
 void gencode_uint_push(const char *uint)
 {
   fprintf(target,"\n\t#Enviando inteiro para topo da pilha\n");
@@ -121,6 +125,9 @@ void gencode_uint_push(const char *uint)
   fprintf(target,"\tpushl %%eax\n");
 }
 
+/**
+ * Coloca uma variavel global no topo da pilha.
+ */
 void gencode_global_var_push(const char *var)
 {
   fprintf(target,"\n\t#Enviando variavel global para topo da pilha\n");
@@ -128,6 +135,9 @@ void gencode_global_var_push(const char *var)
   fprintf(target,"\tpushl %%eax\n");
 }
 
+/**
+ * Coloca uma variavel local no topo da pilha.
+ */
 void gencode_local_var_push(int offset)
 {
   fprintf(target,"\n\t#Enviando variavel local para topo da pilha\n");
@@ -135,6 +145,9 @@ void gencode_local_var_push(int offset)
   fprintf(target,"\tpushl %%eax\n");
 }
 
+/**
+ * Inicio do código de uma expressão if.
+ */
 int gencode_start_if_expression()
 {
   char label[100];
@@ -145,6 +158,9 @@ int gencode_start_if_expression()
   return label_count;
 }
 
+/**
+ * Inicio do código de uma expressão else.
+ */
 int gencode_start_else_expression(int labelif)
 {
   char label[100];
@@ -157,6 +173,9 @@ int gencode_start_else_expression(int labelif)
   return label_count;
 }
 
+/**
+ * Inicio do código de uma expressão while.
+ */
 int gencode_start_while()
 {
   char label[100];
@@ -167,11 +186,20 @@ int gencode_start_while()
   return label_count;
 }
 
+/**
+ * Após avaliação da expressão passado ao comando while, checa se é
+ * necessário pular para o final. Está função foi criada separadamente da
+ * tradução do inicio da expressão while, pois o resultado da expressão deve
+ * ser avaliado todas as iterações.
+ */
 void gencode_start_do(int lblwhile)
 {
   fprintf(target, "\tjz _WHILE_END%d\n", lblwhile);
 }
 
+/**
+ * Encerra uma expressão while.
+ */
 void gencode_end_while(int lblwhile)
 {
   char label[100];
