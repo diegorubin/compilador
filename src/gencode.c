@@ -267,7 +267,38 @@ void gencode_execute_add(int op)
       fprintf(target,"\n\t#relizando ou\n");
       fprintf(target,"\tpopl %%eax\n");
       fprintf(target,"\tpopl %%ebx\n");
-      fprintf(target,"\tor %%ebx, %%eax\n");
+      fprintf(target,"\torl %%ebx, %%eax\n");
+      fprintf(target,"\tpushl %%eax\n");
+      break;
+  }
+}
+
+/**
+ * Multiplicação, divisão ou realiza e lógico utilizando os dois últimos 
+ * valores encontrados na pilha.
+ */
+void gencode_execute_mul(int op)
+{
+  switch(op) {
+    case '*':
+      fprintf(target,"\n\t#relizando multiplicação\n");
+      fprintf(target,"\n\t popl %%eax");
+      fprintf(target,"\n\t popl %%ebx");
+      fprintf(target,"\n\t imul %%ebx");
+      fprintf(target,"\n\t pushl %%ebx");
+      break;
+    case '/':
+      fprintf(target,"\n\t#relizando divisão\n");
+      fprintf(target,"\t popl %%ecx");
+      fprintf(target,"\t popl %%eax");  
+      fprintf(target,"\t cltd");
+      fprintf(target,"\t idivl %%ecx");  
+      break;
+    case AND:
+      fprintf(target,"\n\t#relizando and\n");
+      fprintf(target,"\tpopl %%eax\n");
+      fprintf(target,"\tpopl %%ebx\n");
+      fprintf(target,"\tandl %%ebx, %%eax\n");
       fprintf(target,"\tpushl %%eax\n");
       break;
   }
@@ -311,7 +342,6 @@ void gencode_execute_relational(int op)
 void gencode_global_assgnmt(const char *var)
 {
   fprintf(target, "\n\t#atribuição de variável global\n");
-  fprintf(target,"\tpopl %%eax\n");
   fprintf(target,"\tmovl %%eax, %s\n", var);
 }
 
@@ -321,7 +351,6 @@ void gencode_global_assgnmt(const char *var)
 void gencode_local_assgnmt(int offset)
 {
   fprintf(target, "\n\t#atribuição de variável local\n");
-  fprintf(target,"\tpopl %%eax\n");
   fprintf(target,"\tmovl %%eax, %d(%%ebp)\n", offset);
 }
 

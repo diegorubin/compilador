@@ -600,6 +600,14 @@ void expression(void)
     /** */
 
   }
+
+  /**
+   * No final da expressão o resultado está
+   * armazenado no topo da pilha. Agora iremos
+   * despilhar o resultado em eax, onde será utilizado.
+   */
+  fprintf(target, "\tpopl %%eax\n");
+  /** */
 }
 
 /** 
