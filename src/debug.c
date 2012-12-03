@@ -36,7 +36,7 @@ int debug_isinitialized(void)
   return initialized;
 }
 
-/*TODO otimizar esse metodo*/
+/*TODO otimizar esse método*/
 FILE* debug_change_sourcecode(FILE *in)
 {
   int n = 0;

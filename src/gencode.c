@@ -3,7 +3,7 @@
 int label_count = 0;
 
 /**
- * Imprime no arquivo de saida a tradução do comando program.
+ * Imprime no arquivo de saída a tradução do comando program.
  */
 void gencode_set_main_entry_point(const char *symbol)
 {
@@ -15,7 +15,7 @@ void gencode_set_main_entry_point(const char *symbol)
 }
 
 /**
- * Imprime no arquivo de saida a declaração da seção bss
+ * Imprime no arquivo de saída a declaração da seção bss
  */
 void gencode_bsssection(void)
 {
@@ -42,16 +42,16 @@ void gencode_procedure_start(const char *symbol)
 void gencode_procedure_end(void)
 {
   fprintf(target,"\tmovl  %%ebp, %%esp\n");
-  fprintf(target,"\tpop  %%ebp\n");
+  fprintf(target,"\tpopl  %%ebp\n");
   fprintf(target,"\tret\n");
 }
 
 /**
- * Gera o código inicial de uma funcao 
+ * Gera o código inicial de uma função 
  */
 void gencode_function_start(const char *symbol)
 {
-  fprintf(target,"\n\t#inicio de uma funcao\n\n");
+  fprintf(target,"\n\t#inicio de uma função\n\n");
 
   gencode_start_label(symbol);
   fprintf(target,"\t.type _%s,@function\n", symbol);
@@ -61,17 +61,17 @@ void gencode_function_start(const char *symbol)
 }
 
 /**
- * Gera o código final de uma funcao 
+ * Gera o código final de uma função 
  */
 void gencode_function_end(void)
 {
   fprintf(target,"\tmovl  %%ebp, %%esp\n");
-  fprintf(target,"\tpop  %%ebp\n");
+  fprintf(target,"\tpopl  %%ebp\n");
   fprintf(target,"\tret\n");
 }
 
 /**
- * Imprime no arquivo de saida o inicio de um bloco de comandos,
+ * Imprime no arquivo de saída o inicio de um bloco de comandos,
  * tanto para funções e procedimentos como para o programa principal.
  */
 void gencode_start_label(const char *symbol)
@@ -80,18 +80,18 @@ void gencode_start_label(const char *symbol)
 }
 
 /**
- * Imprime no arquivo de saida a chamada de sistema de fim de programa.
+ * Imprime no arquivo de saída a chamada de sistema de fim de programa.
  */
 void gencode_end_program(void)
 {
   fprintf(target,"\t# encerrando programa\n");
 	fprintf(target,"\tmovl $1, %%eax\n"); /* syscall do linux para sair */
-	fprintf(target,"\tmovl $0, %%ebx\n"); /* status da saida do programa */
+	fprintf(target,"\tmovl $0, %%ebx\n"); /* status da saída do programa */
 	fprintf(target,"\tint $0x80\n");
 }
 
 /**
- * Imprime no arquivo de saida a estrutura de chamada de função.
+ * Imprime no arquivo de saída a estrutura de chamada de função.
  */
 void gencode_callfunction(const char *symbol)
 {
@@ -99,7 +99,7 @@ void gencode_callfunction(const char *symbol)
 }
 
 /**
- * Imprime no arquivo de saida a estrutura de chamada de procedimento.
+ * Imprime no arquivo de saída a estrutura de chamada de procedimento.
  */
 void gencode_callprocedure(const char *symbol)
 {
@@ -112,7 +112,7 @@ void gencode_callprocedure(const char *symbol)
 void gencode_push_accumulator_onto_stack(void)
 {
   fprintf(target,"\n\t#Enviando acumulador pra stack\n");
-  fprintf(target,"\tpush %%eax\n");
+  fprintf(target,"\tpushl %%eax\n");
 }
 
 /**
@@ -126,21 +126,21 @@ void gencode_uint_push(const char *uint)
 }
 
 /**
- * Coloca uma variavel global no topo da pilha.
+ * Coloca uma variável global no topo da pilha.
  */
 void gencode_global_var_push(const char *var)
 {
-  fprintf(target,"\n\t#Enviando variavel global para topo da pilha\n");
+  fprintf(target,"\n\t#Enviando variável global para topo da pilha\n");
   fprintf(target,"\tmovl $%s,%%eax\n", var);
   fprintf(target,"\tpushl %%eax\n");
 }
 
 /**
- * Coloca uma variavel local no topo da pilha.
+ * Coloca uma variável local no topo da pilha.
  */
 void gencode_local_var_push(int offset)
 {
-  fprintf(target,"\n\t#Enviando variavel local para topo da pilha\n");
+  fprintf(target,"\n\t#Enviando variável local para topo da pilha\n");
   fprintf(target,"\tmovl %d(%%ebp),%%eax\n", offset);
   fprintf(target,"\tpushl %%eax\n");
 }
@@ -237,64 +237,64 @@ void gencode_end_repeat(int lblrepeat)
 void gencode_neg()
 {
   fprintf(target,"\n\t#negando topo da pilha\n");
-  fprintf(target,"\tpop %%eax\n");
+  fprintf(target,"\tpopl %%eax\n");
   fprintf(target,"\tneg %%eax\n");
-  fprintf(target,"\tpush %%eax\n");
+  fprintf(target,"\tpushl %%eax\n");
 }
 
 /**
- * Soma, subtrai ou realiza ou lógico utilizando os dois ultimos 
+ * Soma, subtrai ou realiza ou lógico utilizando os dois últimos 
  * valores encontrados na pilha.
  */
 void gencode_execute_add(int op)
 {
   switch(op) {
     case '+':
-      fprintf(target,"\n\t#relizando soma\n");
+      fprintf(target,"\n\t#realizando soma\n");
       fprintf(target,"\tpopl %%eax\n");
       fprintf(target,"\tpopl %%ebx\n");
       fprintf(target,"\taddl %%ebx, %%eax\n");
-      fprintf(target,"\tpush %%eax\n");
+      fprintf(target,"\tpushl %%eax\n");
       break;
     case '-':
-      fprintf(target,"\n\t#relizando subtracao\n");
+      fprintf(target,"\n\t#relizando subtração\n");
       fprintf(target,"\tpopl %%eax\n");
       fprintf(target,"\tpopl %%ebx\n");
       fprintf(target,"\tsubl %%ebx, %%eax\n");
-      fprintf(target,"\tpush %%eax\n");
+      fprintf(target,"\tpushl %%eax\n");
       break;
     case OR:
       fprintf(target,"\n\t#relizando ou\n");
       fprintf(target,"\tpopl %%eax\n");
       fprintf(target,"\tpopl %%ebx\n");
       fprintf(target,"\tor %%ebx, %%eax\n");
-      fprintf(target,"\tpush %%eax\n");
+      fprintf(target,"\tpushl %%eax\n");
       break;
   }
 }
 
 /**
- * Move topo da pilha para uma variavel global.
+ * Move topo da pilha para uma variável global.
  */
 void gencode_global_assgnmt(const char *var)
 {
-  fprintf(target, "\n\t#atribuicao de variavel global\n");
+  fprintf(target, "\n\t#atribuição de variável global\n");
   fprintf(target,"\tpopl %%eax\n");
   fprintf(target,"\tmovl %%eax, %s\n", var);
 }
 
 /**
- * Move topo da pilha para uma variavel local.
+ * Move topo da pilha para uma variável local.
  */
 void gencode_local_assgnmt(int offset)
 {
-  fprintf(target, "\n\t#atribuicao de variavel local\n");
+  fprintf(target, "\n\t#atribuição de variável local\n");
   fprintf(target,"\tpopl %%eax\n");
   fprintf(target,"\tmovl %%eax, %d(%%ebp)\n", offset);
 }
 
 /**
- * Traduz declaração de uma variavel global.
+ * Traduz declaração de uma variável global.
  */
 void gencode_declare_global_var(const char *symbol, int len)
 {

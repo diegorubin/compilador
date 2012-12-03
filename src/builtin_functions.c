@@ -9,7 +9,7 @@ void builtin_write(FILE *target)
 {
   fprintf(target, "_WRITE:\n");
 
-  /* inicializando funcao */
+  /* inicializando função */
   fprintf(target, "\tpushl %%ebp\n");
   fprintf(target, "\tmovl %%esp, %%ebp\n");
 
@@ -40,8 +40,8 @@ void builtin_write(FILE *target)
   fprintf(target, "\tmovl $1, %%edx\n");
   fprintf(target, "\tint $0x80\n");
 
-  /* fechando funcao */
-  fprintf(target, "\n\t#encerrando funcao\n");
+  /* fechando função */
+  fprintf(target, "\n\t#encerrando função\n");
   fprintf(target, "\tmovl %%ebp, %%esp\n");
   fprintf(target, "\tpopl %%ebp\n");
   fprintf(target, "\tret\n");

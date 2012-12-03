@@ -82,7 +82,7 @@ int current_module_pos;
 void program(void)
 {
   /**
-   * Seta variavel que exibi linha atual caso
+   * Seta variável que exibi linha atual caso
    * aconteça algum erro ou alerta.
    */
   current_line = 1; 
@@ -91,7 +91,7 @@ void program(void)
   match(PROGRAM);
 
   /**
-   * Iremos salvar o nome do programa para ser utilizado na label
+   * Iremos salvar o nome do programa para ser utilizado na rótulo
    * da tradução do bloco principal de código.
    */ 
   strcpy(programname, lexeme);
@@ -161,10 +161,10 @@ void modules(void)
 {
   /**
    * O objetivo desta função é adicionar no arquivo
-   * de saida do compilador as funções que foram 
+   * de saída do compilador as funções que foram 
    * desenvolvidas diretamente em assembly e que 
    * podem ser utilizadas pelo desenvolvedor.
-   * Como a funçõa write.
+   * Como a função write.
    */
   builtin_write_functions(target);
   /** */
@@ -760,7 +760,7 @@ void factor(void)
         offset = symtab[symbol_entry][SYMTAB_COL_OFFSET];
         if(offset == 0) {
           /** */
-          gencode_global_var_push(lexeme);
+          gencode_global_var_push(symbol);
           /** */
         }else {
           /** */
