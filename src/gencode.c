@@ -209,6 +209,9 @@ void gencode_end_while(int lblwhile)
   gencode_start_label(label);
 }
 
+/**
+ * Inicia o laço utilizando o comando repeat.
+ */
 int gencode_start_repeat()
 {
   char label[100];
@@ -219,9 +222,13 @@ int gencode_start_repeat()
   return label_count;
 }
 
+/**
+ * Finaliza o laço. Caso a expressão seja falsa um salto
+ * até o inicio do laço é realizado.
+ */
 void gencode_end_repeat(int lblrepeat)
 {
-  fprintf(target, "\tjnz _REPEAT_START%d\n", lblrepeat);
+  fprintf(target, "\tjz _REPEAT_START%d\n", lblrepeat);
 }
 
 void gencode_neg()
