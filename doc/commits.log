@@ -1,0 +1,686 @@
+commit 0598b5c54fc33db1ef9c0a0497767ba7a2d3d44a
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Dec 4 07:56:09 2012 -0200
+
+    Mais documentacao.
+
+commit b4f72914fc8669f9b957e940c4932e86b5e721ef
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 22:05:45 2012 -0200
+
+    Trabalhando no relatorio.
+
+commit 1995611d634418243caf0d4e2386796348b861f9
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 21:40:06 2012 -0200
+
+    Trabalhando no relatorio.
+
+commit 76fa76d234e559839432a88cfe31d46af9dac3e3
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 20:35:44 2012 -0200
+
+    Finalizando tradução de expressões.
+
+commit 17cddbee4f8fff0eebe7d1538b80277caad5501b
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 20:11:49 2012 -0200
+
+    Relizando operacao relacional.
+
+commit e15079339d42d4eeb60eb59c438f610a76fc5720
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 19:13:44 2012 -0200
+
+    Melhorias de comentarios.
+
+commit 23e7b6dcdb562237d813b397c9c6a87c9691e42a
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 18:47:34 2012 -0200
+
+    Correções ortograficas.
+
+commit b418fad975d27975a18dc2e45c17e1ea02bb5cf5
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 15:04:49 2012 -0200
+
+    Mais comentarios.
+
+commit a2412fc884da7df2c73ae98101dee42da982cf6a
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 14:59:49 2012 -0200
+
+    Pequena correção e mais comentarios.
+
+commit 4201205c3b592d99dcf206696f19202fdab31c90
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Dec 3 08:35:48 2012 -0200
+
+    Um pouco de documentacao.
+
+commit 24b2821b78deeb5840da37f1ad5bd4cc7e649866
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Dec 2 15:40:04 2012 -0200
+
+    Correcoes na declaracao de variaveis e parametros.
+
+commit caebff124fbba26d669068bb473a835c32f295a9
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Dec 2 14:01:07 2012 -0200
+
+    Declarando variaveis globais.
+
+commit 5c90f05fedc741b62031fff7631167250c8a0288
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Dec 2 13:48:15 2012 -0200
+
+    diferenciando, na coluna tipo, variavel local de global.
+
+commit 2a67dd32ef31867f5829b00f2063453c189972c1
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Dec 1 16:18:05 2012 -0200
+
+    Traduzindo repeat.
+
+commit d7f79e92d64b8a2e78a9755d4b4c78f3aa753e13
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Dec 1 14:25:40 2012 -0200
+
+    Traducao de if e while.
+
+commit 5842d5be2c3dd3b6963c1240082ad52044ad89e2
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 26 21:17:53 2012 -0200
+
+    Trabalhando nos offset.
+
+commit a014b99a85ddf0244417d8446613888e351be18a
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 26 20:30:04 2012 -0200
+
+    Correcao na chamada de funcao.
+
+commit 0f102ea8ffffb2343a1501562f3765cd010e057a
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 26 14:20:22 2012 -0200
+
+    Gerando inicio de funcao. Bug na chamada de funcao.
+
+commit bd2634ae00aa66eff02c99aded5ed22669af4511
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 26 13:34:55 2012 -0200
+
+    Trabalhando na traducao de procedimento.
+
+commit f27269d92fc4b45ed7854c8eff2da7932e15192b
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 26 13:13:32 2012 -0200
+
+    correcao na adicao de tipo de parametros de procedimentos na tabela de simbolos.
+
+commit 52cf2cdbdafaa6ad3e70f76e45a2bccab99ef25d
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 26 11:50:47 2012 -0200
+
+    Trabalhando na geracao de codigo.
+
+commit 414f62697ab353607b4ed70d58fba00ed801a172
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 25 18:13:53 2012 -0200
+
+    Tentando escrever no stdout.
+
+commit 44436c6f4c7333bcee9c1a10529d50b1327fcfff
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 25 14:16:17 2012 -0200
+
+    Melhorias no write.
+
+commit 71c4565947516614ec1df47477f1f139e748c610
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 25 12:27:50 2012 -0200
+
+    Removendo debug. Trabalhando com 32bits.
+
+commit 0b9f9b6fa793ddc51db1bc182f8a4cd79999c8ff
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Nov 24 18:37:43 2012 -0200
+
+    Problema com 64 bits.
+
+commit d37529b345d0c8671414e88c22e5528eca5bfcaf
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Nov 24 11:27:17 2012 -0200
+
+    Passando os includes para um diretorio proprio.
+
+commit c7acba6a9259d2707aae633554893ce1376c4325
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Nov 24 11:10:11 2012 -0200
+
+    Alterando nome do binario de compilador para mypas.
+
+commit cccb90babfb5b6d49825a7d2e4e2b4698024c3b8
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Nov 22 18:21:34 2012 -0200
+
+    Salvando parametros e seus tipos.
+
+commit e299d1d939a6b68c0efefccd3678de48614d43bb
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Nov 21 22:59:28 2012 -0200
+
+    Adicionando quantidade de parametros na symtab.
+
+commit a0cd2c043f4fe43071e5f9b422a447ab350fd6f1
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Nov 17 08:32:45 2012 -0200
+
+    Funcoes da nova tabela de parametros.
+
+commit 635e2e4c196b14284d4319aff33d1a1b90dce61d
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 13 22:03:45 2012 -0200
+
+    Adicionando checagem de tipo.
+
+commit 04755693e2550b30afdf94c04922e0d2d80dd986
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 13 21:13:39 2012 -0200
+
+    Correcao no idstmt.
+
+commit f0a76e2a73a2368b87ec1c20836e5d7db4a689e5
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 13 20:49:21 2012 -0200
+
+    skipando comentarios.
+
+commit 777557ad42a999da77646033d2762c6ccdfc7a0c
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 13 20:39:49 2012 -0200
+
+    trabalhano na checagem de tipo.
+
+commit 8a952eb1914f0dad6cc3361bbac620c76a9076f7
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 13 20:19:53 2012 -0200
+
+    Limpando comentarios.
+
+commit 60b3b54ee4af0974fafb32ce4e91a115fea8ea59
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 13 15:20:38 2012 -0200
+
+    Imprimindo primeira funcao builtin.
+
+commit 9f8a5548738207883127a4d3b74eb7da9f696853
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 13 13:18:24 2012 -0200
+
+    adicionado hello world em gnu as no diretorio de testes.
+
+commit 9fc3a339c2ac2a21f0d35ae35f950c946b94d414
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 12 13:09:40 2012 -0200
+
+    Removendo arquivo de teste.
+
+commit fd6187f0820706c683219b3cc267424bab532ebe
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 12 12:57:23 2012 -0200
+
+    Correcao da invocacao de metodo.
+
+commit abd37097e8a70fa1b69eb945c76bd2083cd9b2ee
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 12 12:23:35 2012 -0200
+
+    Gerando codigo e linkando corretamente.
+
+commit 635186691aff15765d4257d6914cf576a0cd6f00
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 12 12:03:34 2012 -0200
+
+    compilando codigo corretamente.
+
+commit db838eb30ea9bab7ba9d28fa9424399a8bf2c1cf
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Nov 12 11:28:05 2012 -0200
+
+    Montando e linkando codigo gerado.
+
+commit c2b5bedfb485b1ed947aa032e2795180080db579
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 11 20:38:50 2012 -0200
+
+    Melhorias.
+
+commit ab2818be288afb5771826993c3e4c1d5b7449183
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 11 14:35:22 2012 -0200
+
+    Adicionando funcoes preconstruidas.
+
+commit 3288dcc1f060b4b2570ea1ccf62998757c001faf
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 11 12:24:44 2012 -0200
+
+    Correcao na insercao de parametros na symtab.
+
+commit 1207747fe7b9b373cd10f0e04864e564605e96bb
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Nov 10 17:32:10 2012 -0200
+
+    Enviando codigo.
+
+commit 506c135cf7adeb11cb4ef31e3a49d904911bb6a6
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Nov 10 16:50:32 2012 -0200
+
+    Trabalhando em novas funcoes de debugger.
+
+commit 5d92d85f3a81ef19043172080405a45052870c2e
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Nov 10 00:38:03 2012 -0200
+
+    Funcao de debug.
+
+commit e8cedec25a7cf709278d3ee0ab290f9a53ae6216
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Fri Nov 9 16:54:47 2012 -0200
+
+    Trabalhando na integracao com o cdb.
+
+commit 7ff7f77f85d90d28ace7d35e5631ca34f84fb31b
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Fri Nov 9 14:47:05 2012 -0200
+
+    Trabalhando no modulo de debug.
+
+commit 8a77527f7038d4d1fac55489a3c00fbd3f819521
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Fri Nov 9 11:04:37 2012 -0200
+
+    Jogando log para o buffer do cdb.
+
+commit c4ae9f176c7f720bb398bd25b825b18cb971fe4a
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Nov 8 11:13:56 2012 -0200
+
+    Imprimindo tabela de simbolos.
+
+commit 89e62749dec1db64b6f378afb3f5a05f1061be6c
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Nov 8 08:27:34 2012 -0200
+
+    funcao para adicionar caracter no lexeme.
+
+commit ed548e4c513c46bb66a20187ffb388541039ee63
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Nov 7 15:22:49 2012 -0200
+
+    Case insensitive.
+
+commit 3cdfe0777bb2594cb231bda6a5006a25a70b5a9f
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Nov 7 11:35:52 2012 -0200
+
+    Proximo passo: Criar funcao para adicionar caracteres no lexeme.
+
+commit 40c91c01f59cea421d72a9ac8c11cd1d2d572a82
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 6 23:09:12 2012 -0200
+
+    Erro em expression()
+
+commit 574d2180df34662a4b2492b781ff7a79c25cf818
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 6 22:18:37 2012 -0200
+
+    Possivel problema com expressoes.
+
+commit 048958a5d476fe94ae6fd24e4f0790ccbcc4bf51
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 6 21:43:46 2012 -0200
+
+    Alguns testes.
+
+commit c969d9254a4338c11df45fc863871f6b2d19da10
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 6 18:28:27 2012 -0200
+
+    Removendo binarios do controle de versao.
+
+commit d69ddfd8517ccb60611c59d8079d2c73122b8a1b
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 6 11:05:52 2012 -0200
+
+    Adicionando builtin_functions no projeto.
+
+commit bb5848fe5bf28e5bdf1d947f8b0e31f1ec7a399b
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Nov 6 08:36:26 2012 -0200
+
+    Algum codigo em assembly.
+
+commit 27c5ffb197c9a3f8ee5a343512064634cb221b25
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 4 23:08:38 2012 -0200
+
+    Algumas correcoes.
+
+commit fff79c1c24cfd79c86745a65bac52e095b9f3c25
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 4 22:56:34 2012 -0200
+
+    Bug in expression.
+
+commit a7e319b8f66023a5502f91b0012752e7bcd82f34
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 4 22:28:09 2012 -0200
+
+    Mais alteracoes.
+
+commit b6cfc7fb11e30030ac4ddad835d0fdd30c963e01
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 4 20:10:07 2012 -0200
+
+    Correcoes diversas.
+
+commit 59128c67c85dc2239d0c5309dd00da9de779e3c3
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 4 14:06:33 2012 -0200
+
+    Implementando checagem de tipo.
+
+commit 37fb44d7aad5834762a653474229ca0860165c85
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 4 11:27:43 2012 -0200
+
+    Alteracoes na gramatica.
+
+commit ac860261cabdfaa70bd48bf284a4287fcbe376ed
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Nov 4 11:12:55 2012 -0200
+
+    Criando constantes para tipos de identificadores.
+
+commit 47049a31da8d40197e54b81f6e07e610a33f2ffe
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Nov 3 19:05:52 2012 -0200
+
+    Correcoes diversas.
+
+commit cf15830978a5a560ef538b3feefb0482ea9ee6d0
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 30 22:02:36 2012 -0200
+
+    Removendo possibilidade de criacao de procedimentos dentro de
+    procedimentos.
+    
+    Foi alterada somente a gramatica descrita, agora é preciso alterar o parser.
+
+commit 504e1b9ffcf906cb68af93bcfd2e728da1d70b77
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 30 20:35:32 2012 -0200
+
+    Um pouco de traducao.
+
+commit bc56008675944b7487610d1d32167a2fb47c3237
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 30 20:01:08 2012 -0200
+
+    Adicionando alguns trecho de semantica.
+
+commit 58cb078062c52f7f8e8325809f781bcb2a8b4d7e
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Mon Oct 29 20:23:54 2012 -0200
+
+    Salvando tipo de identificador na tabela de simbolos.
+
+commit 72cfd42ba3dbe19ec5704954fb2e8a91a7233d4b
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 16 22:12:04 2012 -0300
+
+    Recuperando variavel.
+
+commit 493abe4cb74e1b8f7dc861ddcc352d5be0ee5521
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 16 21:45:26 2012 -0300
+
+    Correções.
+
+commit 120001891a278cae4dc760bc45fb4e621e5275a7
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 16 21:16:08 2012 -0300
+
+    Adicionado arquivo de testes do symtab.
+
+commit 16043d9ef48786750b2078951c06f2b99d2530ee
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 16 21:10:53 2012 -0300
+
+    Algumas correcoes.
+
+commit 32ab1ef27145c4c18125b7ac4e54176eca868238
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 16 21:00:12 2012 -0300
+
+    Adicionado a symtab nos aquivos de teste.
+
+commit 391235dd9a7d65358b7ea07aa0372e695e19e0a9
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 16 20:55:49 2012 -0300
+
+    Inicio do desenvolvimento da tabela de simbolos.
+
+commit 28254b5f14b33bf7b63c8b33b98625dcb2fcea4e
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sun Oct 7 11:41:19 2012 -0300
+
+    Reconhendo um programa basico.
+
+commit 4a5df16de13d69547076e72556a2b0ae48b21f1e
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Oct 6 19:15:03 2012 -0300
+
+    Implementando novas producoes.
+
+commit f041fbf396aa5dbdc7f9da352484afcc9de4c542
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Sat Oct 6 18:19:15 2012 -0300
+
+    Adicionando producoes na gramatica.
+
+commit a42a4b1462860284521444c4ace161e6a7071e08
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Oct 4 20:19:35 2012 -0300
+
+    Trabalhando na tarefa.
+
+commit 40c56a5872ae72d4f95a30dd044e0f926cb41c1c
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Oct 4 13:33:58 2012 -0300
+
+    correcao importante.
+
+commit 5335b5a1bf9c5bf4baf398b9379193b5b251272f
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 2 22:28:21 2012 -0300
+
+    Trabalhando no factor.
+
+commit 1397983ffd7c92577c9b6203ffa5cdcba651d0a7
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 2 22:10:32 2012 -0300
+
+    Trabalhando em expressoes.
+
+commit 3f68ac72e22107ae68fd2a774222133c5d71c4d6
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 2 21:44:08 2012 -0300
+
+    Trabalhando na producao stmt.
+
+commit 455726093326253a154b648ce8ee139ab068ab5f
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 2 21:10:05 2012 -0300
+
+    Trabalhando no mypas. Em aula no laboratorio.
+
+commit 62c878be6ce8ac455d4a883d31fe8c20d617153b
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 2 20:37:42 2012 -0300
+
+    Inicio do desenvolvimento do mypas.
+
+commit 8b1b0ebca1fefa5a0324fe710962ea3309382b67
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Oct 2 19:19:00 2012 -0300
+
+    Adicionando comentarios.
+
+commit d6d6bf20abafa1bde540d2cf2a7852c8235a244e
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Sep 25 14:32:46 2012 -0300
+
+    Criado reconhecedor de comentarios.
+
+commit 5c245fba7e078a74db1cf76d2484fa3b7a9ee91c
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Fri Sep 7 13:47:17 2012 -0300
+
+    Funcionando.
+
+commit 072708329613d505e27b1b0d40efe98585af9220
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Sep 6 16:42:08 2012 -0300
+
+    Salvando todos os tokens no lexeme.
+
+commit 6d4cbdec9ac08fc6af398d85f31e96f023a9d16e
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Sep 6 16:06:36 2012 -0300
+
+    Corrigido isFLOAT.
+
+commit 048a2c157060fcd6d173871df8e7eb1e9287dd60
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Sep 6 14:09:55 2012 -0300
+
+    Com erro.
+
+commit 63e70d2c47c0eeb04b36d650250c889b41b111e6
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Sep 6 14:01:26 2012 -0300
+
+    recall, pop, push.
+
+commit 96e306103be557682f382f70798aae936cde4e81
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Sep 6 13:25:15 2012 -0300
+
+    Guardando variavel.
+
+commit 70aa7f3bf79188134dda3a04e8d78df233f0aaf7
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Sep 5 14:37:38 2012 -0300
+
+    Passando de infixo para posfixo.
+
+commit b0b6183c4a21fe7ed236088b759dbc182782e5ad
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Sep 5 11:49:22 2012 -0300
+
+    Trabalhando no lexeme.
+
+commit 0ef690dc37d00bcba60f2efb7bde855cb8ef054c
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Sep 5 10:38:18 2012 -0300
+
+    Adicionando o negate e final do comando.
+
+commit 04b1cd98c7e9c925c8c0dce7e663dd465dcf8aa7
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Aug 23 20:27:52 2012 -0300
+
+    Alterando teste.
+
+commit c1bc4914468255f31663cc0b3bbfdd44ca900faa
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Aug 23 20:24:47 2012 -0300
+
+    Correção do erro quando zero era encontrado.
+
+commit b280cefe1abfd8189c8d1b4989aca236e05a3c18
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Thu Aug 23 20:09:28 2012 -0300
+
+    Correção no isFLOAT.
+
+commit 19bb3455bb83654d193566176bcc8dae1ae8c923
+Author: Diego Rubin <drubin@caiena.net>
+Date:   Mon Aug 20 10:04:08 2012 -0300
+
+    Parser em eBNF.
+
+commit fe46b84f0c89c9c96fd3fc9aaf6e6dbc765f4a2c
+Author: Diego Rubin <drubin@caiena.net>
+Date:   Mon Aug 20 09:55:19 2012 -0300
+
+    Implementando float.
+
+commit 39d2c2d849c2c45a6d78e9eac0720038c343869e
+Author: Diego Rubin <drubin@caiena.net>
+Date:   Mon Aug 20 09:33:11 2012 -0300
+
+    Trabalhando no float point.
+
+commit c0b9f7d35793b8280459af7c0405428b9f7944e6
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Aug 8 14:15:12 2012 -0300
+
+    Pequenas mudancas.
+
+commit 6d11fa82342e47813a2ff94aa206e1ec1c2ca038
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Aug 8 11:46:14 2012 -0300
+
+    Implementação do parser.
+
+commit b862e4ace1feb81f246e2a2cd2e71eb8e1ac5946
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Aug 8 10:52:00 2012 -0300
+
+    Adicionando isOPLUS e isOTIMES.
+
+commit 44c57bfb0e2602c0a3e7db7b323e6834ba3b0c95
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Wed Aug 8 10:45:04 2012 -0300
+
+    Criação do isNUM.
+
+commit 87bfa40444ef46a310b0edd898d1307d76f6dd81
+Author: Diego Rubin <drubin@caiena.net>
+Date:   Wed Aug 8 10:13:33 2012 -0300
+
+    Primeiro teste.
+
+commit c5ad71aec0d19fab859155e0c91ed0dfecd28834
+Author: Diego Rubin <rubin.diego@gmail.com>
+Date:   Tue Aug 7 18:47:54 2012 -0300
+
+    Trabalhando nos arquivos base.
+
+commit 20257453283b562a8872e8c4e9f4bdf402d28837
+Author: Diego Rubin <drubin@caiena.net>
+Date:   Mon Aug 6 10:31:23 2012 -0300
+
+    CC ao invés do GCC.
+
+commit d818a9f095152d9c75a748298174bc61e4d75423
+Author: Diego Rubin <drubin@caiena.net>
+Date:   Mon Aug 6 10:27:22 2012 -0300
+
+    Criação do repositorio.
