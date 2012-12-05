@@ -1,4 +1,4 @@
-#include "symtab.h"
+#include <symtab.h>
 
 /*
  * Colunas da tabela de simbolos.
@@ -13,10 +13,10 @@
  */
 
 int symtab[MAXSYMTABENTRIES][5];
-symtab_nextentry = 1;
+int symtab_nextentry = 1;
 
 char lextape[MAXLEXTAPESIZE];
-lextape_nextentry = 0;
+int lextape_nextentry = 0;
 
 /* funções da tabela de simbolos */
 int symtab_insert(char const *symbol, int dtype, int idtype, int offset)

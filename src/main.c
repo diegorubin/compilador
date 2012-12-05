@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <sys/wait.h>
 
-#include "builtin_functions.h"
-#include "parser.h"
-#include "gencode.h"
+#include <builtin_functions.h>
+#include <parser.h>
+#include <gencode.h>
 
 FILE *sourcecode;
 FILE *target;
@@ -14,7 +17,7 @@ FILE *target;
  * Está função tem como objetivo montar e linkar o código
  * gerado durante a tradução.
  */
-void asssembly_and_link(void)
+void asssembly_and_link(const char *out)
 {
   int status = 0;
   char *arguments[4];
@@ -26,9 +29,10 @@ void asssembly_and_link(void)
       printf("Montando...\n");
 
       arguments[0] = "/usr/bin/as";
-      arguments[1] = "source.s";
+      sprintf(arguments[1], "%s.s", out);
+      printf("arg: %s", arguments[1]);
       arguments[2] = "-o";
-      arguments[3] = "source.o";
+      sprintf(arguments[3], "%s.o", out);
 
       execvp("/usr/bin/as", arguments);
       
@@ -50,9 +54,9 @@ void asssembly_and_link(void)
       printf("Linkando...\n");
 
       arguments[0] = "/usr/bin/ld";
-      arguments[1] = "source.o";
+      sprintf(arguments[1], "%s.o", out);
       arguments[2] = "-o";
-      arguments[3] = "source";
+      sprintf(arguments[3], "%s", out);
 
       execvp("/usr/bin/ld", arguments);
 
@@ -71,12 +75,20 @@ void asssembly_and_link(void)
 int main(int argc, char **argv) 
 {
 
-  sourcecode = stdin;
-  target = fopen("source.s", "w");
+  /**
+   * Não foi informado os parametros minimos.
+   */
+  if(argc < 3) {
+    printf("Não foi informado os parametros minimos\n");
+    printf("Uso: ./mypas <codigo_fonte> <destino>\n");
+    return -1;
+  }
+
+  sourcecode = fopen(argv[1], "r");
+  target = fopen(argv[2], "w");
 
   /**
-   * Neste ponto as funções previamente criadas, serão
-   * adicionadas na tabela de símbolos.
+   * Inserindo funções previamente criadas
    */
   insert_builtins_in_symtab();
   /** */
@@ -86,10 +98,7 @@ int main(int argc, char **argv)
 
   /** */
   fclose(target);
-  /** */
-
-  /** */
-  asssembly_and_link();
+  fclose(sourcecode);
   /** */
 
   return 0;

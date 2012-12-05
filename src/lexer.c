@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "lexer.h"
+#include <lexer.h>
 
 int isID(FILE *buffer)
 {

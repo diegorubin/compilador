@@ -1,4 +1,4 @@
-#include "builtin_functions.h"
+#include <builtin_functions.h>
 
 char *builtins[] = {
   "WRITE",

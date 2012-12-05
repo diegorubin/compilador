@@ -1,4 +1,4 @@
-#include "gencode.h"
+#include <gencode.h>
 
 int label_count = 0;
 

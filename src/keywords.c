@@ -1,4 +1,4 @@
-#include "keywords.h"
+#include <keywords.h>
 
 char *keywords[] = {
   "BEGIN",
