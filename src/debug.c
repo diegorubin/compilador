@@ -1,6 +1,6 @@
-#include <debug.h>
+#include "debug.h"
 
-int initialized = 0;
+initialized = 0;
 
 void debug_init(void)
 {
